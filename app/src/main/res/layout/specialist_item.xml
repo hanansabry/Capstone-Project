@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="180dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/specialist_icon"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:src="@drawable/dermatology"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/specialist_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Dentist"
+        android:padding="2dp"
+        android:textSize="16sp"
+        android:background="@color/secondaryLightColor"
+        android:textColor="@color/white"/>
+</LinearLayout>

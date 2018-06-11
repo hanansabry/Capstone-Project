@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">MeetYourDoctor</string>
+    <string name="app_name">Meet Your Doctor</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_action_string">Search</string>
     <string name="favourites_action_string">Favourites</string>
     <string name="more_action_string">More</string>
+    <string name="search_title">Search</string>
 </resources>

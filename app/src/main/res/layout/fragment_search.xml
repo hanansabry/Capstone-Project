@@ -1,22 +1,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SearchFragment">
-
-    <ImageView
-        android:id="@+id/doctor_image"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/choosing_a_doctor"/>
+    android:layout_marginBottom="@dimen/bottom_navigation_bar">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/specialists_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/doctor_image"
-        android:layout_centerHorizontal="true"
-        android:text="Search Fragment"
-        android:textSize="30sp"/>
+        android:text="Most Common Specialists"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textSize="24sp"
+        android:textColor="@color/primaryColor"
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/specialists_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/specialists_title"
+        android:layout_marginBottom="8dp"/>
 
 </RelativeLayout>
