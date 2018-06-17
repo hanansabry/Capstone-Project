@@ -3,22 +3,10 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/bottom_navigation_bar">
 
-    <TextView
-        android:id="@+id/specialists_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Most Common Specialists"
-        android:gravity="center"
-        android:padding="16dp"
-        android:textSize="24sp"
-        android:textColor="@color/primaryColor"
-        android:textStyle="bold" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/specialists_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/specialists_title"
         android:layout_marginBottom="8dp"/>
 
 </RelativeLayout>

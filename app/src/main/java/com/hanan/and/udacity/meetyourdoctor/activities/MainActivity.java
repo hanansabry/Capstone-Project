@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialSearchView searchView;
     private CollapsingToolbarLayout collapsingToolbar;
     private Toolbar toolbar;
-    private boolean isSearching;
+    private boolean searchViewEnabled = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         //setup the Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        final CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         initCollapsingToolbar();
         //------------------------------------------------------------------------------------------
         //setup the SearchView
@@ -62,6 +63,32 @@ public class MainActivity extends AppCompatActivity {
                 collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
             }
         });
+        searchView.setSuggestions(getResources().getStringArray(R.array.specialists_suggestions));
+        searchView.setEllipsize(true);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(MainActivity.this, newText, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                Toast.makeText(MainActivity.this, "SearchView is shown", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                Toast.makeText(MainActivity.this, "SearchView is closed", Toast.LENGTH_SHORT).show();
+            }
+        });
         //------------------------------------------------------------------------------------------
         //setup the Bottom Navigation View
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
@@ -73,12 +100,23 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.action_search:
                                 selectedFragment = SearchFragment.newInstance();
+                                searchView.setVisibility(View.VISIBLE);
+                                searchViewEnabled = true;
+                                searchView.setSuggestions(getResources().getStringArray(R.array.specialists_suggestions));
+                                invalidateOptionsMenu();
                                 break;
                             case R.id.action_favourites:
                                 selectedFragment = FavouritesFragment.newInstance();
+                                searchView.setVisibility(View.VISIBLE);
+                                searchViewEnabled = true;
+                                searchView.setSuggestions(getResources().getStringArray(R.array.doctors_suggestions));
+                                invalidateOptionsMenu();
                                 break;
                             case R.id.action_more:
                                 selectedFragment = MoreFragment.newInstance();
+                                searchView.setVisibility(View.INVISIBLE);
+                                searchViewEnabled = false;
+                                invalidateOptionsMenu();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -103,17 +141,29 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.options_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         searchView.setMenuItem(searchItem);
+
+        if(searchViewEnabled){
+            searchItem.setVisible(true);
+        }else{
+            searchItem.setVisible(false);
+        }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(searchView.isSearchOpen()){
+            searchView.closeSearch();
+        }else{
+            super.onBackPressed();
+        }
     }
 
     /**
      * Initializing collapsing toolbar
      * Will show and hide the toolbar title on scroll
      */
-
     private void initCollapsingToolbar() {
-        final CollapsingToolbarLayout collapsingToolbar =
-                findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(" ");
         AppBarLayout appBarLayout = findViewById(R.id.appbar);
         appBarLayout.setExpanded(true);
@@ -139,4 +189,3 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
-

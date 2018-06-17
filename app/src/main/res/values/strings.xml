@@ -7,4 +7,20 @@
     <string name="favourites_action_string">Favourites</string>
     <string name="more_action_string">More</string>
     <string name="search_title">Search</string>
+
+    <string-array name="specialists_suggestions">
+        <item>Specialist 1</item>
+        <item>Specialist 2</item>
+        <item>Specialist 3</item>
+        <item>Specialist 4</item>
+        <item>Specialist 5</item>
+    </string-array>
+
+    <string-array name="doctors_suggestions">
+        <item>Doctor 1</item>
+        <item>Doctor 2</item>
+        <item>Doctor 3</item>
+        <item>Doctor 4</item>
+        <item>Doctor 5</item>
+    </string-array>
 </resources>
