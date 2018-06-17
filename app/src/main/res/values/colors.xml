@@ -21,4 +21,5 @@
 
     <color name="white">#FFFFFF</color>
     <color name="white_trans">#99FFFFFF</color>
+    <color name="yellow">#FFFF00</color>
 </resources>

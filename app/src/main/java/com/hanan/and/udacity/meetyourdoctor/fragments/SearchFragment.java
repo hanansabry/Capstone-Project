@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,7 @@ public class SearchFragment extends Fragment {
 
         //setup the Specialists Recycler View
         RecyclerView specialistRecyclerView = rootView.findViewById(R.id.specialists_list);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
 
         specialistRecyclerView.setLayoutManager(layoutManager);
         specialistRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -58,7 +59,10 @@ public class SearchFragment extends Fragment {
         specialistList.add("Pediatrics and New Born");
         specialistList.add("Neurology");
         specialistList.add("Orthopedics");
+        specialistList.add("Gynaecology and Infertility");
         specialistList.add("Ear, Nose and Throat");
+        specialistList.add("Cardiology and Vascular Disease");
+        specialistList.add("Allergy and Immunology");
 
         return specialistList;
     }

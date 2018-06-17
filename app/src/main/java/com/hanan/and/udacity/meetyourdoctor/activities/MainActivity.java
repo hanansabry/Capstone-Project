@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.adapters.SpecialistsAdapter;
+import com.hanan.and.udacity.meetyourdoctor.fragments.DoctorsFragment;
 import com.hanan.and.udacity.meetyourdoctor.fragments.FavouritesFragment;
 import com.hanan.and.udacity.meetyourdoctor.fragments.MoreFragment;
 import com.hanan.and.udacity.meetyourdoctor.fragments.SearchFragment;
@@ -50,45 +51,8 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         initCollapsingToolbar();
         //------------------------------------------------------------------------------------------
-        //setup the SearchView
-        searchView = findViewById(R.id.search_view);
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewShown() {
-                collapsingToolbar.setCollapsedTitleTextColor(Color.TRANSPARENT);
-            }
-
-            @Override
-            public void onSearchViewClosed() {
-                collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
-            }
-        });
-        searchView.setSuggestions(getResources().getStringArray(R.array.specialists_suggestions));
-        searchView.setEllipsize(true);
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Toast.makeText(MainActivity.this, newText, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewShown() {
-                Toast.makeText(MainActivity.this, "SearchView is shown", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onSearchViewClosed() {
-                Toast.makeText(MainActivity.this, "SearchView is closed", Toast.LENGTH_SHORT).show();
-            }
-        });
+        //initiate the SearchView
+        initiateSearchView();
         //------------------------------------------------------------------------------------------
         //setup the Bottom Navigation View
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
@@ -154,9 +118,44 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if(searchView.isSearchOpen()){
             searchView.closeSearch();
+        }else if(getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStack();
         }else{
             super.onBackPressed();
         }
+    }
+
+    public void initiateSearchView(){
+        searchView = findViewById(R.id.search_view);
+        searchView.setEllipsize(true);
+        searchView.setVoiceSearch(true);
+        searchView.setSuggestions(getResources().getStringArray(R.array.specialists_suggestions));
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(MainActivity.this, newText, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                Toast.makeText(MainActivity.this, "SearchView is shown", Toast.LENGTH_SHORT).show();
+                collapsingToolbar.setCollapsedTitleTextColor(Color.TRANSPARENT);
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                Toast.makeText(MainActivity.this, "SearchView is closed", Toast.LENGTH_SHORT).show();
+                collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
+            }
+        });
     }
 
     /**
