@@ -2,21 +2,130 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.MoreFragment">
+    tools:context=".fragments.MoreFragment"
+    android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/doctor_image"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/choosing_a_doctor"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/settings_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/doctor_image"
-        android:layout_centerHorizontal="true"
-        android:text="More Fragment"
-        android:textSize="30sp"/>
+        android:orientation="horizontal"
+        android:paddingStart="16sp"
+        android:paddingEnd="16sp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:weightSum="3"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_settings_24dp"
+            android:background="@color/white"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/settings_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="@string/settings"
+            android:textColor="@color/secondaryColor"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@android:drawable/arrow_down_float"
+            android:background="@color/white"
+            android:gravity="right"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/settings_layout"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="16sp"
+        android:paddingEnd="16sp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:layout_below="@id/line1"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/doctor_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_account_circle_24dp"
+            android:background="@color/white"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/profile_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="@string/profile"
+            android:textColor="@color/secondaryColor"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/profile_layout"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/logout_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="16sp"
+        android:paddingEnd="16sp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:layout_below="@id/line2"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/login_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/logout"
+            android:background="@color/white"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/logout_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Logout"
+            android:textColor="@color/secondaryColor"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp" />
+    </LinearLayout>
 
 </RelativeLayout>
