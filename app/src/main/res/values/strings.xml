@@ -9,6 +9,7 @@
     <string name="search_title">Search</string>
     <string name="search_specialists">Search by specialist</string>
     <string name="search_hint">Search by doctor name</string>
+    <string name="call_now_str">Call Now</string>
 
     <string-array name="specialists_suggestions">
         <item>Specialist 1</item>

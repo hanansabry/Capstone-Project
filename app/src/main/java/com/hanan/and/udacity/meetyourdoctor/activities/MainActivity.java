@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
                                 invalidateOptionsMenu();
                                 break;
                             case R.id.action_favourites:
-                                selectedFragment = FavouritesFragment.newInstance();
+                                selectedFragment = DoctorsFragment.newInstance();
+                                ((DoctorsFragment)selectedFragment).setDoctorsList(getDoctorsFavouriteList());
                                 searchView.setVisibility(View.VISIBLE);
                                 searchViewEnabled = true;
                                 searchView.setSuggestions(getResources().getStringArray(R.array.doctors_suggestions));
@@ -186,5 +187,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    //fake doctors list
+    public List<String> getDoctorsFavouriteList(){
+        List<String> doctors = new ArrayList();
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        return doctors;
     }
 }

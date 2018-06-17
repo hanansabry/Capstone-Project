@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.fragments.DoctorsFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,9 +83,35 @@ public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.
         @Override
         public void onClick(View view) {
             DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
+            doctorsFragment.setDoctorsList(getDoctorsSpecialistList());
             FragmentTransaction transaction = ((FragmentActivity)(mContext)).getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("search_fragment");
             transaction.commit();
         }
+    }
+
+    public List<String> getDoctorsSpecialistList(){
+        List<String> doctors = new ArrayList();
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        doctors.add("Amany Sabry");
+        return doctors;
     }
 }

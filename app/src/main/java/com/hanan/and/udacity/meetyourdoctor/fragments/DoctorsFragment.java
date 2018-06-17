@@ -26,6 +26,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class DoctorsFragment extends Fragment {
+    List<String> doctors;
 
     public static DoctorsFragment newInstance() {
         DoctorsFragment fragment = new DoctorsFragment();
@@ -40,41 +41,21 @@ public class DoctorsFragment extends Fragment {
 
         //setup the Specialists Recycler View
         RecyclerView doctorsRecyclerView = rootView.findViewById(R.id.doctors_list);
-        doctorsRecyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 0));
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         doctorsRecyclerView.setLayoutManager(layoutManager);
         doctorsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //fill the recycler view with data
-        DoctorsAdapter doctorsAdapter = new DoctorsAdapter(getContext(), getDoctors());
+        DoctorsAdapter doctorsAdapter = new DoctorsAdapter(getContext(), getDoctorsList());
         doctorsRecyclerView.setAdapter(doctorsAdapter);
         return rootView;
     }
 
-    public List<String> getDoctors(){
-        List<String> doctors = new ArrayList();
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        return doctors;
+    public void setDoctorsList(List<String> doctors){
+        this.doctors = doctors;
     }
 
+    public List<String> getDoctorsList(){
+        return doctors;
+    }
 }

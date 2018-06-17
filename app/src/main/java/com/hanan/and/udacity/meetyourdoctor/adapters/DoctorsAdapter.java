@@ -30,14 +30,13 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
 
     @Override
     public DoctorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.doctor_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.doctor_list_item_2, parent, false);
         return new DoctorViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(DoctorViewHolder holder, int position) {
         holder.doctorName.setText(mDoctorsList.get(position));
-        holder.doctorSpecialist.setText("Specialist: Pediatrics and New Born");
         holder.ratingBar.setRating(3f);
     }
 
