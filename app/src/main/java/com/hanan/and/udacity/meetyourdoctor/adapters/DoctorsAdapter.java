@@ -1,8 +1,7 @@
 package com.hanan.and.udacity.meetyourdoctor.adapters;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
-import com.hanan.and.udacity.meetyourdoctor.fragments.DoctorsFragment;
+import com.hanan.and.udacity.meetyourdoctor.activities.DoctorProfile;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
 
     @Override
     public DoctorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.doctor_list_item_2, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.doctor_list_item, parent, false);
         return new DoctorViewHolder(view);
     }
 
@@ -45,7 +44,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
         return mDoctorsList.size();
     }
 
-    class DoctorViewHolder extends RecyclerView.ViewHolder{
+    class DoctorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView doctorName, doctorSpecialist;
         RatingBar ratingBar;
 
@@ -54,6 +53,13 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
             doctorName = itemView.findViewById(R.id.doctor_name);
             doctorSpecialist = itemView.findViewById(R.id.doctor_specialist);
             ratingBar = itemView.findViewById(R.id.rating);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(mContext, DoctorProfile.class);
+            mContext.startActivity(intent);
         }
     }
 }

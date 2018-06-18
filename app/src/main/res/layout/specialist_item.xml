@@ -7,7 +7,8 @@
     android:layout_marginEnd="8dp"
     android:layout_marginTop="8dp"
     android:background="?android:selectableItemBackground"
-    android:clickable="true">
+    android:clickable="true"
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/specialist_icon"
@@ -24,8 +25,7 @@
         android:gravity="center"
         android:text="Dentist"
         android:padding="2dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textSize="14sp"
         android:background="@color/secondaryLightColor"
         android:textColor="@color/white"
         android:maxLines="2"/>
