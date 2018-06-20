@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.activities.DoctorProfile;
+import com.hanan.and.udacity.meetyourdoctor.activities.SettingsActivity;
 
 
 public class MoreFragment extends Fragment {
@@ -32,7 +33,14 @@ public class MoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_more, container, false);
-        LinearLayout profileLayout = rootView.findViewById(R.id.profile_layout);
+        LinearLayout settingsLayout = rootView.findViewById(R.id.settings_layout);
+        settingsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 }

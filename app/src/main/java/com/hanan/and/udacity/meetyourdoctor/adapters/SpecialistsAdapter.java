@@ -1,8 +1,11 @@
 package com.hanan.and.udacity.meetyourdoctor.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,8 @@ import com.hanan.and.udacity.meetyourdoctor.fragments.DoctorsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
 
 /**
  * Created by Nono on 6/11/2018.
@@ -82,8 +87,15 @@ public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.
 
         @Override
         public void onClick(View view) {
+            int position = getAdapterPosition();
+            //add specialist name to the fragment arguments
+            Bundle bundle = new Bundle();
+            bundle.putString(SPECIALIST, mSpecialistList.get(position));
+            //initiate DoctorsFragment
             DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
+            doctorsFragment.setArguments(bundle);
             doctorsFragment.setDoctorsList(getDoctorsSpecialistList());
+
             FragmentTransaction transaction = ((FragmentActivity)(mContext)).getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("search_fragment");
             transaction.commit();

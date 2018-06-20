@@ -33,7 +33,6 @@ public class DoctorProfile extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed(); // close this activity and return to preview activity (if there is any)
         }
-
         return super.onOptionsItemSelected(item);
     }
 

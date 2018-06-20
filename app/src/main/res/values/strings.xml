@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Meet Your Doctor</string>
+    <string name="app_name">Doctor Online</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -12,6 +12,10 @@
     <string name="call_now_str">Call Now</string>
     <string name="settings">Settings</string>
     <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="choose_city">City:    </string>
+    <string name="logout">Logout</string>
+    <string name="language">Language:</string>
 
     <string-array name="specialists_suggestions">
         <item>Specialist 1</item>
@@ -27,5 +31,15 @@
         <item>Doctor 3</item>
         <item>Doctor 4</item>
         <item>Doctor 5</item>
+    </string-array>
+
+    <string-array name="city_list">
+        <item>Sirs El-Layan</item>
+        <item>Menouf</item>
+    </string-array>
+
+    <string-array name="language_list">
+        <item>Arabic</item>
+        <item>English</item>
     </string-array>
 </resources>

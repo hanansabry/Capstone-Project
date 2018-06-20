@@ -1,30 +1,23 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
-import com.hanan.and.udacity.meetyourdoctor.adapters.SpecialistsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.fragments.DoctorsFragment;
-import com.hanan.and.udacity.meetyourdoctor.fragments.FavouritesFragment;
 import com.hanan.and.udacity.meetyourdoctor.fragments.MoreFragment;
 import com.hanan.and.udacity.meetyourdoctor.fragments.SearchFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -32,12 +25,19 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.FAVOURITE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.MORE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.MOST_COMMON_SPECIALISTS;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SIGNIN;
+
 public class MainActivity extends AppCompatActivity {
 
     private MaterialSearchView searchView;
     private CollapsingToolbarLayout collapsingToolbar;
     private Toolbar toolbar;
     private boolean searchViewEnabled = true;
+    private ActionBar actionBar;
+    private boolean login = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
         //setup the Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        collapsingToolbar = findViewById(R.id.collapsing_toolbar);
-        initCollapsingToolbar();
-        //------------------------------------------------------------------------------------------
+        actionBar = getSupportActionBar();
+//        collapsingToolbar = findViewById(R.id.collapsing_toolbar);
+//        initCollapsingToolbar();
+//        ------------------------------------------------------------------------------------------
         //initiate the SearchView
         initiateSearchView();
         //------------------------------------------------------------------------------------------
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.action_search:
+                                actionBar.setTitle(MOST_COMMON_SPECIALISTS);
                                 selectedFragment = SearchFragment.newInstance();
                                 searchView.setVisibility(View.VISIBLE);
                                 searchViewEnabled = true;
@@ -70,23 +71,33 @@ public class MainActivity extends AppCompatActivity {
                                 invalidateOptionsMenu();
                                 break;
                             case R.id.action_favourites:
-                                selectedFragment = DoctorsFragment.newInstance();
-                                ((DoctorsFragment)selectedFragment).setDoctorsList(getDoctorsFavouriteList());
-                                searchView.setVisibility(View.VISIBLE);
-                                searchViewEnabled = true;
-                                searchView.setSuggestions(getResources().getStringArray(R.array.doctors_suggestions));
-                                invalidateOptionsMenu();
+                                if(login){
+                                    //start login activity
+                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }else {
+                                    actionBar.setTitle(FAVOURITE);
+                                    selectedFragment = DoctorsFragment.newInstance();
+                                    ((DoctorsFragment) selectedFragment).setDoctorsList(getDoctorsFavouriteList());
+                                    searchView.setVisibility(View.VISIBLE);
+                                    searchViewEnabled = true;
+                                    searchView.setSuggestions(getResources().getStringArray(R.array.doctors_suggestions));
+                                    invalidateOptionsMenu();
+                                }
                                 break;
                             case R.id.action_more:
+                                actionBar.setTitle(MORE);
                                 selectedFragment = MoreFragment.newInstance();
                                 searchView.setVisibility(View.INVISIBLE);
                                 searchViewEnabled = false;
                                 invalidateOptionsMenu();
                                 break;
                         }
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.commit();
+                        if(!login) {
+                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.frame_layout, selectedFragment);
+                            transaction.commit();
+                        }
                         return true;
                     }
                 });
@@ -95,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, SearchFragment.newInstance());
         transaction.commit();
+        actionBar.setTitle(MOST_COMMON_SPECIALISTS);
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
         //------------------------------------------------------------------------------------------
@@ -148,13 +160,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSearchViewShown() {
                 Toast.makeText(MainActivity.this, "SearchView is shown", Toast.LENGTH_SHORT).show();
-                collapsingToolbar.setCollapsedTitleTextColor(Color.TRANSPARENT);
+//                collapsingToolbar.setCollapsedTitleTextColor(Color.TRANSPARENT);
             }
 
             @Override
             public void onSearchViewClosed() {
                 Toast.makeText(MainActivity.this, "SearchView is closed", Toast.LENGTH_SHORT).show();
-                collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
+//                collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
             }
         });
     }

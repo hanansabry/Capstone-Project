@@ -1,18 +1,30 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        tools:context=".fragments.MoreFragment">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/settings_layout"
+            android:id="@+id/edit_profile_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -30,41 +42,34 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/ic_settings_24dp" />
+                android:src="@drawable/ic_account_circle_24dp" />
 
             <TextView
-                android:id="@+id/settings_tv"
+                android:id="@+id/edit_profile_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
-                android:text="@string/settings"
+                android:text="@string/edit_profile"
                 android:textColor="@color/secondaryLightColor"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@color/white"
-                android:gravity="right"
-                android:src="@android:drawable/arrow_down_float" />
         </LinearLayout>
 
         <View
             android:id="@+id/line1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/settings_layout"
+            android:layout_below="@id/edit_profile_layout"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:background="@android:color/darker_gray" />
 
         <LinearLayout
-            android:id="@+id/profile_layout"
+            android:id="@+id/choose_city_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/line1"
-            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"
@@ -74,39 +79,47 @@
             android:paddingTop="16dp">
 
             <ImageView
-                android:id="@+id/doctor_icon"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/ic_account_circle_24dp" />
+                android:src="@drawable/ic_location_city_black_24dp" />
 
             <TextView
-                android:id="@+id/profile_tv"
-                android:layout_width="match_parent"
+                android:id="@+id/choose_city_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
-                android:text="@string/profile"
+                android:text="@string/choose_city"
                 android:textColor="@color/secondaryLightColor"
                 android:textSize="16sp" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/choose_city_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_gravity="center"
+                android:prompt="@string/choose_city"
+                android:spinnerMode="dialog"
+                android:backgroundTint="@color/primaryLightColor"/>
         </LinearLayout>
 
         <View
             android:id="@+id/line2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/profile_layout"
+            android:layout_below="@id/choose_city_layout"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:background="@android:color/darker_gray" />
 
         <LinearLayout
-            android:id="@+id/logout_layout"
+            android:id="@+id/language_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/line2"
-            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"
@@ -121,18 +134,28 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/logout" />
+                android:src="@drawable/ic_language_black_32dp" />
 
             <TextView
-                android:id="@+id/logout_tv"
-                android:layout_width="match_parent"
+                android:id="@+id/language_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
-                android:text="@string/logout"
+                android:text="@string/language"
                 android:textColor="@color/secondaryLightColor"
                 android:textSize="16sp" />
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/language_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_gravity="center"
+                android:prompt="@string/language"
+                android:spinnerMode="dialog"
+                android:backgroundTint="@color/primaryLightColor"/>
+
         </LinearLayout>
 
     </RelativeLayout>
-</ScrollView>
+</LinearLayout>
