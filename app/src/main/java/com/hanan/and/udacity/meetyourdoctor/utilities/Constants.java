@@ -7,4 +7,6 @@ public class Constants {
     public static final String SETTINGS = "Settings";
     public static final String SPECIALIST = "specialist";
     public static final String SIGNIN = "Sign in";
+    public static final String SIGNUP = "Sign up";
+    public static final String EDIT_PROFILE = "edit_profile";
 }

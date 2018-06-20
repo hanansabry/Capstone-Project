@@ -12,7 +12,11 @@ import android.widget.LinearLayout;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.activities.DoctorProfile;
+import com.hanan.and.udacity.meetyourdoctor.activities.LoginActivity;
 import com.hanan.and.udacity.meetyourdoctor.activities.SettingsActivity;
+import com.hanan.and.udacity.meetyourdoctor.activities.SignupActivity;
+
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EDIT_PROFILE;
 
 
 public class MoreFragment extends Fragment {
@@ -33,6 +37,8 @@ public class MoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_more, container, false);
+
+        //open settings activity
         LinearLayout settingsLayout = rootView.findViewById(R.id.settings_layout);
         settingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +47,28 @@ public class MoreFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        //open login activity
+        LinearLayout loginLayout = rootView.findViewById(R.id.login_layout);
+        loginLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //open profile Activity
+        LinearLayout profileLayout = rootView.findViewById(R.id.profile_layout);
+        profileLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SignupActivity.class);
+                intent.putExtra(EDIT_PROFILE, getContext().getResources().getString(R.string.edit_profile));
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 }

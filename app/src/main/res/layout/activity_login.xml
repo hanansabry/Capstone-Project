@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:text="(You must sign up first)"
+        android:text="(You must login first)"
         android:layout_gravity="center"/>
 
     <ImageView
@@ -61,7 +61,8 @@
             android:layout_height="wrap_content"
             android:hint="Email"
             android:textColor="@color/white"
-            app:backgroundTint="@color/secondaryLightColor" />
+            app:backgroundTint="@color/secondaryLightColor"
+            android:drawableLeft="@drawable/ic_email_white_24dp"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -80,7 +81,8 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:textColor="@color/white"
-            app:backgroundTint="@color/secondaryLightColor" />
+            app:backgroundTint="@color/secondaryLightColor"
+            android:drawableLeft="@drawable/ic_password_white_24dp"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -113,7 +115,8 @@
             android:background="@null"
             android:text="Sign up"
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="openSignupActivity"/>
     </LinearLayout>
 
     <FrameLayout

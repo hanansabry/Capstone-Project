@@ -60,15 +60,17 @@ public class MainActivity extends AppCompatActivity {
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.action_search:
                                 actionBar.setTitle(MOST_COMMON_SPECIALISTS);
                                 selectedFragment = SearchFragment.newInstance();
+                                transaction.replace(R.id.frame_layout, selectedFragment);
+                                transaction.commit();
                                 searchView.setVisibility(View.VISIBLE);
                                 searchViewEnabled = true;
                                 searchView.setSuggestions(getResources().getStringArray(R.array.specialists_suggestions));
-                                invalidateOptionsMenu();
                                 break;
                             case R.id.action_favourites:
                                 if(login){
@@ -79,25 +81,23 @@ public class MainActivity extends AppCompatActivity {
                                     actionBar.setTitle(FAVOURITE);
                                     selectedFragment = DoctorsFragment.newInstance();
                                     ((DoctorsFragment) selectedFragment).setDoctorsList(getDoctorsFavouriteList());
+                                    transaction.replace(R.id.frame_layout, selectedFragment);
+                                    transaction.commit();
                                     searchView.setVisibility(View.VISIBLE);
                                     searchViewEnabled = true;
                                     searchView.setSuggestions(getResources().getStringArray(R.array.doctors_suggestions));
-                                    invalidateOptionsMenu();
                                 }
                                 break;
                             case R.id.action_more:
                                 actionBar.setTitle(MORE);
                                 selectedFragment = MoreFragment.newInstance();
+                                transaction.replace(R.id.frame_layout, selectedFragment);
+                                transaction.commit();
                                 searchView.setVisibility(View.INVISIBLE);
                                 searchViewEnabled = false;
-                                invalidateOptionsMenu();
                                 break;
                         }
-                        if(!login) {
-                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.frame_layout, selectedFragment);
-                            transaction.commit();
-                        }
+                        invalidateOptionsMenu();
                         return true;
                     }
                 });

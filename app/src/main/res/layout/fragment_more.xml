@@ -102,7 +102,7 @@
             android:background="@android:color/darker_gray" />
 
         <LinearLayout
-            android:id="@+id/logout_layout"
+            android:id="@+id/login_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/line2"
@@ -121,15 +121,15 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/logout" />
+                android:src="@drawable/login" />
 
             <TextView
-                android:id="@+id/logout_tv"
+                android:id="@+id/login_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
-                android:text="@string/logout"
+                android:text="@string/login"
                 android:textColor="@color/secondaryLightColor"
                 android:textSize="16sp" />
         </LinearLayout>
