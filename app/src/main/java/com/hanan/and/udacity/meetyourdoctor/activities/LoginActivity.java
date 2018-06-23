@@ -9,9 +9,12 @@ import android.view.View;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
 
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.NOT_SIGNED;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SIGNIN;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private boolean notSigned;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +23,13 @@ public class LoginActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(SIGNIN);
+        getSupportActionBar().setTitle(getResources().getString(R.string.sign_in));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //check if the activity starts from favourties screen
+        if (getIntent().getExtras() != null) {
+            notSigned = getIntent().getBooleanExtra(NOT_SIGNED, false);
+        }
     }
 
     @Override
@@ -31,6 +39,21 @@ public class LoginActivity extends AppCompatActivity {
             onBackPressed(); // close this activity and return to preview activity (if there is any)
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (notSigned) {
+            finish();
+            startMainActivity();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    public void startMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     public void openSignupActivity(View view) {

@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">Doctor Online</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="search_action_string">البحث</string>
+    <string name="favourites_action_string">المفضلة</string>
+    <string name="more_action_string">المزيد</string>
+    <string name="search_title">بحث</string>
+    <string name="search_specialists">ابحث بالتخصص</string>
+    <string name="search_hint">ابحث باسم الطبيب</string>
+    <string name="call_now_str">اتصل الآن</string>
+    <string name="settings">اعدادات</string>
+    <string name="edit_profile">تعديل بياناتي</string>
+    <string name="choose_city">المدينة</string>
+    <string name="logout">خروج</string>
+    <string name="language">اللغة</string>
+    <string name="login">دخول</string>
+    <string name="login_first">يجب ان تسجل أولا</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="sign_in">دخول</string>
+    <string name="don_t_have_account">لا تملك حساب ؟</string>
+    <string name="sign_up">سجل الآن</string>
+    <string name="or">أو</string>
+    <string name="full_name">الاسم الكامل</string>
+    <string name="mobile_number">رقم الهاتف</string>
+    <string name="gender">النوع</string>
+    <string name="male">ذكر</string>
+    <string name="female">أنثى</string>
+    <string name="fees">سعر الكشف:</string>
+    <string name="address">العنوان:</string>
+    <string name="days">الأيام</string>
+    <string name="from">المواعيد</string>
+    <string name="amany_sabry">د.أماني صبري</string>
+    <string name="specialist_name">طب أطفال وحديثي ولادة</string>
+    <string name="patients_reviews">تقييمات المرضى</string>
+    <string name="about_the_doctor">معلومات عن الطبيب</string>
+    <string name="about_doctor_example">طب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادةطب أطفال وحديثي ولادة</string>
+    <string name="clinic_services">خدمات أخرى للعيادة:</string>
+    <string name="services_example">خدمة1، خدمة2، خدمة3</string>
+    <string name="save_button">حفظ</string>
+    <string name="most_common_specialists">أشهر التخصصات</string>
+    <string name="favourites">الدكاترة المفضلين لي</string>
+    <string name="arabic">عربي</string>
+    <string name="english">انجليزي</string>
+    <string name="continue_with_google">المتابعة بحساب جوجل</string>
+    <string name="continue_with_facebook">المتابعة بحساب الفيس بوك</string>
+    <string name="create_account_with_email">أنشأ حساب بايميلك الخاص</string>
+    <string name="already_a_member">لديك حساب؟</string>
+    <string name="skip">تخطى</string>
+
+    <string-array name="doctors_suggestions">
+        <item>دكتور 1</item>
+        <item>دكتور 2</item>
+        <item>دكتور 3</item>
+        <item>دكتور 4</item>
+        <item>دكتور 5</item>
+    </string-array>
+
+    <string-array name="city_list">
+        <item>سرس الليان</item>
+        <item>منوف</item>
+    </string-array>
+
+    <string-array name="language_list">
+        <item>عربي</item>
+        <item>انجليزي</item>
+    </string-array>
+</resources>

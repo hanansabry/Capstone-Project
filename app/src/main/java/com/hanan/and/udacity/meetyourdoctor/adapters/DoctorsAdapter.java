@@ -35,7 +35,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
 
     @Override
     public void onBindViewHolder(DoctorViewHolder holder, int position) {
-        holder.doctorName.setText(mDoctorsList.get(position));
+//        holder.doctorName.setText(mDoctorsList.get(position));
         holder.ratingBar.setRating(3f);
     }
 

@@ -25,10 +25,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.FAVOURITE;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.MORE;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.MOST_COMMON_SPECIALISTS;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SIGNIN;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.NOT_SIGNED;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.action_search:
-                                actionBar.setTitle(MOST_COMMON_SPECIALISTS);
+                                actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
                                 selectedFragment = SearchFragment.newInstance();
                                 transaction.replace(R.id.frame_layout, selectedFragment);
                                 transaction.commit();
@@ -74,11 +71,13 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.action_favourites:
                                 if(login){
+                                    finish();
                                     //start login activity
                                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                    intent.putExtra(NOT_SIGNED, true);
                                     startActivity(intent);
                                 }else {
-                                    actionBar.setTitle(FAVOURITE);
+                                    actionBar.setTitle(getResources().getString(R.string.favourites));
                                     selectedFragment = DoctorsFragment.newInstance();
                                     ((DoctorsFragment) selectedFragment).setDoctorsList(getDoctorsFavouriteList());
                                     transaction.replace(R.id.frame_layout, selectedFragment);
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 break;
                             case R.id.action_more:
-                                actionBar.setTitle(MORE);
+                                actionBar.setTitle(getResources().getString(R.string.more_action_string));
                                 selectedFragment = MoreFragment.newInstance();
                                 transaction.replace(R.id.frame_layout, selectedFragment);
                                 transaction.commit();
@@ -103,10 +102,11 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         //Manually displaying the first fragment - one time only
+        bottomNavigationView.getMenu().getItem(0).setChecked(true);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, SearchFragment.newInstance());
         transaction.commit();
-        actionBar.setTitle(MOST_COMMON_SPECIALISTS);
+        actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
         //------------------------------------------------------------------------------------------

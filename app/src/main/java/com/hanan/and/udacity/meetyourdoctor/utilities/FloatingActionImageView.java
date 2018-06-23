@@ -113,11 +113,6 @@ public class FloatingActionImageView extends FloatingActionButton {
         Bitmap result = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
-
-
-
-
-
         Canvas canvas = new Canvas(result);
 
         int color = Color.BLUE;
@@ -132,8 +127,6 @@ public class FloatingActionImageView extends FloatingActionButton {
 
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
-
-
 
         return result;
     }

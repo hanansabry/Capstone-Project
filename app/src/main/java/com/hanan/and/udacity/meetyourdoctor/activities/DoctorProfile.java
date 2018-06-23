@@ -20,7 +20,7 @@ public class DoctorProfile extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        initCollapsingToolbar("Dr.Amany Sabry");
+        initCollapsingToolbar(getResources().getString(R.string.amany_sabry));
 
         RatingBar ratingBar = findViewById(R.id.rating);
         ratingBar.setRating(3);

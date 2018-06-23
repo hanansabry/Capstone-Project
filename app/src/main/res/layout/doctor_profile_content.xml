@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="@color/white">
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,39 +20,39 @@
                 android:id="@+id/favourite_button"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_favorite_border_24dp"
                 android:layout_gravity="center|start"
-                android:background="?android:selectableItemBackground"
+                android:layout_marginEnd="24dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="24dp"/>
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/ic_favorite_border_24dp" />
 
             <ImageButton
                 android:id="@+id/call_button"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_call_black_24dp"
                 android:layout_gravity="center|start"
+                android:layout_toEndOf="@id/favourite_button"
                 android:background="?android:selectableItemBackground"
-                android:layout_toEndOf="@id/favourite_button"/>
+                android:src="@drawable/ic_call_black_24dp" />
 
             <!--<ImageView-->
-                <!--android:layout_width="48dp"-->
-                <!--android:layout_height="48dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:src="@drawable/ic_call_black_24dp"/>-->
+            <!--android:layout_width="48dp"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:src="@drawable/ic_call_black_24dp"/>-->
 
             <RatingBar
                 android:id="@+id/rating"
+                style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:numStars="5"
-                android:stepSize="1"
-                android:isIndicator="true"
-                android:progressTint="@color/yellow"
                 android:layout_alignParentEnd="true"
+                android:layout_gravity="center|end"
                 android:layout_margin="8dp"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_gravity="center|end" />
+                android:isIndicator="true"
+                android:numStars="5"
+                android:progressTint="@color/yellow"
+                android:stepSize="1" />
 
 
         </RelativeLayout>
@@ -72,54 +72,54 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/line1"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp" />
 
         <LinearLayout
             android:id="@+id/about_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/details">
+            android:layout_below="@id/details"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="About the doctor:"
-                android:padding="8dp"
                 android:background="@color/secondaryLightColor"
-                android:textColor="@color/white"/>
+                android:padding="8dp"
+                android:text="@string/about_the_doctor"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/about_doctor_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:textColor="@android:color/darker_gray"
-                android:text="Pediatrics and New Born Pediatrics and New Born Pediatrics and New Born Pediatrics and New Born Pediatrics and New Born Pediatrics and New Born Pediatrics and New Born"/>
+                android:text="@string/about_doctor_example"
+                android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/services_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/about_layout">
+            android:layout_below="@id/about_layout"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Clinic Services:"
-                android:padding="8dp"
                 android:background="@color/secondaryLightColor"
-                android:textColor="@color/white"/>
+                android:padding="8dp"
+                android:text="@string/clinic_services"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/services_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:textColor="@android:color/darker_gray"
-                android:text="Service1, Service2, Service3"/>
+                android:text="@string/services_example"
+                android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 
 

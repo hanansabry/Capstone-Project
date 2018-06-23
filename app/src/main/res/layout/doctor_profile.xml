@@ -36,7 +36,7 @@
                     android:id="@+id/love_music"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dr.Amany Sabry"
+                    android:text="@string/amany_sabry"
                     android:textColor="@android:color/white"
                     android:textSize="32sp"
                     android:textStyle="bold" />
@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pediatrics and New Born"
+                    android:text="@string/specialist_name"
                     android:textColor="@android:color/white"
                     android:textSize="20sp" />
 
@@ -85,8 +85,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/services_layout"
-        android:backgroundTint="@color/primaryLightColor"
-        android:text="Patients' Reviews"
+        android:background="@color/primaryColor"
+        android:text="@string/patients_reviews"
         android:textColor="@color/white"
         android:layout_gravity="bottom|end"
         android:fitsSystemWindows="true"/>

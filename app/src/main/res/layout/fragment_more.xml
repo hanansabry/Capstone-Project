@@ -1,13 +1,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         tools:context=".fragments.MoreFragment">
 
@@ -30,7 +30,7 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/ic_settings_24dp" />
+                android:src="@drawable/ic_settings_24dp"/>
 
             <TextView
                 android:id="@+id/settings_tv"
@@ -39,15 +39,9 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
                 android:text="@string/settings"
-                android:textColor="@color/secondaryLightColor"
+                android:textColor="@android:color/darker_gray"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@color/white"
-                android:gravity="right"
-                android:src="@android:drawable/arrow_down_float" />
         </LinearLayout>
 
         <View
@@ -87,8 +81,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
-                android:text="@string/profile"
-                android:textColor="@color/secondaryLightColor"
+                android:text="@string/edit_profile"
+                android:textColor="@android:color/darker_gray"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -121,7 +115,7 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/login" />
+                android:src="@drawable/login"/>
 
             <TextView
                 android:id="@+id/login_tv"
@@ -130,7 +124,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
                 android:text="@string/login"
-                android:textColor="@color/secondaryLightColor"
+                android:textColor="@android:color/darker_gray"
                 android:textSize="16sp" />
         </LinearLayout>
 

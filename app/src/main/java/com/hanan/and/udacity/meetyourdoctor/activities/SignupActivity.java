@@ -9,8 +9,6 @@ import android.widget.Button;
 import com.hanan.and.udacity.meetyourdoctor.R;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EDIT_PROFILE;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SIGNIN;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SIGNUP;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -25,10 +23,10 @@ public class SignupActivity extends AppCompatActivity {
 
         //if the activity opened from edit_profile button, set the activity title to "Edit Profile"
         if(getIntent().getStringExtra(EDIT_PROFILE)!=null){
-            getSupportActionBar().setTitle(getIntent().getStringExtra(EDIT_PROFILE));
-            ((Button)findViewById(R.id.signup_button)).setText("Save");
+            getSupportActionBar().setTitle(getResources().getString(R.string.edit_profile));
+            ((Button)findViewById(R.id.signup_button)).setText(getResources().getString(R.string.save_button));
         }else{
-            getSupportActionBar().setTitle(SIGNUP);
+            getSupportActionBar().setTitle(getResources().getString(R.string.sign_up));
         }
     }
 

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryColor">
+
+    <TextView
+        android:id="@+id/app_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="128dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_name_tv"
+        android:layout_centerInParent="true"
+        android:src="@drawable/stethoscope" />
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerInParent="true">-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/signup_skip_layout"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity=""-->
+            <!--android:layout_marginBottom="96dp"-->
+            <!--android:visibility="invisible">-->
+
+            <!--<Button-->
+                <!--android:id="@+id/signup_button"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="8dp"-->
+                <!--android:background="@color/secondaryLightColor"-->
+                <!--android:text="Sign up"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:onClick="openSignupActivity"/>-->
+
+            <!--<Button-->
+                <!--android:id="@+id/skip_button"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="8dp"-->
+                <!--android:background="@color/white"-->
+                <!--android:text="Skip"-->
+                <!--android:textColor="@color/secondaryLightColor"-->
+                <!--android:onClick="openMainActivity"/>-->
+        <!--</LinearLayout>-->
+
+        <!--<ProgressBar-->
+            <!--android:id="@+id/progress_bar"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center" />-->
+
+    <!--</FrameLayout>-->
+
+</RelativeLayout>
