@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,7 @@ import android.widget.TextView;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.fragments.DoctorsFragment;
+import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +25,23 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIS
  */
 
 public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.SpecialistViewHolder> {
-    Context mContext;
-    List<String> mSpecialistList;
+    private Context mContext;
+    private List<Specialist> mSpecialistList;
+    private SpecialistAdapterCallback mCallback;
 
-    public SpecialistsAdapter(Context context, List<String> specialistList) {
+    public interface SpecialistAdapterCallback{
+        void onSpecialistClick(int position);
+    }
+
+    public SpecialistsAdapter(Context context, List<Specialist> specialistList) {
         mContext = context;
         mSpecialistList = specialistList;
+    }
+
+    public SpecialistsAdapter(Context context,List<Specialist> specialistList, SpecialistAdapterCallback callback){
+        mContext = context;
+        mSpecialistList = specialistList;
+        mCallback = callback;
     }
 
     @Override
@@ -42,31 +52,9 @@ public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.
 
     @Override
     public void onBindViewHolder(SpecialistViewHolder holder, int position) {
-        if(position == 0){
-            holder.specialistIcon.setImageResource(R.drawable.ic_dermatology);
-        }else if(position == 1){
-            holder.specialistIcon.setImageResource(R.drawable.ic_dentistry);
-        }else if(position == 2){
-            holder.specialistIcon.setImageResource(R.drawable.ic_psychiatry);
-        }else if(position == 3){
-            holder.specialistIcon.setImageResource(R.drawable.ic_newborn);
-        }else if(position == 4){
-            holder.specialistIcon.setImageResource(R.drawable.ic_neurology);
-        }else if(position == 5){
-            holder.specialistIcon.setImageResource(R.drawable.ic_orthopedics);
-        }else if(position == 6){
-            holder.specialistIcon.setImageResource(R.drawable.ic_gynaecology);
-        }else if(position == 7){
-            holder.specialistIcon.setImageResource(R.drawable.ic_earnose);
-        }else if(position == 8){
-            holder.specialistIcon.setImageResource(R.drawable.ic_cardiology);
-        }else if(position == 9){
-            holder.specialistIcon.setImageResource(R.drawable.ic_allergy);
-        }
-
-
-
-        holder.specialistName.setText(mSpecialistList.get(position));
+        Specialist specialist = mSpecialistList.get(position);
+        holder.specialistName.setText(specialist.getSpecialistName());
+        holder.specialistIcon.setImageDrawable(specialist.getSpecialistImageDrawable());
     }
 
     @Override
@@ -74,7 +62,7 @@ public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.
         return mSpecialistList.size();
     }
 
-    class SpecialistViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class SpecialistViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView specialistIcon;
         TextView specialistName;
 
@@ -87,43 +75,20 @@ public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-            //add specialist name to the fragment arguments
-            Bundle bundle = new Bundle();
-            bundle.putString(SPECIALIST, mSpecialistList.get(position));
-            //initiate DoctorsFragment
-            DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
-            doctorsFragment.setArguments(bundle);
-            doctorsFragment.setDoctorsList(getDoctorsSpecialistList());
+            mCallback.onSpecialistClick(getAdapterPosition());
 
-            FragmentTransaction transaction = ((FragmentActivity)(mContext)).getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("search_fragment");
-            transaction.commit();
+//            int position = getAdapterPosition();
+//            //add specialist name to the fragment arguments
+//            Bundle bundle = new Bundle();
+//            bundle.putString(SPECIALIST, mSpecialistList.get(position).getSpecialistName());
+//            //initiate DoctorsFragment
+//            DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
+//            doctorsFragment.setArguments(bundle);
+//            doctorsFragment.setDoctorsList(getDoctorsSpecialistList());
+//
+//            FragmentTransaction transaction = ((FragmentActivity) (mContext)).getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("search_fragment");
+//            transaction.commit();
         }
-    }
-
-    public List<String> getDoctorsSpecialistList(){
-        List<String> doctors = new ArrayList();
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        return doctors;
     }
 }

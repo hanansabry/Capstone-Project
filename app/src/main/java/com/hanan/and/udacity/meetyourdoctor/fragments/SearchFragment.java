@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,12 +17,18 @@ import android.view.ViewGroup;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.adapters.SpecialistsAdapter;
+import com.hanan.and.udacity.meetyourdoctor.data.SpecialistsRetrieval;
+import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
 
-public class SearchFragment extends Fragment {
+
+public class SearchFragment extends Fragment implements SpecialistsAdapter.SpecialistAdapterCallback {
+    private List<Specialist> specialists;
+    private ActionBar actionBar;
 
     public static SearchFragment newInstance() {
         SearchFragment fragment = new SearchFragment();
@@ -34,6 +43,9 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
@@ -43,27 +55,30 @@ public class SearchFragment extends Fragment {
 
         specialistRecyclerView.setLayoutManager(layoutManager);
         specialistRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        //get Specialist list
+        specialists = new SpecialistsRetrieval(getContext()).getSpecialists();
+
         //fill the recycler view with data
-        SpecialistsAdapter specialistsAdapter = new SpecialistsAdapter(getContext(), getSpecialists());
+        SpecialistsAdapter specialistsAdapter = new SpecialistsAdapter(getContext(), specialists, this);
         specialistRecyclerView.setAdapter(specialistsAdapter);
         return rootView;
     }
 
-    //fake date for the specialist list
-    public List<String> getSpecialists(){
-        List<String> specialistList = new ArrayList();
+    @Override
+    public void onSpecialistClick(int position) {
+        Specialist specialist = specialists.get(position);
+        String specialistName = specialist.getSpecialistName();
+        actionBar.setTitle(specialistName);
 
-        specialistList.add("Dermatology");
-        specialistList.add("Dentistry");
-        specialistList.add("Psychiatry");
-        specialistList.add("Pediatrics and New Born");
-        specialistList.add("Neurology");
-        specialistList.add("Orthopedics");
-        specialistList.add("Gynaecology and Infertility");
-        specialistList.add("Ear, Nose and Throat");
-        specialistList.add("Cardiology and Vascular Disease");
-        specialistList.add("Allergy and Immunology");
+        //create bundle to pass specialist object to doctors fragment
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SPECIALIST, specialist);
+        //initiate DoctorsFragment
+        DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
 
-        return specialistList;
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("search_fragment");
+        transaction.commit();
     }
 }

@@ -69,6 +69,7 @@
             <include layout="@layout/doctor_details_layout"/>
 
             <Button
+                android:id="@+id/call_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@color/primaryColor"

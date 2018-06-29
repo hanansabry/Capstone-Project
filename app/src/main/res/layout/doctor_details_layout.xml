@@ -19,7 +19,7 @@
         android:textColor="@android:color/darker_gray" />
 
     <TextView
-        android:id="@+id/location_tv"
+        android:id="@+id/address_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"

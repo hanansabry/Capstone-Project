@@ -14,7 +14,6 @@
         android:id="@+id/specialist_icon"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:src="@drawable/ic_dermatology"
         android:layout_gravity="center"
         android:adjustViewBounds="true"/>
 

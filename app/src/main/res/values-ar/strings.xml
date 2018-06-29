@@ -66,4 +66,17 @@
         <item>عربي</item>
         <item>انجليزي</item>
     </string-array>
+
+    <string-array name="specialists">
+        <item>جلدية</item>
+        <item>أسنان</item>
+        <item>نفسي وعصبي</item>
+        <item>أطفال وحديثي ولادة</item>
+        <item>مخ وأعصاب</item>
+        <item>عظام</item>
+        <item>نساء وولادة</item>
+        <item>أنف وأذن وحنجرة</item>
+        <item>قلب وأوعية دموية</item>
+        <item>حساسية ومناعة</item>
+    </string-array>
 </resources>

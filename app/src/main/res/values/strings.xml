@@ -75,4 +75,31 @@
         <item>Arabic</item>
         <item>English</item>
     </string-array>
+
+    <string-array name="specialists">
+        <item>Dermatology</item>
+        <item>Dentistry</item>
+        <item>Psychiatry</item>
+        <item>Pediatrics and New Born</item>
+        <item>Neurology</item>
+        <item>Orthopedics</item>
+        <item>Gynaecology and Infertility</item>
+        <item>Ear, Nose and Throat</item>
+        <item>Cardiology and Vascular Disease</item>
+        <item>Allergy and Immunology</item>
+    </string-array>
+
+    <integer-array name="specialists_icons">
+        <item>@drawable/ic_dermatology</item>
+        <item>@drawable/ic_dentistry</item>
+        <item>@drawable/ic_psychiatry</item>
+        <item>@drawable/ic_newborn</item>
+        <item>@drawable/ic_neurology</item>
+        <item>@drawable/ic_orthopedics</item>
+        <item>@drawable/ic_gynaecology</item>
+        <item>@drawable/ic_earnose</item>
+        <item>@drawable/ic_cardiology</item>
+        <item>@drawable/ic_allergy</item>
+    </integer-array>
+
 </resources>

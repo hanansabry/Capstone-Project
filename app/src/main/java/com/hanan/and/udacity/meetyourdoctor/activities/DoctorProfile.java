@@ -1,16 +1,26 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
+import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
+import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
+
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTOR;
 
 public class DoctorProfile extends AppCompatActivity {
+    private Doctor doctor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +32,42 @@ public class DoctorProfile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initCollapsingToolbar(getResources().getString(R.string.amany_sabry));
 
+        //get doctor object from activity intent
+        if(getIntent().getParcelableExtra(DOCTOR) != null){
+            doctor = getIntent().getParcelableExtra(DOCTOR);
+        }
+
+        TextView doctorName = findViewById(R.id.doctor_name);
+        TextView doctorSpecialist = findViewById(R.id.doctor_specialist);
+        TextView fees = findViewById(R.id.fees_tv);
+        TextView address = findViewById(R.id.address_tv);
+        TextView days = findViewById(R.id.days_tv);
+        TextView times = findViewById(R.id.times_tv);
         RatingBar ratingBar = findViewById(R.id.rating);
-        ratingBar.setRating(3);
+
+        doctorName.setText(doctor.getDoctorName());
+        doctorSpecialist.setText(doctor.getSpecialist());
+        fees.setText(doctor.getFees());
+        address.setText(doctor.getAddress());
+        days.setText(doctor.getClinicDays());
+        times.setText(doctor.getClinicTimes());
+        ratingBar.setRating(doctor.getRating());
+
+        ImageButton call = findViewById(R.id.call_button);
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DoctorProfile.this, "Call now on this number : 01034344829", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ImageButton favourite = findViewById(R.id.favourite_button);
+        favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DoctorProfile.this, "Added to Favourites", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -62,5 +106,11 @@ public class DoctorProfile extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void openPatientsReviewsActivity(View view) {
+        Intent intent = new Intent(this, ReviewsActivity.class);
+        startActivity(intent);
+        overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
     }
 }

@@ -33,7 +33,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/love_music"
+                    android:id="@+id/doctor_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/amany_sabry"
@@ -42,6 +42,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/doctor_specialist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/specialist_name"
@@ -89,7 +90,8 @@
         android:text="@string/patients_reviews"
         android:textColor="@color/white"
         android:layout_gravity="bottom|end"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true"
+        android:onClick="openPatientsReviewsActivity"/>
 
     <!--<RatingBar-->
         <!--android:id="@+id/rating"-->

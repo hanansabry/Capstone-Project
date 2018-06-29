@@ -34,8 +34,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.StartScreen"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.StartScreen"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.ReviewsActivity"></activity>
     </application>
 
 </manifest>

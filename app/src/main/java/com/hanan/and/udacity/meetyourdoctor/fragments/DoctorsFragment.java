@@ -17,6 +17,9 @@ import android.view.ViewGroup;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.adapters.DoctorsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.adapters.SpecialistsAdapter;
+import com.hanan.and.udacity.meetyourdoctor.data.DoctorsRetrieval;
+import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
+import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
 import com.hanan.and.udacity.meetyourdoctor.utilities.GridSpacingItemDecoration;
 import com.hanan.and.udacity.meetyourdoctor.utilities.MyDividerItemDecoration;
 
@@ -29,8 +32,8 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIS
  * A simple {@link Fragment} subclass.
  */
 public class DoctorsFragment extends Fragment {
-    List<String> doctors;
-    String currentSpecialist;
+    List<Doctor> doctors;
+    private Specialist currentSpcialist;
 
     public static DoctorsFragment newInstance() {
         DoctorsFragment fragment = new DoctorsFragment();
@@ -40,9 +43,18 @@ public class DoctorsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(getArguments() != null){
-            currentSpecialist = getArguments().getString(SPECIALIST);
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(currentSpecialist);
+
+        //get specialist argument else we are in favourite doctors fragment
+        if(getArguments()!=null){
+            currentSpcialist = getArguments().getParcelable(SPECIALIST);
+        }
+
+        //get doctors list
+        DoctorsRetrieval retrieval = new DoctorsRetrieval();
+        if(currentSpcialist == null){
+            doctors = retrieval.getFavouriteDoctors();
+        }else{
+            doctors = retrieval.getDoctorsBySpecialist(currentSpcialist.getSpecialistId());
         }
 
         // Inflate the layout for this fragment
@@ -55,16 +67,8 @@ public class DoctorsFragment extends Fragment {
         doctorsRecyclerView.setLayoutManager(layoutManager);
         doctorsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //fill the recycler view with data
-        DoctorsAdapter doctorsAdapter = new DoctorsAdapter(getContext(), getDoctorsList());
+        DoctorsAdapter doctorsAdapter = new DoctorsAdapter(getContext(), doctors);
         doctorsRecyclerView.setAdapter(doctorsAdapter);
         return rootView;
-    }
-
-    public void setDoctorsList(List<String> doctors){
-        this.doctors = doctors;
-    }
-
-    public List<String> getDoctorsList(){
-        return doctors;
     }
 }

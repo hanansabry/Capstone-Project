@@ -45,9 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
-//        collapsingToolbar = findViewById(R.id.collapsing_toolbar);
-//        initCollapsingToolbar();
-//        ------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         //initiate the SearchView
         initiateSearchView();
         //------------------------------------------------------------------------------------------
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                 searchView.setSuggestions(getResources().getStringArray(R.array.specialists_suggestions));
                                 break;
                             case R.id.action_favourites:
-                                if(login){
+                                if(!login){
                                     finish();
                                     //start login activity
                                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -79,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                                 }else {
                                     actionBar.setTitle(getResources().getString(R.string.favourites));
                                     selectedFragment = DoctorsFragment.newInstance();
-                                    ((DoctorsFragment) selectedFragment).setDoctorsList(getDoctorsFavouriteList());
                                     transaction.replace(R.id.frame_layout, selectedFragment);
                                     transaction.commit();
                                     searchView.setVisibility(View.VISIBLE);
@@ -160,52 +157,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSearchViewShown() {
                 Toast.makeText(MainActivity.this, "SearchView is shown", Toast.LENGTH_SHORT).show();
-//                collapsingToolbar.setCollapsedTitleTextColor(Color.TRANSPARENT);
             }
 
             @Override
             public void onSearchViewClosed() {
                 Toast.makeText(MainActivity.this, "SearchView is closed", Toast.LENGTH_SHORT).show();
-//                collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
             }
         });
-    }
-
-    /**
-     * Initializing collapsing toolbar
-     * Will show and hide the toolbar title on scroll
-     */
-    private void initCollapsingToolbar() {
-        collapsingToolbar.setTitle(" ");
-        AppBarLayout appBarLayout = findViewById(R.id.appbar);
-        appBarLayout.setExpanded(true);
-
-        // hiding & showing the title when toolbar expanded & collapsed
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(getString(R.string.app_name));
-                    isShow = true;
-                } else if (isShow) {
-                    collapsingToolbar.setTitle(" ");
-                    isShow = false;
-                }
-            }
-        });
-    }
-
-    //fake doctors list
-    public List<String> getDoctorsFavouriteList(){
-        List<String> doctors = new ArrayList();
-        doctors.add("Amany Sabry");
-        doctors.add("Amany Sabry");
-        return doctors;
     }
 }
