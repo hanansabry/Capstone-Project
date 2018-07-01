@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "481201373960",
+    "firebase_url": "https://doctor-online-d16a3.firebaseio.com",
+    "project_id": "doctor-online-d16a3",
+    "storage_bucket": "doctor-online-d16a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481201373960:android:83e4eb0bd2c356c0",
+        "android_client_info": {
+          "package_name": "com.hanan.and.udacity.meetyourdoctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "481201373960-eq8ba9a5tkgor8j14a942ommg3ghrp6i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hanan.and.udacity.meetyourdoctor",
+            "certificate_hash": "b0dd7b76c1430d122f588f4a62e6d9c97a2afca4"
+          }
+        },
+        {
+          "client_id": "481201373960-notouj153roe1e6bovv4quefjfjrp0ka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP-OYKUJB6g7aafa7j49QZgoRb7mb2VUs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "481201373960-notouj153roe1e6bovv4quefjfjrp0ka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

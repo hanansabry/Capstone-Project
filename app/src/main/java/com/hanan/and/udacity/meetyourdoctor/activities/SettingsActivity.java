@@ -20,7 +20,9 @@ import com.hanan.and.udacity.meetyourdoctor.R;
 
 import java.util.Locale;
 
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.AR_LOCALE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ENGLISH;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EN_LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SETTINGS;
 
@@ -51,10 +53,10 @@ public class SettingsActivity extends AppCompatActivity {
         languageSpinner.setAdapter(languageAdapter);
 //        languageSpinner.setSelection(0, false);
         String locale = getResources().getConfiguration().locale.getDisplayLanguage();
-        if (locale.equals(getResources().getString(R.string.english))) {
-            languageSpinner.setSelection(1, false);
-        } else if (locale.equals(getResources().getString(R.string.arabic))) {
+        if (locale.equals(ARABIC)) {
             languageSpinner.setSelection(2, false);
+        } else  if (locale.equals(ENGLISH)) {
+            languageSpinner.setSelection(1, false);
         }
 
 

@@ -1,29 +1,21 @@
 package com.hanan.and.udacity.meetyourdoctor.fragments;
 
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.adapters.DoctorsAdapter;
-import com.hanan.and.udacity.meetyourdoctor.adapters.SpecialistsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.data.DoctorsRetrieval;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
-import com.hanan.and.udacity.meetyourdoctor.utilities.GridSpacingItemDecoration;
-import com.hanan.and.udacity.meetyourdoctor.utilities.MyDividerItemDecoration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
@@ -33,7 +25,7 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIS
  */
 public class DoctorsFragment extends Fragment {
     List<Doctor> doctors;
-    private Specialist currentSpcialist;
+    private Specialist currentSpecialist;
 
     public static DoctorsFragment newInstance() {
         DoctorsFragment fragment = new DoctorsFragment();
@@ -46,15 +38,15 @@ public class DoctorsFragment extends Fragment {
 
         //get specialist argument else we are in favourite doctors fragment
         if(getArguments()!=null){
-            currentSpcialist = getArguments().getParcelable(SPECIALIST);
+            currentSpecialist = getArguments().getParcelable(SPECIALIST);
         }
 
         //get doctors list
         DoctorsRetrieval retrieval = new DoctorsRetrieval();
-        if(currentSpcialist == null){
+        if(currentSpecialist == null){
             doctors = retrieval.getFavouriteDoctors();
         }else{
-            doctors = retrieval.getDoctorsBySpecialist(currentSpcialist.getSpecialistId());
+            doctors = retrieval.getDoctorsBySpecialist(currentSpecialist.getId());
         }
 
         // Inflate the layout for this fragment

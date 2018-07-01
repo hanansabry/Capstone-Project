@@ -16,7 +16,7 @@ public class DoctorsRetrieval {
         this.context = context;
     }
 
-    public List<Doctor> getDoctorsBySpecialist(int specialistId){
+    public List<Doctor> getDoctorsBySpecialist(String specialistName){
         return getDoctors();
     }
 

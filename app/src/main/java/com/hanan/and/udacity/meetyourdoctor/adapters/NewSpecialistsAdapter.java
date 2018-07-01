@@ -1,9 +1,6 @@
 package com.hanan.and.udacity.meetyourdoctor.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,37 +8,33 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hanan.and.udacity.meetyourdoctor.R;
-import com.hanan.and.udacity.meetyourdoctor.fragments.DoctorsFragment;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
 
 /**
  * Created by Nono on 6/11/2018.
  */
 
-public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.SpecialistViewHolder> {
+public class NewSpecialistsAdapter extends RecyclerView.Adapter<NewSpecialistsAdapter.SpecialistViewHolder> {
     private Context mContext;
     private List<Specialist> mSpecialistList;
     private SpecialistAdapterCallback mCallback;
+    String mLocale;
 
-    public interface SpecialistAdapterCallback{
+    public interface SpecialistAdapterCallback {
         void onSpecialistClick(int position);
     }
 
-    public SpecialistsAdapter(Context context, List<Specialist> specialistList) {
-        mContext = context;
-        mSpecialistList = specialistList;
-    }
-
-    public SpecialistsAdapter(Context context,List<Specialist> specialistList, SpecialistAdapterCallback callback){
+    public NewSpecialistsAdapter(Context context, List<Specialist> specialistList, String locale, SpecialistAdapterCallback callback) {
         mContext = context;
         mSpecialistList = specialistList;
         mCallback = callback;
+        mLocale = locale;
     }
 
     @Override
@@ -53,8 +46,15 @@ public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.
     @Override
     public void onBindViewHolder(SpecialistViewHolder holder, int position) {
         Specialist specialist = mSpecialistList.get(position);
-        holder.specialistName.setText(specialist.getSpecialistName());
-        holder.specialistIcon.setImageDrawable(specialist.getSpecialistImageDrawable());
+        if(mLocale.equals(ARABIC)){
+            holder.specialistName.setText(specialist.getNameAr());
+        }else {
+            holder.specialistName.setText(specialist.getName());
+        }
+        Glide.with(mContext).load(specialist.getIconUrl())
+                .placeholder(R.drawable.dermatology)
+                .into(holder.specialistIcon);
+//        holder.specialistIcon.setImageDrawable(specialistOld.getSpecialistImageDrawable());
     }
 
     @Override
@@ -80,7 +80,7 @@ public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.
 //            int position = getAdapterPosition();
 //            //add specialist name to the fragment arguments
 //            Bundle bundle = new Bundle();
-//            bundle.putString(SPECIALIST, mSpecialistList.get(position).getSpecialistName());
+//            bundle.putString(SPECIALIST, mSpecialistOldList.get(position).getSpecialistName());
 //            //initiate DoctorsFragment
 //            DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
 //            doctorsFragment.setArguments(bundle);

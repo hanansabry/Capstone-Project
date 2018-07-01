@@ -9,4 +9,6 @@ public class Constants {
     public static final String AR_LOCALE = "ar";
     public static final String EN_LOCALE = "en";
     public static final String NOT_SIGNED= "login";
+    public static final String ARABIC = "Arabic";
+    public static final String ENGLISH = "English";
 }

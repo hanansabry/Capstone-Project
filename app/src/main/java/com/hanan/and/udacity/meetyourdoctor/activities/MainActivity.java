@@ -1,8 +1,7 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -11,30 +10,36 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.fragments.DoctorsFragment;
 import com.hanan.and.udacity.meetyourdoctor.fragments.MoreFragment;
 import com.hanan.and.udacity.meetyourdoctor.fragments.SearchFragment;
+import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.NOT_SIGNED;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private MaterialSearchView searchView;
     private CollapsingToolbarLayout collapsingToolbar;
     private Toolbar toolbar;
     private boolean searchViewEnabled = true;
     private ActionBar actionBar;
     private boolean login = true;
+
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,21 +73,13 @@ public class MainActivity extends AppCompatActivity {
                                 searchView.setSuggestions(getResources().getStringArray(R.array.specialists_suggestions));
                                 break;
                             case R.id.action_favourites:
-                                if(!login){
-                                    finish();
-                                    //start login activity
-                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                    intent.putExtra(NOT_SIGNED, true);
-                                    startActivity(intent);
-                                }else {
-                                    actionBar.setTitle(getResources().getString(R.string.favourites));
-                                    selectedFragment = DoctorsFragment.newInstance();
-                                    transaction.replace(R.id.frame_layout, selectedFragment);
-                                    transaction.commit();
-                                    searchView.setVisibility(View.VISIBLE);
-                                    searchViewEnabled = true;
-                                    searchView.setSuggestions(getResources().getStringArray(R.array.doctors_suggestions));
-                                }
+                                actionBar.setTitle(getResources().getString(R.string.favourites));
+                                selectedFragment = DoctorsFragment.newInstance();
+                                transaction.replace(R.id.frame_layout, selectedFragment);
+                                transaction.commit();
+                                searchView.setVisibility(View.VISIBLE);
+                                searchViewEnabled = true;
+                                searchView.setSuggestions(getResources().getStringArray(R.array.doctors_suggestions));
                                 break;
                             case R.id.action_more:
                                 actionBar.setTitle(getResources().getString(R.string.more_action_string));
@@ -116,9 +113,9 @@ public class MainActivity extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.action_search);
         searchView.setMenuItem(searchItem);
 
-        if(searchViewEnabled){
+        if (searchViewEnabled) {
             searchItem.setVisible(true);
-        }else{
+        } else {
             searchItem.setVisible(false);
         }
         return true;
@@ -126,16 +123,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(searchView.isSearchOpen()){
+        if (searchView.isSearchOpen()) {
             searchView.closeSearch();
-        }else if(getFragmentManager().getBackStackEntryCount() > 0){
+        } else if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
 
-    public void initiateSearchView(){
+    public void initiateSearchView() {
         searchView = findViewById(R.id.search_view);
         searchView.setEllipsize(true);
         searchView.setVoiceSearch(true);

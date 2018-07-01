@@ -1,39 +1,31 @@
 package com.hanan.and.udacity.meetyourdoctor.model;
 
-import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Specialist implements Parcelable{
-    
-    private int specialistId;
-    private String specialistName;
-    private String specialistDesc;
-    private Drawable specialistImageDrawable;
+    private String id;
+    private String name;
+    private String nameAr;
+    private String desc;
+    private String iconUrl;
 
-    public Specialist(int specialistId, String specialistName, String specialistDesc, Drawable specialistImageDrawable){
-        this.specialistId = specialistId;
-        this.specialistName = specialistName;
-        this.specialistDesc = specialistDesc;
-        this.specialistImageDrawable = specialistImageDrawable;
+    public Specialist() {
+    }
+
+    public Specialist(String name, String nameAr, String desc, String iconUrl) {
+        this.name = name;
+        this.nameAr = nameAr;
+        this.desc = desc;
+        this.iconUrl = iconUrl;
     }
 
     protected Specialist(Parcel in) {
-        specialistId = in.readInt();
-        specialistName = in.readString();
-        specialistDesc = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(specialistId);
-        dest.writeString(specialistName);
-        dest.writeString(specialistDesc);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        name = in.readString();
+        nameAr = in.readString();
+        desc = in.readString();
+        iconUrl = in.readString();
+        id = in.readString();
     }
 
     public static final Creator<Specialist> CREATOR = new Creator<Specialist>() {
@@ -48,35 +40,57 @@ public class Specialist implements Parcelable{
         }
     };
 
-    public int getSpecialistId() {
-        return specialistId;
+    public String getName() {
+        return name;
     }
 
-    public void setSpecialistId(int specialistId) {
-        this.specialistId = specialistId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSpecialistName() {
-        return specialistName;
+    public String getNameAr() {
+        return nameAr;
     }
 
-    public void setSpecialistName(String specialistName) {
-        this.specialistName = specialistName;
+    public void setNameAr(String nameAr) {
+        this.nameAr = nameAr;
     }
 
-    public String getSpecialistDesc() {
-        return specialistDesc;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setSpecialistDesc(String specialistDesc) {
-        this.specialistDesc = specialistDesc;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public Drawable getSpecialistImageDrawable() {
-        return specialistImageDrawable;
+    public String getIconUrl() {
+        return iconUrl;
     }
 
-    public void setSpecialistImageDrawable(Drawable specialistImageDrawable) {
-        this.specialistImageDrawable = specialistImageDrawable;
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(nameAr);
+        dest.writeString(desc);
+        dest.writeString(iconUrl);
+        dest.writeString(id);
     }
 }
