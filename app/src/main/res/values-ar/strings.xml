@@ -12,7 +12,7 @@
     <string name="settings">اعدادات</string>
     <string name="edit_profile">تعديل بياناتي</string>
     <string name="choose_city">المدينة</string>
-    <string name="logout">خروج</string>
+    <string name="logout">خروج (%1$s)</string>
     <string name="language">اللغة</string>
     <string name="login">دخول</string>
     <string name="login_first">يجب ان تسجل أولا</string>

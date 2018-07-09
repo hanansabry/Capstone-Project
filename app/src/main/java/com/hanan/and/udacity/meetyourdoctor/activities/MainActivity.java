@@ -1,5 +1,7 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -28,6 +30,10 @@ import com.hanan.and.udacity.meetyourdoctor.fragments.SearchFragment;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ANONYMOUS;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.NOT_SIGNED;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -36,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private boolean searchViewEnabled = true;
     private ActionBar actionBar;
-    private boolean login = true;
+    private boolean isSigned = false;
+    private String user;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -54,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
         //initiate the SearchView
         initiateSearchView();
         //------------------------------------------------------------------------------------------
+        //check if the user is signed
+        if (getUser().equals(ANONYMOUS)) {
+            isSigned = false;
+        } else {
+            isSigned = true;
+        }
+        //------------------------------------------------------------------------------------------
         //setup the Bottom Navigation View
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener
@@ -66,20 +80,29 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.action_search:
                                 actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
                                 selectedFragment = SearchFragment.newInstance();
-                                transaction.replace(R.id.frame_layout, selectedFragment);
+                                transaction.replace(R.id.frame_layout, selectedFragment, "specialist");
                                 transaction.commit();
                                 searchView.setVisibility(View.VISIBLE);
                                 searchViewEnabled = true;
                                 searchView.setSuggestions(getResources().getStringArray(R.array.specialists_suggestions));
                                 break;
                             case R.id.action_favourites:
-                                actionBar.setTitle(getResources().getString(R.string.favourites));
-                                selectedFragment = DoctorsFragment.newInstance();
-                                transaction.replace(R.id.frame_layout, selectedFragment);
-                                transaction.commit();
-                                searchView.setVisibility(View.VISIBLE);
-                                searchViewEnabled = true;
-                                searchView.setSuggestions(getResources().getStringArray(R.array.doctors_suggestions));
+                                if (isSigned) {
+                                    //if the user is signed start favourites doctors screen
+                                    actionBar.setTitle(getResources().getString(R.string.favourites));
+                                    selectedFragment = DoctorsFragment.newInstance();
+                                    transaction.replace(R.id.frame_layout, selectedFragment);
+                                    transaction.commit();
+                                    searchView.setVisibility(View.VISIBLE);
+                                    searchViewEnabled = true;
+                                    searchView.setSuggestions(getResources().getStringArray(R.array.doctors_suggestions));
+                                } else {
+                                    finish();
+                                    //start login activity
+                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                    intent.putExtra(NOT_SIGNED, true);
+                                    startActivity(intent);
+                                }
                                 break;
                             case R.id.action_more:
                                 actionBar.setTitle(getResources().getString(R.string.more_action_string));
@@ -161,5 +184,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "SearchView is closed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private String getUser() {
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(
+                getResources().getString(R.string.pref_file), 0);
+        return preferences.getString(USER, ANONYMOUS);
     }
 }

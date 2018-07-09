@@ -5,61 +5,35 @@ import android.os.Parcelable;
 
 public class Doctor implements Parcelable{
 
-    private int doctorId;
-    private String doctorName;
-    private String specialist;
+    private String id;
+    private String name;
+    private Specialist specialist;
     private String study;
     private String fees;
-    private String clinicDays;
-    private String clinicTimes;
+    private String days;
+    private String times;
     private String address;
-    private String langitude;
-    private String latitiude;
-    private String[] clinicServices;
+    private String services;
     private String city;
-    private String profilePicture;
+    private String photoUrl;
     private float rating;
 
-    public Doctor(){}
+    public Doctor() {
+    }
 
     protected Doctor(Parcel in) {
-        doctorId = in.readInt();
-        doctorName = in.readString();
-        specialist = in.readString();
+        id = in.readString();
+        name = in.readString();
+        specialist = in.readParcelable(Specialist.class.getClassLoader());
         study = in.readString();
         fees = in.readString();
-        clinicDays = in.readString();
-        clinicTimes = in.readString();
+        days = in.readString();
+        times = in.readString();
         address = in.readString();
-        langitude = in.readString();
-        latitiude = in.readString();
-        clinicServices = in.createStringArray();
+        services = in.readString();
         city = in.readString();
-        profilePicture = in.readString();
+        photoUrl = in.readString();
         rating = in.readFloat();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(doctorId);
-        dest.writeString(doctorName);
-        dest.writeString(specialist);
-        dest.writeString(study);
-        dest.writeString(fees);
-        dest.writeString(clinicDays);
-        dest.writeString(clinicTimes);
-        dest.writeString(address);
-        dest.writeString(langitude);
-        dest.writeString(latitiude);
-        dest.writeStringArray(clinicServices);
-        dest.writeString(city);
-        dest.writeString(profilePicture);
-        dest.writeFloat(rating);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<Doctor> CREATOR = new Creator<Doctor>() {
@@ -74,27 +48,27 @@ public class Doctor implements Parcelable{
         }
     };
 
-    public int getDoctorId() {
-        return doctorId;
+    public String getId() {
+        return id;
     }
 
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getDoctorName() {
-        return doctorName;
+    public String getName() {
+        return name;
     }
 
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSpecialist() {
+    public Specialist getSpecialist() {
         return specialist;
     }
 
-    public void setSpecialist(String specialist) {
+    public void setSpecialist(Specialist specialist) {
         this.specialist = specialist;
     }
 
@@ -114,12 +88,20 @@ public class Doctor implements Parcelable{
         this.fees = fees;
     }
 
-    public String getClinicTimes() {
-        return clinicTimes;
+    public String getDays() {
+        return days;
     }
 
-    public void setClinicTimes(String clinicTimes) {
-        this.clinicTimes = clinicTimes;
+    public void setDays(String days) {
+        this.days = days;
+    }
+
+    public String getTimes() {
+        return times;
+    }
+
+    public void setTimes(String times) {
+        this.times = times;
     }
 
     public String getAddress() {
@@ -130,28 +112,12 @@ public class Doctor implements Parcelable{
         this.address = address;
     }
 
-    public String getLangitude() {
-        return langitude;
+    public String getServices() {
+        return services;
     }
 
-    public void setLangitude(String langitude) {
-        this.langitude = langitude;
-    }
-
-    public String getLatitiude() {
-        return latitiude;
-    }
-
-    public void setLatitiude(String latitiude) {
-        this.latitiude = latitiude;
-    }
-
-    public String[] getClinicServices() {
-        return clinicServices;
-    }
-
-    public void setClinicServices(String[] clinicServices) {
-        this.clinicServices = clinicServices;
+    public void setServices(String services) {
+        this.services = services;
     }
 
     public String getCity() {
@@ -162,12 +128,12 @@ public class Doctor implements Parcelable{
         this.city = city;
     }
 
-    public String getProfilePicture() {
-        return profilePicture;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public float getRating() {
@@ -178,11 +144,24 @@ public class Doctor implements Parcelable{
         this.rating = rating;
     }
 
-    public String getClinicDays() {
-        return clinicDays;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setClinicDays(String clinicDays) {
-        this.clinicDays = clinicDays;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeParcelable(specialist, flags);
+        dest.writeString(study);
+        dest.writeString(fees);
+        dest.writeString(days);
+        dest.writeString(times);
+        dest.writeString(address);
+        dest.writeString(services);
+        dest.writeString(city);
+        dest.writeString(photoUrl);
+        dest.writeFloat(rating);
     }
 }

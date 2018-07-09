@@ -1,6 +1,7 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -20,15 +21,18 @@ import com.hanan.and.udacity.meetyourdoctor.R;
 
 import java.util.Locale;
 
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ANONYMOUS;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.AR_LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ENGLISH;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EN_LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SETTINGS;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    boolean isUserInteraction;
+    private boolean isUserInteraction;
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +57,10 @@ public class SettingsActivity extends AppCompatActivity {
         languageSpinner.setAdapter(languageAdapter);
 //        languageSpinner.setSelection(0, false);
         String locale = getResources().getConfiguration().locale.getDisplayLanguage();
-        if (locale.equals(ARABIC)) {
-            languageSpinner.setSelection(2, false);
-        } else  if (locale.equals(ENGLISH)) {
+        if (locale.equals(getResources().getString(R.string.english))) {
             languageSpinner.setSelection(1, false);
+        } else if (locale.equals(getResources().getString(R.string.arabic))) {
+            languageSpinner.setSelection(2, false);
         }
 
 
@@ -113,16 +117,10 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             resources.updateConfiguration(configuration, displayMetrics);
         }
-//        recreate();
-//        Intent refresh = new Intent(this, SplashScreen.class);
-//        startActivity(refresh);
-//        finish();
 
         Intent i = getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(getBaseContext().getPackageName());
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
-
     }
-
-}
+    }

@@ -20,21 +20,19 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
  * Created by Nono on 6/11/2018.
  */
 
-public class NewSpecialistsAdapter extends RecyclerView.Adapter<NewSpecialistsAdapter.SpecialistViewHolder> {
+public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.SpecialistViewHolder> {
     private Context mContext;
     private List<Specialist> mSpecialistList;
     private SpecialistAdapterCallback mCallback;
-    String mLocale;
 
     public interface SpecialistAdapterCallback {
         void onSpecialistClick(int position);
     }
 
-    public NewSpecialistsAdapter(Context context, List<Specialist> specialistList, String locale, SpecialistAdapterCallback callback) {
+    public SpecialistsAdapter(Context context, List<Specialist> specialistList, SpecialistAdapterCallback callback) {
         mContext = context;
         mSpecialistList = specialistList;
         mCallback = callback;
-        mLocale = locale;
     }
 
     @Override
@@ -46,15 +44,10 @@ public class NewSpecialistsAdapter extends RecyclerView.Adapter<NewSpecialistsAd
     @Override
     public void onBindViewHolder(SpecialistViewHolder holder, int position) {
         Specialist specialist = mSpecialistList.get(position);
-        if(mLocale.equals(ARABIC)){
-            holder.specialistName.setText(specialist.getNameAr());
-        }else {
-            holder.specialistName.setText(specialist.getName());
-        }
+        holder.specialistName.setText(specialist.getName());
         Glide.with(mContext).load(specialist.getIconUrl())
-                .placeholder(R.drawable.dermatology)
+                .placeholder(R.drawable.ic_specialist_placeholder)
                 .into(holder.specialistIcon);
-//        holder.specialistIcon.setImageDrawable(specialistOld.getSpecialistImageDrawable());
     }
 
     @Override
@@ -76,19 +69,6 @@ public class NewSpecialistsAdapter extends RecyclerView.Adapter<NewSpecialistsAd
         @Override
         public void onClick(View view) {
             mCallback.onSpecialistClick(getAdapterPosition());
-
-//            int position = getAdapterPosition();
-//            //add specialist name to the fragment arguments
-//            Bundle bundle = new Bundle();
-//            bundle.putString(SPECIALIST, mSpecialistOldList.get(position).getSpecialistName());
-//            //initiate DoctorsFragment
-//            DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
-//            doctorsFragment.setArguments(bundle);
-//            doctorsFragment.setDoctorsList(getDoctorsSpecialistList());
-//
-//            FragmentTransaction transaction = ((FragmentActivity) (mContext)).getSupportFragmentManager().beginTransaction();
-//            transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("search_fragment");
-//            transaction.commit();
         }
     }
 }

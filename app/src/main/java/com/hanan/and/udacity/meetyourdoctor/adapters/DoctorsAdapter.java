@@ -2,7 +2,6 @@ package com.hanan.and.udacity.meetyourdoctor.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,13 +41,14 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
     @Override
     public void onBindViewHolder(DoctorViewHolder holder, int position) {
         Doctor doctor = mDoctorsList.get(position);
-        holder.doctorName.setText(doctor.getDoctorName());
-        holder.doctorSpecialist.setText(doctor.getSpecialist());
+        holder.doctorName.setText(doctor.getName());
+        holder.doctorStudy.setText(doctor.getStudy());
         holder.ratingBar.setRating(doctor.getRating());
         holder.fees.setText(doctor.getFees());
         holder.address.setText(doctor.getAddress());
-        holder.days.setText(doctor.getClinicDays());
-        holder.times.setText(doctor.getClinicTimes());
+        holder.days.setText(doctor.getDays());
+        holder.times.setText(doctor.getTimes());
+        holder.ratingBar.setRating(doctor.getRating());
     }
 
     @Override
@@ -57,14 +57,14 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
     }
 
     class DoctorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView doctorName, doctorSpecialist, fees, address, days, times;
+        TextView doctorName, doctorStudy, fees, address, days, times;
         RatingBar ratingBar;
         Button callNow;
 
         DoctorViewHolder(View itemView) {
             super(itemView);
             doctorName = itemView.findViewById(R.id.doctor_name);
-            doctorSpecialist = itemView.findViewById(R.id.doctor_specialist);
+            doctorStudy = itemView.findViewById(R.id.doctor_study);
             ratingBar = itemView.findViewById(R.id.rating);
             callNow = itemView.findViewById(R.id.call_button);
             fees = itemView.findViewById(R.id.fees_tv);

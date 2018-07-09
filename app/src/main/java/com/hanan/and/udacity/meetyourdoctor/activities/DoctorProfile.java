@@ -45,12 +45,12 @@ public class DoctorProfile extends AppCompatActivity {
         TextView times = findViewById(R.id.times_tv);
         RatingBar ratingBar = findViewById(R.id.rating);
 
-        doctorName.setText(doctor.getDoctorName());
-        doctorSpecialist.setText(doctor.getSpecialist());
+        doctorName.setText(doctor.getName());
+        doctorSpecialist.setText(doctor.getSpecialist().getName());
         fees.setText(doctor.getFees());
         address.setText(doctor.getAddress());
-        days.setText(doctor.getClinicDays());
-        times.setText(doctor.getClinicTimes());
+        days.setText(doctor.getDays());
+        times.setText(doctor.getTimes());
         ratingBar.setRating(doctor.getRating());
 
         ImageButton call = findViewById(R.id.call_button);

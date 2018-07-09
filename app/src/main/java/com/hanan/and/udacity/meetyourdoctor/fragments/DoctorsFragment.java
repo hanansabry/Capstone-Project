@@ -2,34 +2,51 @@ package com.hanan.and.udacity.meetyourdoctor.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.adapters.DoctorsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.data.DoctorsRetrieval;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
+import com.hanan.and.udacity.meetyourdoctor.utilities.DoctorOnline;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.AR_LOCALE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EN_LOCALE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DoctorsFragment extends Fragment {
-    List<Doctor> doctors;
+    private static final String DOCTORS_NODE = "doctors";
     private Specialist currentSpecialist;
+    private ArrayList<Doctor> allDoctors;
 
     public static DoctorsFragment newInstance() {
-        DoctorsFragment fragment = new DoctorsFragment();
-        return fragment;
+        return new DoctorsFragment();
     }
 
     @Override
@@ -37,16 +54,18 @@ public class DoctorsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         //get specialist argument else we are in favourite doctors fragment
-        if(getArguments()!=null){
+        if (getArguments() != null) {
             currentSpecialist = getArguments().getParcelable(SPECIALIST);
+            allDoctors = getArguments().getParcelableArrayList(DOCTORS);
         }
 
         //get doctors list
-        DoctorsRetrieval retrieval = new DoctorsRetrieval();
-        if(currentSpecialist == null){
+        DoctorsRetrieval retrieval = new DoctorsRetrieval(getContext());
+        List<Doctor> doctors;
+        if (currentSpecialist == null) {
             doctors = retrieval.getFavouriteDoctors();
-        }else{
-            doctors = retrieval.getDoctorsBySpecialist(currentSpecialist.getId());
+        } else {
+            doctors = getDoctorsBySpecialist();
         }
 
         // Inflate the layout for this fragment
@@ -62,5 +81,15 @@ public class DoctorsFragment extends Fragment {
         DoctorsAdapter doctorsAdapter = new DoctorsAdapter(getContext(), doctors);
         doctorsRecyclerView.setAdapter(doctorsAdapter);
         return rootView;
+    }
+
+    public List<Doctor> getDoctorsBySpecialist() {
+        ArrayList<Doctor> doctors = new ArrayList<>();
+        for (Doctor doctor : allDoctors) {
+            if (doctor.getSpecialist().getId().equals(currentSpecialist.getId())) {
+                doctors.add(doctor);
+            }
+        }
+        return doctors;
     }
 }

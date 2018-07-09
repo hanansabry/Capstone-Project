@@ -36,7 +36,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/doctor_specialist"
+            android:id="@+id/doctor_study"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/specialist_name"

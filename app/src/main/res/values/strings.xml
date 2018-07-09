@@ -2,6 +2,7 @@
     <string name="app_name">Doctor Online</string>
 
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="pref_file">pref_file</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_action_string">Search</string>
     <string name="favourites_action_string">Favourites</string>
@@ -13,7 +14,7 @@
     <string name="settings">Settings</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="choose_city">City:    </string>
-    <string name="logout">Logout</string>
+    <string name="logout">Logout (%1$s)</string>
     <string name="language">Language:</string>
     <string name="login">Login</string>
     <string name="login_first">(You must login first)</string>
