@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.NOT_SIGNED;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SIGNIN;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.displaySnackMessage;
 

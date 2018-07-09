@@ -33,6 +33,7 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EN_LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.getLocale;
 
 
 public class SearchFragment extends Fragment implements SpecialistsAdapter.SpecialistAdapterCallback {
@@ -127,7 +128,7 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
 
     //get all data from firebase
     public void getData() {
-        if (LOCALE.equals(ARABIC)) {
+        if (getLocale().equals(ARABIC)) {
             databaseReference = firebaseDatabase.getReference(AR_LOCALE);
         } else {
             databaseReference = firebaseDatabase.getReference(EN_LOCALE);
