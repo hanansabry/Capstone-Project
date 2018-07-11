@@ -41,7 +41,6 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIS
  * A simple {@link Fragment} subclass.
  */
 public class DoctorsFragment extends Fragment {
-    private static final String DOCTORS_NODE = "doctors";
     private Specialist currentSpecialist;
     private ArrayList<Doctor> allDoctors;
 

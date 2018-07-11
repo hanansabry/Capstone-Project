@@ -16,6 +16,10 @@ public class Constants {
     public static final String ENGLISH = "English";
     public static final String ANONYMOUS = "anonymous";
     public static final String USER = "user";
+    public static final String SPECIALISTS_NODE = "specialists";
+    public static final String DOCTORS_NODE = "doctors";
+    public static final String CITY = "city";
+    public static final String LANGUAGE = "language";
     public static String LOCALE = DoctorOnline.getContext().getResources().getConfiguration().locale.getDisplayLanguage();
 
     public static void displaySnackMessage( View view, String msg){

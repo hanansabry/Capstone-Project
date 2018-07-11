@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.2'
     //butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     testImplementation 'junit:junit:4.12'

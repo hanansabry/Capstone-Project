@@ -1,6 +1,7 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +10,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static final long SPLASH_TIME_OUT = 3000;
+    private static final long SPLASH_TIME_OUT = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,11 @@ public class SplashScreen extends AppCompatActivity {
 //                finish();
             }
         }, SPLASH_TIME_OUT);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     public void openSignupActivity(View view) {

@@ -23,22 +23,24 @@ import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.adapters.SpecialistsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
+import com.hanan.and.udacity.meetyourdoctor.utilities.DoctorOnline;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.AR_LOCALE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.CITY;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_NODE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EN_LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALISTS_NODE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.getLocale;
 
 
 public class SearchFragment extends Fragment implements SpecialistsAdapter.SpecialistAdapterCallback {
-    private static final String SPECIALISTS_NODE = "specialists";
-    private static final String DOCTORS_NODE = "doctors";
     private ArrayList<Specialist> specialists;
     private ArrayList<Doctor> doctors;
     private ActionBar actionBar;
@@ -47,6 +49,8 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
     private FirebaseDatabase firebaseDatabase;
+    private String selectedCity;
+    private String[] cities;
 
     public static SearchFragment newInstance() {
         SearchFragment fragment = new SearchFragment();
@@ -65,6 +69,9 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
 
         actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
+
+        selectedCity = getSelectedCity();
+        cities = getResources().getStringArray(R.array.city_list);
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
@@ -91,39 +98,6 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
     public void onStop() {
         super.onStop();
         databaseReference.removeEventListener(valueEventListener);
-    }
-
-    public void addSpecialistsToRecyclerView() {
-        if (LOCALE.equals(ARABIC)) {
-            databaseReference = firebaseDatabase.getReference(AR_LOCALE);
-        } else {
-            databaseReference = firebaseDatabase.getReference(EN_LOCALE);
-        }
-        databaseReference = databaseReference.child(SPECIALISTS_NODE);
-        databaseReference.keepSynced(true);
-
-        valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    specialists = new ArrayList<>();
-                    for (DataSnapshot specialistSnapshot : dataSnapshot.getChildren()) {
-                        Specialist specialist = specialistSnapshot.getValue(Specialist.class);
-                        specialist.setId(specialistSnapshot.getKey());
-                        specialists.add(specialist);
-                    }
-                    specialistsAdapter = new SpecialistsAdapter(getContext(), specialists, SearchFragment.this);
-                    specialistRecyclerView.setAdapter(specialistsAdapter);
-                    specialistsAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Failed to load data.", Toast.LENGTH_SHORT).show();
-            }
-        };
-        databaseReference.addValueEventListener(valueEventListener);
     }
 
     //get all data from firebase
@@ -155,12 +129,21 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
                     //get doctors list
                     for (DataSnapshot doctorsNode : dataSnapshot.child(DOCTORS_NODE).getChildren()) {
                         Doctor doctor = doctorsNode.getValue(Doctor.class);
+
                         Iterable<DataSnapshot> children = doctorsNode.child(SPECIALIST).getChildren();
                         for (DataSnapshot specialist : children) {
                             doctor.setSpecialist(getSpecialistByKey(specialist.getKey()));
                         }
                         doctor.setId(doctorsNode.getKey());
-                        doctors.add(doctor);
+
+                        //get doctors of only selected city, if all cities is selected get all doctors
+                        if(selectedCity.equals(cities[0])){
+                            doctors.add(doctor);
+                        }else{
+                            if(doctor.getCity().toLowerCase().equals(selectedCity.toLowerCase())){
+                                doctors.add(doctor);
+                            }
+                        }
                     }
                 }
             }
@@ -199,5 +182,13 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("search_fragment");
         transaction.commit();
+    }
+
+    public String getSelectedCity(){
+        int cityPosition = getActivity().getApplicationContext()
+                .getSharedPreferences(getResources().getString(R.string.pref_file), 0)
+                .getInt(CITY, 0);
+        String city = getResources().getStringArray(R.array.city_list)[cityPosition];
+        return city;
     }
 }

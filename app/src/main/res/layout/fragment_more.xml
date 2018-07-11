@@ -65,7 +65,8 @@
             android:paddingBottom="8dp"
             android:paddingEnd="16sp"
             android:paddingStart="16sp"
-            android:paddingTop="16dp">
+            android:paddingTop="16dp"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/doctor_icon"

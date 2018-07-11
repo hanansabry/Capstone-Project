@@ -58,6 +58,7 @@
     </string-array>
 
     <string-array name="city_list">
+        <item>جميع المدن</item>
         <item>سرس الليان</item>
         <item>منوف</item>
     </string-array>
