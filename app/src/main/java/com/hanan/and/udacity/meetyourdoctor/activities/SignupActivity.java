@@ -38,6 +38,7 @@ import butterknife.OnClick;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EDIT_PROFILE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.displaySnackMessage;
 
 public class SignupActivity extends AppCompatActivity {
@@ -169,7 +170,7 @@ public class SignupActivity extends AppCompatActivity {
     public void writeNewUser(String id, String name, String mail, String mobile, String password, String gender) {
         //save in database
         User user = new User(name, mail, mobile, password, gender);
-        databaseReference.child("users").child(id).setValue(user);
+        databaseReference.child(USERS).child(id).setValue(user);
 
         //save in shared preferences
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(

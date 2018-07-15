@@ -50,6 +50,7 @@
     <string name="create_account_with_email">Create Account with Email</string>
     <string name="already_a_member">Already A Member?</string>
     <string name="skip">Skip</string>
+    <string name="clinic_phones">Clinic Phones</string>
 
     <string-array name="specialists_suggestions">
         <item>Specialist 1</item>

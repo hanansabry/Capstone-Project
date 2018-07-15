@@ -1,11 +1,18 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,13 +21,57 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
+import com.hanan.and.udacity.meetyourdoctor.utilities.FloatingActionImageView;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTOR;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_NODE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.TRUE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
 
 public class DoctorProfile extends AppCompatActivity {
     private Doctor doctor;
+    @BindView(R.id.doctor_name)
+    TextView doctorName;
+    @BindView(R.id.doctor_specialist)
+    TextView doctorSpecialist;
+    @BindView(R.id.fees_tv)
+    TextView fees;
+    @BindView(R.id.address_tv)
+    TextView address;
+    @BindView(R.id.days_tv)
+    TextView days;
+    @BindView(R.id.times_tv)
+    TextView times;
+    @BindView(R.id.rating)
+    RatingBar ratingBar;
+    @BindView(R.id.doctor_profile_image)
+    FloatingActionImageView doctorProfileImage;
+    @BindView(R.id.favourite_button)
+    ImageButton favouriteBtn;
+    List<String> phones;
+
+    private DatabaseReference database;
+    private FirebaseUser currentUser;
+    private boolean isFavourite;
+    private ValueEventListener favouriteDoctorsEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +81,27 @@ public class DoctorProfile extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        initCollapsingToolbar(getResources().getString(R.string.amany_sabry));
+        ButterKnife.bind(this);
 
-        //get doctor object from activity intent
-        if(getIntent().getParcelableExtra(DOCTOR) != null){
-            doctor = getIntent().getParcelableExtra(DOCTOR);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        database = FirebaseDatabase.getInstance().getReference().child(USERS).child(currentUser.getUid());
+        if (currentUser != null) {
+            favouriteBtn.setVisibility(View.VISIBLE);
+            isDoctorFavourite();
+        } else {
+            favouriteBtn.setVisibility(View.GONE);
         }
 
-        TextView doctorName = findViewById(R.id.doctor_name);
-        TextView doctorSpecialist = findViewById(R.id.doctor_specialist);
-        TextView fees = findViewById(R.id.fees_tv);
-        TextView address = findViewById(R.id.address_tv);
-        TextView days = findViewById(R.id.days_tv);
-        TextView times = findViewById(R.id.times_tv);
-        RatingBar ratingBar = findViewById(R.id.rating);
+        //get doctor object from activity intent
+        if (getIntent().getParcelableExtra(DOCTOR) != null) {
+            doctor = getIntent().getParcelableExtra(DOCTOR);
+        }
+        initCollapsingToolbar(doctor.getName());
+        if (doctor.getGender().equalsIgnoreCase(getResources().getString(R.string.female))) {
+            doctorProfileImage.setImageDrawable(getResources().getDrawable(R.drawable.doctor_female_profile));
+        } else {
+            doctorProfileImage.setImageDrawable(getResources().getDrawable(R.drawable.doctor_male_profile));
+        }
 
         doctorName.setText(doctor.getName());
         doctorSpecialist.setText(doctor.getSpecialist().getName());
@@ -52,22 +110,8 @@ public class DoctorProfile extends AppCompatActivity {
         days.setText(doctor.getDays());
         times.setText(doctor.getTimes());
         ratingBar.setRating(doctor.getRating());
+        phones = doctor.getPhones();
 
-        ImageButton call = findViewById(R.id.call_button);
-        call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(DoctorProfile.this, "Call now on this number : 01034344829", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        ImageButton favourite = findViewById(R.id.favourite_button);
-        favourite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(DoctorProfile.this, "Added to Favourites", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
@@ -111,6 +155,80 @@ public class DoctorProfile extends AppCompatActivity {
     public void openPatientsReviewsActivity(View view) {
         Intent intent = new Intent(this, ReviewsActivity.class);
         startActivity(intent);
-        overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+    }
+
+    @OnClick(R.id.call_button)
+    public void onCallClicked(View view) {
+        final String[] selectedPhone = new String[1];
+        selectedPhone[0] = phones.get(0);
+        new MaterialDialog.Builder(this)
+                .title(getResources().getString(R.string.clinic_phones))
+                .items(phones)
+                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        selectedPhone[0] = phones.get(which);
+                        return true;
+                    }
+                })
+                .alwaysCallSingleChoiceCallback()
+                .positiveText(R.string.call_now_str)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @SuppressLint("MissingPermission")
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + selectedPhone[0]));
+                        startActivity(intent);
+
+                    }
+                })
+                .show();
+    }
+
+    @OnClick(R.id.favourite_button)
+    public void onFavouriteClicked(View view) {
+        if (isFavourite) {
+            //delete from favourites
+            Toast.makeText(this, "Deleted from favourites", Toast.LENGTH_SHORT).show();
+            isFavourite = false;
+            favouriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite_border));
+            database.child(DOCTORS_NODE).child(doctor.getId()).removeValue();
+        } else {
+            //add to favourites
+            Toast.makeText(this, "Added to favourites", Toast.LENGTH_SHORT).show();
+            isFavourite = true;
+            favouriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite_fill));
+            //add current doctor as favourite to current user
+            database.child(DOCTORS_NODE).child(doctor.getId()).setValue(TRUE);
+        }
+    }
+
+    public void isDoctorFavourite() {
+//        database = database.child(DOCTORS_NODE);
+        favouriteDoctorsEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot favDoctor : dataSnapshot.child(DOCTORS_NODE).getChildren()) {
+                    if (favDoctor.getKey().equals(doctor.getId())) {
+                        favouriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite_fill));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        database.addListenerForSingleValueEvent(favouriteDoctorsEventListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (favouriteDoctorsEventListener != null) {
+            database.removeEventListener(favouriteDoctorsEventListener);
+        }
     }
 }

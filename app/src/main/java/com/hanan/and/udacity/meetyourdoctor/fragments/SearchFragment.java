@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.adapters.SpecialistsAdapter;
@@ -35,6 +36,7 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_NODE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EN_LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.LOCALE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.PHONES;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALISTS_NODE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.getLocale;
@@ -130,10 +132,12 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
                     for (DataSnapshot doctorsNode : dataSnapshot.child(DOCTORS_NODE).getChildren()) {
                         Doctor doctor = doctorsNode.getValue(Doctor.class);
 
+                        //get doctor specialist
                         Iterable<DataSnapshot> children = doctorsNode.child(SPECIALIST).getChildren();
                         for (DataSnapshot specialist : children) {
                             doctor.setSpecialist(getSpecialistByKey(specialist.getKey()));
                         }
+
                         doctor.setId(doctorsNode.getKey());
 
                         //get doctors of only selected city, if all cities is selected get all doctors
@@ -191,4 +195,5 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
         String city = getResources().getStringArray(R.array.city_list)[cityPosition];
         return city;
     }
+
 }

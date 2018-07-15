@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.hanan.and.udacity.meetyourdoctor.R;
 
 import java.util.Locale;
@@ -71,28 +74,19 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         //Language Spinner Setup
-        Spinner languageSpinner = findViewById(R.id.language_spinner);
+        final Spinner languageSpinner = findViewById(R.id.language_spinner);
         final ArrayAdapter<CharSequence> languageAdapter = ArrayAdapter.createFromResource(this, R.array.language_list, R.layout.spinner_item);
         languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         languageSpinner.setAdapter(languageAdapter);
         languageSpinner.setSelection(getLanguagePosition());
-//        languageSpinner.setSelection(0, false);
-//        String locale = getResources().getConfiguration().locale.getDisplayLanguage();
-//        if (locale.equals(getResources().getString(R.string.english))) {
-//            languageSpinner.setSelection(1, false);
-//        } else if (locale.equals(getResources().getString(R.string.arabic))) {
-//            languageSpinner.setSelection(2, false);
-//        }
-
 
         //set language of the application
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
                 if (isUserInteraction) {
-                    Toast.makeText(SettingsActivity.this, languageAdapter.getItem(i) + " is selected", Toast.LENGTH_SHORT).show();
-                    String language = (String) languageAdapter.getItem(i);
+                    final String language = (String) languageAdapter.getItem(i);
                     if (language.equals(getResources().getString(R.string.arabic))) {
                         setLocale(AR_LOCALE);
                     } else if (language.equals(getResources().getString(R.string.english))) {
@@ -162,5 +156,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     public int getLanguagePosition(){
         return preferences.getInt(LANGUAGE, 1);
+    }
+
+    public MaterialDialog.Builder confirmationDialog(){
+        //create confirmation Dialog
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(SettingsActivity.this);
+        builder.title("Change Language")
+                .content("You'll change the app's language, Continue?")
+                .positiveText("Agree")
+                .negativeText("Dismiss");
+        return builder;
     }
 }

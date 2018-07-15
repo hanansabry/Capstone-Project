@@ -6,6 +6,7 @@ import android.view.View;
 public class Constants {
     public static final String SETTINGS = "Settings";
     public static final String SPECIALIST = "specialist";
+    public static final String PHONES = "phones";
     public static final String DOCTORS = "all_doctors";
     public static final String DOCTOR = "doctor";
     public static final String EDIT_PROFILE = "edit_profile";
@@ -16,10 +17,12 @@ public class Constants {
     public static final String ENGLISH = "English";
     public static final String ANONYMOUS = "anonymous";
     public static final String USER = "user";
+    public static final String USERS = "users";
     public static final String SPECIALISTS_NODE = "specialists";
     public static final String DOCTORS_NODE = "doctors";
     public static final String CITY = "city";
     public static final String LANGUAGE = "language";
+    public static final String TRUE = "true";
     public static String LOCALE = DoctorOnline.getContext().getResources().getConfiguration().locale.getDisplayLanguage();
 
     public static void displaySnackMessage( View view, String msg){

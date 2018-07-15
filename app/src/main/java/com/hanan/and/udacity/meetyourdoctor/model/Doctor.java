@@ -3,6 +3,8 @@ package com.hanan.and.udacity.meetyourdoctor.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 public class Doctor implements Parcelable{
 
     private String id;
@@ -16,10 +18,13 @@ public class Doctor implements Parcelable{
     private String services;
     private String city;
     private String photoUrl;
+    private String gender;
     private float rating;
+    private List<String> phones;
 
     public Doctor() {
     }
+
 
     protected Doctor(Parcel in) {
         id = in.readString();
@@ -33,7 +38,9 @@ public class Doctor implements Parcelable{
         services = in.readString();
         city = in.readString();
         photoUrl = in.readString();
+        gender = in.readString();
         rating = in.readFloat();
+        phones = in.createStringArrayList();
     }
 
     public static final Creator<Doctor> CREATOR = new Creator<Doctor>() {
@@ -136,12 +143,28 @@ public class Doctor implements Parcelable{
         this.photoUrl = photoUrl;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public float getRating() {
         return rating;
     }
 
     public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    public List<String> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<String> phones) {
+        this.phones = phones;
     }
 
     @Override
@@ -162,6 +185,8 @@ public class Doctor implements Parcelable{
         dest.writeString(services);
         dest.writeString(city);
         dest.writeString(photoUrl);
+        dest.writeString(gender);
         dest.writeFloat(rating);
+        dest.writeStringList(phones);
     }
 }
