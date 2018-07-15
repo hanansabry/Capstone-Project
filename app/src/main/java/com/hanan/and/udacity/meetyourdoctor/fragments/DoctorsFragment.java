@@ -62,24 +62,16 @@ public class DoctorsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //get specialist argument else we are in favourite doctors fragment
-        if (getArguments() != null) {
-            currentSpecialist = getArguments().getParcelable(SPECIALIST);
-            allDoctors = getArguments().getParcelableArrayList(DOCTORS);
-        }
-
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(currentUser != null){
-//            getFavouriteDoctors();
-        }
-
-        //get doctors list
-        DoctorsRetrieval retrieval = new DoctorsRetrieval(getContext());
-
-        if (currentSpecialist == null) {
-            doctors = retrieval.getFavouriteDoctors();
-        } else {
-            doctors = getDoctorsBySpecialist();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            //get current specialist if user comes from most common specialists fragment
+            if (bundle.getParcelable(SPECIALIST) != null) {
+                currentSpecialist = bundle.getParcelable(SPECIALIST);
+                doctors = bundle.getParcelableArrayList(DOCTORS_NODE);
+            } else if (bundle.getParcelableArrayList(DOCTORS_NODE) != null) {
+                doctors = bundle.getParcelableArrayList(DOCTORS_NODE);
+                currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            }
         }
 
         // Inflate the layout for this fragment
@@ -91,56 +83,70 @@ public class DoctorsFragment extends Fragment {
 
         doctorsRecyclerView.setLayoutManager(layoutManager);
         doctorsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        //fill the recycler view with data
-        doctorsAdapter = new DoctorsAdapter(getContext(), doctors);
-        doctorsRecyclerView.setAdapter(doctorsAdapter);
+        if (currentSpecialist != null) {
+            doctors = getDoctorsBySpecialist();
+            //fill the recycler view with data
+            doctorsAdapter = new DoctorsAdapter(getContext(), doctors);
+            doctorsRecyclerView.setAdapter(doctorsAdapter);
+        }
         return rootView;
     }
 
     public List<Doctor> getDoctorsBySpecialist() {
-        ArrayList<Doctor> doctors = new ArrayList<>();
-        for (Doctor doctor : allDoctors) {
+        ArrayList<Doctor> specDoctors = new ArrayList<>();
+        for (Doctor doctor : doctors) {
             if (doctor.getSpecialist().getId().equals(currentSpecialist.getId())) {
-                doctors.add(doctor);
+                specDoctors.add(doctor);
             }
         }
-        return doctors;
+        return specDoctors;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(currentSpecialist == null){
+            getFavouriteDoctors();
+        }
+    }
 
-//    public void getFavouriteDoctors(){
-//        ref = FirebaseDatabase.getInstance().getReference().child(USERS).child(currentUser.getUid()).child(DOCTORS_NODE);
-//        favouriteDoctorsValueListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                doctors = new ArrayList<>();
-//                for(DataSnapshot favDoctor : dataSnapshot.getChildren()){
-////                    favDoctor =
-//                }
-//                doctorsAdapter = new DoctorsAdapter(getContext(), doctors);
-//                doctorsRecyclerView.setAdapter(doctorsAdapter);
-//                doctorsAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        };
-//        ref.addListenerForSingleValueEvent(favouriteDoctorsValueListener);
-//    }
+    public void getFavouriteDoctors() {
+        ref = FirebaseDatabase.getInstance().getReference().child(USERS).child(currentUser.getUid()).child(DOCTORS_NODE);
+        favouriteDoctorsValueListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList favDoctors = new ArrayList<>();
+                for (DataSnapshot favDoctor : dataSnapshot.getChildren()) {
+                    Doctor doctor = getDoctorById(favDoctor.getKey());
+                    favDoctors.add(doctor);
+                }
+                doctorsAdapter = new DoctorsAdapter(getContext(), favDoctors);
+                doctorsRecyclerView.setAdapter(doctorsAdapter);
+                doctorsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        ref.addListenerForSingleValueEvent(favouriteDoctorsValueListener);
+    }
 
     @Override
     public void onStop() {
         super.onStop();
-        if(favouriteDoctorsValueListener != null){
+        if (favouriteDoctorsValueListener != null) {
             ref.removeEventListener(favouriteDoctorsValueListener);
         }
     }
 
-    public void getDoctorById(String id){
-        for(Doctor doc : allDoctors){
-
+    public Doctor getDoctorById(String id) {
+        for (Doctor doc : doctors) {
+            if (doc.getId().equalsIgnoreCase(id)) {
+                return doc;
+            }
         }
+        return null;
     }
 }

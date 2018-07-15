@@ -84,9 +84,9 @@ public class DoctorProfile extends AppCompatActivity {
         ButterKnife.bind(this);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        database = FirebaseDatabase.getInstance().getReference().child(USERS).child(currentUser.getUid());
         if (currentUser != null) {
             favouriteBtn.setVisibility(View.VISIBLE);
+            database = FirebaseDatabase.getInstance().getReference().child(USERS).child(currentUser.getUid());
             isDoctorFavourite();
         } else {
             favouriteBtn.setVisibility(View.GONE);
@@ -111,7 +111,6 @@ public class DoctorProfile extends AppCompatActivity {
         times.setText(doctor.getTimes());
         ratingBar.setRating(doctor.getRating());
         phones = doctor.getPhones();
-
     }
 
 
@@ -211,6 +210,7 @@ public class DoctorProfile extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot favDoctor : dataSnapshot.child(DOCTORS_NODE).getChildren()) {
                     if (favDoctor.getKey().equals(doctor.getId())) {
+                        isFavourite = true;
                         favouriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite_fill));
                     }
                 }

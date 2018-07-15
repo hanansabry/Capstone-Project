@@ -46,23 +46,14 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
     private ArrayList<Specialist> specialists;
     private ArrayList<Doctor> doctors;
     private ActionBar actionBar;
-    private RecyclerView specialistRecyclerView;
-    private SpecialistsAdapter specialistsAdapter;
-    private DatabaseReference databaseReference;
-    private ValueEventListener valueEventListener;
-    private FirebaseDatabase firebaseDatabase;
-    private String selectedCity;
-    private String[] cities;
 
     public static SearchFragment newInstance() {
-        SearchFragment fragment = new SearchFragment();
-        return fragment;
+        return new SearchFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        firebaseDatabase = FirebaseDatabase.getInstance();
     }
 
     @Override
@@ -72,102 +63,24 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
         actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
 
-        selectedCity = getSelectedCity();
-        cities = getResources().getStringArray(R.array.city_list);
+        //get data from fragment arguments
+        Bundle bundle = getArguments();
+        doctors = bundle.getParcelableArrayList(DOCTORS_NODE);
+        specialists = bundle.getParcelableArrayList(SPECIALISTS_NODE);
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
         //setup the Specialists Recycler View
-        specialistRecyclerView = rootView.findViewById(R.id.specialists_list);
+        RecyclerView specialistRecyclerView = rootView.findViewById(R.id.specialists_list);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
 
         specialistRecyclerView.setLayoutManager(layoutManager);
         specialistRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        //get all data from firebase database
-        getData();
+        SpecialistsAdapter specialistsAdapter = new SpecialistsAdapter(getContext(), specialists, SearchFragment.this);
+        specialistRecyclerView.setAdapter(specialistsAdapter);
 
         return rootView;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        databaseReference.removeEventListener(valueEventListener);
-    }
-
-    //get all data from firebase
-    public void getData() {
-        if (getLocale().equals(ARABIC)) {
-            databaseReference = firebaseDatabase.getReference(AR_LOCALE);
-        } else {
-            databaseReference = firebaseDatabase.getReference(EN_LOCALE);
-        }
-        databaseReference.keepSynced(true);
-
-        valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    specialists = new ArrayList<>();
-                    doctors = new ArrayList<>();
-
-                    //get specialists list
-                    for (DataSnapshot specialistsNode : dataSnapshot.child(SPECIALISTS_NODE).getChildren()) {
-                        Specialist specialist = specialistsNode.getValue(Specialist.class);
-                        specialist.setId(specialistsNode.getKey());
-                        specialists.add(specialist);
-                    }
-                    specialistsAdapter = new SpecialistsAdapter(getContext(), specialists, SearchFragment.this);
-                    specialistRecyclerView.setAdapter(specialistsAdapter);
-                    specialistsAdapter.notifyDataSetChanged();
-
-                    //get doctors list
-                    for (DataSnapshot doctorsNode : dataSnapshot.child(DOCTORS_NODE).getChildren()) {
-                        Doctor doctor = doctorsNode.getValue(Doctor.class);
-
-                        //get doctor specialist
-                        Iterable<DataSnapshot> children = doctorsNode.child(SPECIALIST).getChildren();
-                        for (DataSnapshot specialist : children) {
-                            doctor.setSpecialist(getSpecialistByKey(specialist.getKey()));
-                        }
-
-                        doctor.setId(doctorsNode.getKey());
-
-                        //get doctors of only selected city, if all cities is selected get all doctors
-                        if(selectedCity.equals(cities[0])){
-                            doctors.add(doctor);
-                        }else{
-                            if(doctor.getCity().toLowerCase().equals(selectedCity.toLowerCase())){
-                                doctors.add(doctor);
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-        databaseReference.addListenerForSingleValueEvent(valueEventListener);
-    }
-
-
-    public Specialist getSpecialistByKey(final String key) {
-        for (Specialist specialist : specialists) {
-            if (specialist.getId().equals(key)) {
-                return specialist;
-            }
-        }
-        return null;
     }
 
     @Override
@@ -178,7 +91,7 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
         //create bundle to pass specialist object to doctors fragment
         Bundle bundle = new Bundle();
         bundle.putParcelable(SPECIALIST, specialist);
-        bundle.putParcelableArrayList(DOCTORS, doctors);
+        bundle.putParcelableArrayList(DOCTORS_NODE, doctors);
         //initiate DoctorsFragment
         DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
         doctorsFragment.setArguments(bundle);
@@ -187,13 +100,4 @@ public class SearchFragment extends Fragment implements SpecialistsAdapter.Speci
         transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("search_fragment");
         transaction.commit();
     }
-
-    public String getSelectedCity(){
-        int cityPosition = getActivity().getApplicationContext()
-                .getSharedPreferences(getResources().getString(R.string.pref_file), 0)
-                .getInt(CITY, 0);
-        String city = getResources().getStringArray(R.array.city_list)[cityPosition];
-        return city;
-    }
-
 }
