@@ -20,6 +20,7 @@ public class Constants {
     public static final String USERS = "users";
     public static final String SPECIALISTS_NODE = "specialists";
     public static final String DOCTORS_NODE = "doctors";
+    public static final String REVIEWS_NODE = "reviews";
     public static final String CITY = "city";
     public static final String LANGUAGE = "language";
     public static final String TRUE = "true";

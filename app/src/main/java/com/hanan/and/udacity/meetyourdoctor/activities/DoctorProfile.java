@@ -153,6 +153,7 @@ public class DoctorProfile extends AppCompatActivity {
 
     public void openPatientsReviewsActivity(View view) {
         Intent intent = new Intent(this, ReviewsActivity.class);
+        intent.putExtra(DOCTOR, doctor);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
     }
@@ -231,4 +232,5 @@ public class DoctorProfile extends AppCompatActivity {
             database.removeEventListener(favouriteDoctorsEventListener);
         }
     }
+
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RatingBar
+        android:id="@+id/reviewer_rating"
+        style="?android:attr/ratingBarStyleIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:progressTint="@color/yellow"
+        android:stepSize="1"
+        android:rating="3"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <EditText
+            android:id="@+id/reviewer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Your name"
+            android:inputType="textAutoCorrect"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <EditText
+            android:id="@+id/review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:hint="Write your review here"
+            android:inputType="textCapSentences|textMultiLine|textAutoCorrect"
+            android:minLines="4" />
+    </android.support.design.widget.TextInputLayout>
+
+</LinearLayout>

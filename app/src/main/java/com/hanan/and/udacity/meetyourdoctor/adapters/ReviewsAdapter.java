@@ -9,14 +9,15 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.hanan.and.udacity.meetyourdoctor.R;
+import com.hanan.and.udacity.meetyourdoctor.model.Review;
 
 import java.util.List;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewHolder> {
     Context mContext;
-    List<String> mReviewsList;
+    List<Review> mReviewsList;
 
-    public ReviewsAdapter(Context context, List<String> reviewsList){
+    public ReviewsAdapter(Context context, List<Review> reviewsList){
         mContext = context;
         mReviewsList = reviewsList;
     }
@@ -29,7 +30,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewHo
 
     @Override
     public void onBindViewHolder(ReviewHolder holder, int position) {
-        holder.ratingBar.setRating(3f);
+        Review review = mReviewsList.get(position);
+        holder.userNameTextView.setText(review.getReviewerName());
+        holder.reviewTextView.setText(review.getReview());
+        holder.reviewDateTextView.setText(review.getReviewDate());
+        holder.ratingBar.setRating(review.getRatingValue());
     }
 
     @Override

@@ -81,7 +81,7 @@ public class SignupActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         auth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference = FirebaseDatabase.getInstance().getReference(USERS);
 
         //if the activity opened from edit_profile button, set the activity title to "Edit Profile"
         currentUser = auth.getCurrentUser();
