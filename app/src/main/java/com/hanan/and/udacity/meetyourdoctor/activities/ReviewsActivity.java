@@ -2,15 +2,13 @@ package com.hanan.and.udacity.meetyourdoctor.activities;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -20,19 +18,20 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
-import com.hanan.and.udacity.meetyourdoctor.adapters.DoctorsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.adapters.ReviewsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Review;
+import com.hanan.and.udacity.meetyourdoctor.model.User;
 import com.hanan.and.udacity.meetyourdoctor.utilities.GridSpacingItemDecoration;
-import com.hanan.and.udacity.meetyourdoctor.utilities.MyDividerItemDecoration;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,16 +43,22 @@ import java.util.TimeZone;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ANONYMOUS;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTOR;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.REVIEWS_NODE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
 
 public class ReviewsActivity extends AppCompatActivity {
-    private DatabaseReference ref;
+    private FirebaseDatabase database;
+    private DatabaseReference doctorReviewsRef;
+    private DatabaseReference userRef;
     private ChildEventListener childEventListener;
+    private ValueEventListener usersEventListener;
     private String reviewerName;
     private String reviewContent;
     private float ratingValue;
     private Doctor doctor;
     private RecyclerView reviewsRecyclerView;
     private List<Review> reviews;
+    private FirebaseUser currentUser;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +74,11 @@ public class ReviewsActivity extends AppCompatActivity {
             doctor = getIntent().getParcelableExtra(DOCTOR);
         }
 
-        ref = FirebaseDatabase.getInstance().getReference().child(REVIEWS_NODE).child(doctor.getId());
-        ref.keepSynced(true);
+        database = FirebaseDatabase.getInstance();
+        doctorReviewsRef = database.getReference().child(REVIEWS_NODE).child(doctor.getId());
+        doctorReviewsRef.keepSynced(true);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         reviews = new ArrayList<>();
 
         //setup the Reviews Recycler View
@@ -80,6 +88,9 @@ public class ReviewsActivity extends AppCompatActivity {
         reviewsRecyclerView.setLayoutManager(layoutManager);
         //fill the recycler view with data
         addReviewsToReyclerView();
+        if(currentUser != null) {
+            getCurrentUserName();
+        }
     }
 
     @Override
@@ -92,16 +103,14 @@ public class ReviewsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        //get all reviews
-//        addReviewsToReyclerView();
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
-        ref.removeEventListener(childEventListener);
+        if(doctorReviewsRef != null){
+            doctorReviewsRef.removeEventListener(childEventListener);
+        }
+        if(userRef != null){
+            userRef.removeEventListener(usersEventListener);
+        }
     }
 
     public void addReviewsToReyclerView() {
@@ -135,11 +144,11 @@ public class ReviewsActivity extends AppCompatActivity {
 
             }
         };
-        ref.addChildEventListener(childEventListener);
+        doctorReviewsRef.addChildEventListener(childEventListener);
     }
 
     public void addNewReview(View view) {
-        MaterialDialog dialog = new MaterialDialog.Builder(this)
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
                 .title("Add review")
                 .customView(R.layout.review_dialog, true)
                 .positiveText("Add")
@@ -151,6 +160,10 @@ public class ReviewsActivity extends AppCompatActivity {
                         EditText reviewContentET = dialogView.findViewById(R.id.review);
                         RatingBar reviewerRating = dialogView.findViewById(R.id.reviewer_rating);
 
+                        if(currentUser != null) {
+                            reviewerET.setText(userName);
+                        }
+
                         reviewerName = (reviewerET.getText().toString()).equals("") ? ANONYMOUS : reviewerET.getText().toString();
                         reviewContent = reviewContentET.getText().toString();
                         ratingValue = reviewerRating.getRating();
@@ -161,7 +174,7 @@ public class ReviewsActivity extends AppCompatActivity {
                             String timestamp = getDateCurrentTime();
 
                             Review review = new Review(reviewerName, reviewContent, ratingValue, timestamp, doctor.getId());
-                            ref.push().setValue(review)
+                            doctorReviewsRef.push().setValue(review)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -173,8 +186,12 @@ public class ReviewsActivity extends AppCompatActivity {
                                     });
                         }
                     }
-                })
-                .show();
+                });
+        MaterialDialog dialog = builder.build();
+        View dialogView = dialog.getCustomView();
+        EditText usernameEditText = dialogView.findViewById(R.id.reviewer_name);
+        usernameEditText.setText(userName);
+        dialog.show();
     }
 
     public String getDateCurrentTime() {
@@ -189,5 +206,23 @@ public class ReviewsActivity extends AppCompatActivity {
         } catch (Exception e) {
         }
         return "";
+    }
+
+    public void getCurrentUserName(){
+        userRef = database.getReference().child(USERS).child(currentUser.getUid());
+        usersEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                userName = user.getName();
+                Log.d("User Name", userName);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        userRef.addListenerForSingleValueEvent(usersEventListener);
     }
 }

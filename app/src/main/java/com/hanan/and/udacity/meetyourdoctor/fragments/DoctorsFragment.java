@@ -64,12 +64,11 @@ public class DoctorsFragment extends Fragment {
 
         Bundle bundle = getArguments();
         if (bundle != null) {
+            doctors = bundle.getParcelableArrayList(DOCTORS_NODE);
             //get current specialist if user comes from most common specialists fragment
             if (bundle.getParcelable(SPECIALIST) != null) {
                 currentSpecialist = bundle.getParcelable(SPECIALIST);
-                doctors = bundle.getParcelableArrayList(DOCTORS_NODE);
             } else if (bundle.getParcelableArrayList(DOCTORS_NODE) != null) {
-                doctors = bundle.getParcelableArrayList(DOCTORS_NODE);
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
             }
         }

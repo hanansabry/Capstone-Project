@@ -43,12 +43,12 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
         Doctor doctor = mDoctorsList.get(position);
         holder.doctorName.setText(doctor.getName());
         holder.doctorStudy.setText(doctor.getStudy());
-        holder.ratingBar.setRating(doctor.getRating());
+//        holder.ratingBar.setRating(doctor.getRating());
         holder.fees.setText(doctor.getFees());
         holder.address.setText(doctor.getAddress());
         holder.days.setText(doctor.getDays());
         holder.times.setText(doctor.getTimes());
-        holder.ratingBar.setRating(doctor.getRating());
+//        holder.ratingBar.setRating(doctor.getRating());
     }
 
     @Override
@@ -58,14 +58,14 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
 
     class DoctorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView doctorName, doctorStudy, fees, address, days, times;
-        RatingBar ratingBar;
+//        RatingBar ratingBar;
         Button callNow;
 
         DoctorViewHolder(View itemView) {
             super(itemView);
             doctorName = itemView.findViewById(R.id.doctor_name);
             doctorStudy = itemView.findViewById(R.id.doctor_study);
-            ratingBar = itemView.findViewById(R.id.rating);
+//            ratingBar = itemView.findViewById(R.id.rating);
             callNow = itemView.findViewById(R.id.call_button);
             fees = itemView.findViewById(R.id.fees_tv);
             address = itemView.findViewById(R.id.address_tv);

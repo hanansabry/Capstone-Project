@@ -170,7 +170,7 @@ public class SignupActivity extends AppCompatActivity {
     public void writeNewUser(String id, String name, String mail, String mobile, String password, String gender) {
         //save in database
         User user = new User(name, mail, mobile, password, gender);
-        databaseReference.child(USERS).child(id).setValue(user);
+        databaseReference.child(id).setValue(user);
 
         //save in shared preferences
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(

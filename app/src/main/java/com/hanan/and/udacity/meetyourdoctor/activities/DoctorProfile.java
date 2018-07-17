@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
+import com.hanan.and.udacity.meetyourdoctor.model.Review;
 import com.hanan.and.udacity.meetyourdoctor.utilities.FloatingActionImageView;
 
 import java.util.List;
@@ -42,6 +43,7 @@ import butterknife.OnClick;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTOR;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_NODE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.REVIEWS_NODE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.TRUE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
@@ -66,12 +68,17 @@ public class DoctorProfile extends AppCompatActivity {
     FloatingActionImageView doctorProfileImage;
     @BindView(R.id.favourite_button)
     ImageButton favouriteBtn;
+
     List<String> phones;
 
-    private DatabaseReference database;
+    private FirebaseDatabase database;
+    private DatabaseReference userRef;
+    private DatabaseReference reviewRef;
     private FirebaseUser currentUser;
     private boolean isFavourite;
     private ValueEventListener favouriteDoctorsEventListener;
+    private ValueEventListener reviewsEventListener;
+    private float reviewsValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +90,10 @@ public class DoctorProfile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
 
+        database = FirebaseDatabase.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             favouriteBtn.setVisibility(View.VISIBLE);
-            database = FirebaseDatabase.getInstance().getReference().child(USERS).child(currentUser.getUid());
             isDoctorFavourite();
         } else {
             favouriteBtn.setVisibility(View.GONE);
@@ -111,6 +118,8 @@ public class DoctorProfile extends AppCompatActivity {
         times.setText(doctor.getTimes());
         ratingBar.setRating(doctor.getRating());
         phones = doctor.getPhones();
+
+        getDoctorRating();
     }
 
 
@@ -193,19 +202,19 @@ public class DoctorProfile extends AppCompatActivity {
             Toast.makeText(this, "Deleted from favourites", Toast.LENGTH_SHORT).show();
             isFavourite = false;
             favouriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite_border));
-            database.child(DOCTORS_NODE).child(doctor.getId()).removeValue();
+            userRef.child(DOCTORS_NODE).child(doctor.getId()).removeValue();
         } else {
             //add to favourites
             Toast.makeText(this, "Added to favourites", Toast.LENGTH_SHORT).show();
             isFavourite = true;
             favouriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite_fill));
             //add current doctor as favourite to current user
-            database.child(DOCTORS_NODE).child(doctor.getId()).setValue(TRUE);
+            userRef.child(DOCTORS_NODE).child(doctor.getId()).setValue(TRUE);
         }
     }
 
     public void isDoctorFavourite() {
-//        database = database.child(DOCTORS_NODE);
+        userRef = database.getReference().child(USERS).child(currentUser.getUid());
         favouriteDoctorsEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -222,15 +231,39 @@ public class DoctorProfile extends AppCompatActivity {
 
             }
         };
-        database.addListenerForSingleValueEvent(favouriteDoctorsEventListener);
+        userRef.addListenerForSingleValueEvent(favouriteDoctorsEventListener);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         if (favouriteDoctorsEventListener != null) {
-            database.removeEventListener(favouriteDoctorsEventListener);
+            userRef.removeEventListener(favouriteDoctorsEventListener);
+        }
+        if (reviewsEventListener != null){
+            reviewRef.removeEventListener(reviewsEventListener);
         }
     }
 
+    public void getDoctorRating(){
+        reviewRef = database.getReference().child(REVIEWS_NODE).child(doctor.getId());
+        reviewsEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot reviewChild: dataSnapshot.getChildren()){
+                    Review review = reviewChild.getValue(Review.class);
+                    reviewsValue +=review.getRatingValue();
+                }
+                //get doctor rating value
+                float ratingValue = reviewsValue / dataSnapshot.getChildrenCount();
+                ratingBar.setRating(ratingValue);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        reviewRef.addListenerForSingleValueEvent(reviewsEventListener);
+    }
 }
