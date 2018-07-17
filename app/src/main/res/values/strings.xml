@@ -51,6 +51,7 @@
     <string name="already_a_member">Already A Member?</string>
     <string name="skip">Skip</string>
     <string name="clinic_phones">Clinic Phones</string>
+    <string name="info">Info</string>
 
     <string-array name="specialists_suggestions">
         <item>Specialist 1</item>

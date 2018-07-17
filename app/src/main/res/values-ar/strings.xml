@@ -49,6 +49,7 @@
     <string name="already_a_member">لديك حساب؟</string>
     <string name="skip">تخطى</string>
     <string name="clinic_phones">أرقام العيادة</string>
+    <string name="info">معلومات</string>
 
     <string-array name="doctors_suggestions">
         <item>دكتور 1</item>

@@ -1,7 +1,10 @@
 package com.hanan.and.udacity.meetyourdoctor.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.activities.DoctorProfile;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
@@ -77,6 +82,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(mContext, "Call now on this number : 01034344829", Toast.LENGTH_SHORT).show();
+                    onCallClicked(mDoctorsList.get(getAdapterPosition()));
                 }
             });
         }
@@ -88,5 +94,31 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
             intent.putExtra(DOCTOR, mDoctorsList.get(getAdapterPosition()));
             mContext.startActivity(intent);
         }
+    }
+
+    public void onCallClicked(final Doctor doctor){
+        final String[] selectedPhone = new String[1];
+        selectedPhone[0] = doctor.getPhones().get(0);
+        new MaterialDialog.Builder(mContext)
+                .title(mContext.getResources().getString(R.string.clinic_phones))
+                .items(doctor.getPhones())
+                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        selectedPhone[0] = doctor.getPhones().get(which);
+                        return true;
+                    }
+                })
+                .alwaysCallSingleChoiceCallback()
+                .positiveText(R.string.call_now_str)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @SuppressLint("MissingPermission")
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + selectedPhone[0]));
+                        mContext.startActivity(intent);
+                    }
+                })
+                .show();
     }
 }

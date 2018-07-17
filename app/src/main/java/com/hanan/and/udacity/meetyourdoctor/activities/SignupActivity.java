@@ -32,6 +32,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.model.User;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -182,12 +185,19 @@ public class SignupActivity extends AppCompatActivity {
 
     public void updateUser(String name, String mobile, final String password, String gender) {
         User user = new User(name, currentUser.getEmail(), mobile, password, gender);
-        databaseReference.child(currentUser.getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Map<String, Object>  children= new HashMap<>();
+        children.put("name", name);
+        children.put("gender", gender);
+        children.put("mobileNumber", mobile);
+        children.put("password", password);
+
+        databaseReference.child(currentUser.getUid()).updateChildren(children).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(SignupActivity.this, "Data updated successfully", Toast.LENGTH_SHORT).show();
                 //update password in firebase auth
                 currentUser.updatePassword(password);
+                progressBar.setVisibility(View.GONE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

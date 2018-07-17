@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
+import com.hanan.and.udacity.meetyourdoctor.adapters.DoctorsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Review;
 import com.hanan.and.udacity.meetyourdoctor.utilities.FloatingActionImageView;
@@ -48,7 +50,7 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.TRUE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
 
-public class DoctorProfile extends AppCompatActivity {
+public class DoctorProfile extends AppCompatActivity{
     private Doctor doctor;
     @BindView(R.id.doctor_name)
     TextView doctorName;
@@ -66,8 +68,8 @@ public class DoctorProfile extends AppCompatActivity {
     RatingBar ratingBar;
     @BindView(R.id.doctor_profile_image)
     FloatingActionImageView doctorProfileImage;
-    @BindView(R.id.favourite_button)
-    ImageButton favouriteBtn;
+//    @BindView(R.id.favourite_button)
+//    ImageButton favouriteBtn;
 
     List<String> phones;
 
@@ -79,6 +81,7 @@ public class DoctorProfile extends AppCompatActivity {
     private ValueEventListener favouriteDoctorsEventListener;
     private ValueEventListener reviewsEventListener;
     private float reviewsValue = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +96,14 @@ public class DoctorProfile extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            favouriteBtn.setVisibility(View.VISIBLE);
+//            favouriteBtn.setVisibility(View.VISIBLE);
             isDoctorFavourite();
-        } else {
-            favouriteBtn.setVisibility(View.GONE);
         }
+        invalidateOptionsMenu();
+//        else {
+//            favouriteBtn.setVisibility(View.GONE);
+//        }
+
 
         //get doctor object from activity intent
         if (getIntent().getParcelableExtra(DOCTOR) != null) {
@@ -119,15 +125,34 @@ public class DoctorProfile extends AppCompatActivity {
         ratingBar.setRating(doctor.getRating());
         phones = doctor.getPhones();
 
-        getDoctorRating();
+//        getDoctorRating();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.doctor_profile_menu, menu);
+        MenuItem favItem = menu.findItem(R.id.action_fav);
+        if(currentUser != null){
+            favItem.setVisible(true);
+        }else{
+            favItem.setVisible(false);
+        }
+        if(isFavourite){
+            favItem.setIcon(getResources().getDrawable(R.drawable.ic_favourite_white));
+        }
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
             onBackPressed(); // close this activity and return to preview activity (if there is any)
+        }else if(item.getItemId() == R.id.action_fav){
+            onFavouriteClicked(item);
+        }else if(item.getItemId() == R.id.action_call){
+            onCallClicked();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -167,8 +192,8 @@ public class DoctorProfile extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
     }
 
-    @OnClick(R.id.call_button)
-    public void onCallClicked(View view) {
+//    @OnClick(R.id.call_button)
+    public void onCallClicked() {
         final String[] selectedPhone = new String[1];
         selectedPhone[0] = phones.get(0);
         new MaterialDialog.Builder(this)
@@ -195,19 +220,19 @@ public class DoctorProfile extends AppCompatActivity {
                 .show();
     }
 
-    @OnClick(R.id.favourite_button)
-    public void onFavouriteClicked(View view) {
+//    @OnClick(R.id.favourite_button)
+    public void onFavouriteClicked(MenuItem item) {
         if (isFavourite) {
             //delete from favourites
             Toast.makeText(this, "Deleted from favourites", Toast.LENGTH_SHORT).show();
             isFavourite = false;
-            favouriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite_border));
+            item.setIcon(getResources().getDrawable(R.drawable.ic_favourite_border_white));
             userRef.child(DOCTORS_NODE).child(doctor.getId()).removeValue();
         } else {
             //add to favourites
             Toast.makeText(this, "Added to favourites", Toast.LENGTH_SHORT).show();
             isFavourite = true;
-            favouriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite_fill));
+            item.setIcon(getResources().getDrawable(R.drawable.ic_favourite_white));
             //add current doctor as favourite to current user
             userRef.child(DOCTORS_NODE).child(doctor.getId()).setValue(TRUE);
         }
@@ -221,7 +246,8 @@ public class DoctorProfile extends AppCompatActivity {
                 for (DataSnapshot favDoctor : dataSnapshot.child(DOCTORS_NODE).getChildren()) {
                     if (favDoctor.getKey().equals(doctor.getId())) {
                         isFavourite = true;
-                        favouriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite_fill));
+//                        favouriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite_fill));
+                        invalidateOptionsMenu();
                     }
                 }
             }
@@ -246,6 +272,7 @@ public class DoctorProfile extends AppCompatActivity {
     }
 
     public void getDoctorRating(){
+        reviewsValue = 0;
         reviewRef = database.getReference().child(REVIEWS_NODE).child(doctor.getId());
         reviewsEventListener = new ValueEventListener() {
             @Override
@@ -265,5 +292,11 @@ public class DoctorProfile extends AppCompatActivity {
             }
         };
         reviewRef.addListenerForSingleValueEvent(reviewsEventListener);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDoctorRating();
     }
 }
