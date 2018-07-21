@@ -81,7 +81,6 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
             callNow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, "Call now on this number : 01034344829", Toast.LENGTH_SHORT).show();
                     onCallClicked(mDoctorsList.get(getAdapterPosition()));
                 }
             });

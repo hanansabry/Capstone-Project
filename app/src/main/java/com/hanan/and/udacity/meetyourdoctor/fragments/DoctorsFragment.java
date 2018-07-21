@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,6 +56,8 @@ public class DoctorsFragment extends Fragment {
     private List<Doctor> doctors;
     private DoctorsAdapter doctorsAdapter;
     private RecyclerView doctorsRecyclerView;
+    private boolean search;
+    ActionBar actionBar;
 
     public static DoctorsFragment newInstance() {
         return new DoctorsFragment();
@@ -62,17 +67,20 @@ public class DoctorsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             doctors = bundle.getParcelableArrayList(DOCTORS_NODE);
             //get current specialist if user comes from most common specialists fragment
             if (bundle.getParcelable(SPECIALIST) != null) {
                 currentSpecialist = bundle.getParcelable(SPECIALIST);
-            } else if (bundle.getParcelableArrayList(DOCTORS_NODE) != null) {
-                currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            } else if (bundle.getBoolean("SEARCH")) {
+                search = bundle.getBoolean("SEARCH");
             }
         }
 
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_doctors, container, false);
 
@@ -83,8 +91,13 @@ public class DoctorsFragment extends Fragment {
         doctorsRecyclerView.setLayoutManager(layoutManager);
         doctorsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         if (currentSpecialist != null) {
+            actionBar.setTitle(currentSpecialist.getName());
             doctors = getDoctorsBySpecialist();
             //fill the recycler view with data
+            doctorsAdapter = new DoctorsAdapter(getContext(), doctors);
+            doctorsRecyclerView.setAdapter(doctorsAdapter);
+        } else if (search) {
+            //showing search result
             doctorsAdapter = new DoctorsAdapter(getContext(), doctors);
             doctorsRecyclerView.setAdapter(doctorsAdapter);
         }
@@ -104,12 +117,13 @@ public class DoctorsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(currentSpecialist == null){
+        if (currentSpecialist == null && currentUser != null && !search) {
             getFavouriteDoctors();
         }
     }
 
     public void getFavouriteDoctors() {
+        actionBar.setTitle(getResources().getString(R.string.favourites));
         ref = FirebaseDatabase.getInstance().getReference().child(USERS).child(currentUser.getUid()).child(DOCTORS_NODE);
         favouriteDoctorsValueListener = new ValueEventListener() {
             @Override
@@ -117,7 +131,8 @@ public class DoctorsFragment extends Fragment {
                 ArrayList favDoctors = new ArrayList<>();
                 for (DataSnapshot favDoctor : dataSnapshot.getChildren()) {
                     Doctor doctor = getDoctorById(favDoctor.getKey());
-                    favDoctors.add(doctor);
+                    if (doctor != null)
+                        favDoctors.add(doctor);
                 }
                 doctorsAdapter = new DoctorsAdapter(getContext(), favDoctors);
                 doctorsRecyclerView.setAdapter(doctorsAdapter);

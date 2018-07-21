@@ -122,12 +122,12 @@ public class SignupActivity extends AppCompatActivity {
         //validate data
         if (!isValidData(name, email, mobile, password)) {
             progressBar.setVisibility(View.INVISIBLE);
-            displaySnackMessage(scrollView, "Please enter all fields!");
+            displaySnackMessage(scrollView, getResources().getString(R.string.enter_all_fields));
             return;
         }
         if (password.length() < 6) {
             progressBar.setVisibility(View.INVISIBLE);
-            displaySnackMessage(scrollView, "Password is too short, enter minimum 6 characters");
+            displaySnackMessage(scrollView, getResources().getString(R.string.password_length));
             return;
         }
 
@@ -138,12 +138,10 @@ public class SignupActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     progressBar.setVisibility(View.INVISIBLE);
                     if (!task.isSuccessful()) {
-                        displaySnackMessage(scrollView, "Authentication Failed!");
+                        displaySnackMessage(scrollView, getResources().getString(R.string.authentication_failed));
                     } else {
                         //create new user to save in the database
                         writeNewUser(auth.getUid(), name, email, mobile, password, gender);
-                        displaySnackMessage(scrollView, "User is created successfully!");
-                        startMainActivity();
                     }
                 }
             });
@@ -173,7 +171,18 @@ public class SignupActivity extends AppCompatActivity {
     public void writeNewUser(String id, String name, String mail, String mobile, String password, String gender) {
         //save in database
         User user = new User(name, mail, mobile, password, gender);
-        databaseReference.child(id).setValue(user);
+        databaseReference.child(id).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                displaySnackMessage(scrollView, getResources().getString(R.string.create_user));
+                startMainActivity();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                displaySnackMessage(scrollView, getResources().getString(R.string.create_user_failed));
+            }
+        });
 
         //save in shared preferences
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(
@@ -194,7 +203,8 @@ public class SignupActivity extends AppCompatActivity {
         databaseReference.child(currentUser.getUid()).updateChildren(children).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(SignupActivity.this, "Data updated successfully", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SignupActivity.this, "Data updated successfully", Toast.LENGTH_SHORT).show();
+                displaySnackMessage(scrollView, getResources().getString(R.string.update_user));
                 //update password in firebase auth
                 currentUser.updatePassword(password);
                 progressBar.setVisibility(View.GONE);
@@ -202,7 +212,8 @@ public class SignupActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(SignupActivity.this, "Failed to update data, please try again!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SignupActivity.this, "Failed to update data, please try again!", Toast.LENGTH_SHORT).show();
+                displaySnackMessage(scrollView, getResources().getString(R.string.update_user_failed));
             }
         });
     }

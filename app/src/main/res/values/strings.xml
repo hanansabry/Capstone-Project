@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Doctor Online</string>
+    <string name="app_name">Doctor Finder</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="pref_file">pref_file</string>
@@ -52,6 +52,19 @@
     <string name="skip">Skip</string>
     <string name="clinic_phones">Clinic Phones</string>
     <string name="info">Info</string>
+    <string name="search_results_str">Search results for %1$s</string>
+    <string name="add_to_fav">Added to favourites</string>
+    <string name="remove_from_fav">Removed from favourites</string>
+    <string name="authentication_failed">Authentication Failed, Please try again!</string>
+    <string name="password_length">Password is too short, enter minimum 6 characters</string>
+    <string name="enter_mail_password">Please enter your email and password!</string>
+    <string name="login_failed">Login failed, wrong username or password!</string>
+    <string name="enter_all_fields">Please enter all fields!</string>
+    <string name="create_user">User is created successfully!</string>
+    <string name="create_user_failed">Failed to create new user, Please try again!</string>
+    <string name="update_user">Data updated successfully</string>
+    <string name="update_user_failed">Failed to update data, please try again!</string>
+
 
     <string-array name="specialists_suggestions">
         <item>Specialist 1</item>

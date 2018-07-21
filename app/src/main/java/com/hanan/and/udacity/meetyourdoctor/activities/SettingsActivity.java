@@ -62,8 +62,8 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                 if (isUserInteraction) {
-                    Toast.makeText(SettingsActivity.this, cityAdapter.getItem(i) + " is selected", Toast.LENGTH_SHORT).show();
                     setCityValue(i);
+                    restartApplication();
                 }
             }
 
@@ -134,8 +134,13 @@ public class SettingsActivity extends AppCompatActivity {
             resources.updateConfiguration(configuration, displayMetrics);
         }
 
-        Intent i = getBaseContext().getPackageManager()
-                .getLaunchIntentForPackage(getBaseContext().getPackageName());
+        restartApplication();
+    }
+
+    public void restartApplication(){
+//        Intent i = getBaseContext().getPackageManager()
+//                .getLaunchIntentForPackage(getBaseContext().getPackageName());
+        Intent i = new Intent(this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }

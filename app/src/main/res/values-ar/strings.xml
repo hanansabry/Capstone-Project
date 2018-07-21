@@ -50,6 +50,19 @@
     <string name="skip">تخطى</string>
     <string name="clinic_phones">أرقام العيادة</string>
     <string name="info">معلومات</string>
+    <string name="search_results_str">نتائج البحث عن %1$s</string>
+    <string name="add_to_fav">تمت الاضافة الى قائمة المفضلة</string>
+    <string name="remove_from_fav">تم الحذف من قائمة المفضلة</string>
+    <string name="authentication_failed">فشل محاولة الدخول .. من فضلك حاول مرة أخرى!</string>
+    <string name="password_length">الباسورد قصيرة .. يحب أن تكون 6 حروف على الأقل</string>
+    <string name="enter_mail_password">من فضلك ادخل الايميل والباسورد!</string>
+    <string name="login_failed">فشل عملية الدخول .. الايميل أو الباسورد غير صالحين!</string>
+    <string name="enter_all_fields">من فضلك ادخل جميع البيانات!</string>
+    <string name="create_user">تمت اضافة الحساب بنجاح</string>
+    <string name="create_user_failed">فشل عملية إضافة حساب جديد.. من فضلك حاول مرة أخرى</string>
+    <string name="update_user">تم تعديل البيانات بنجاح</string>
+    <string name="update_user_failed">فشل عملية تعديل البيانات.. من فضلك حاول مرة أخرى!</string>
+
 
     <string-array name="doctors_suggestions">
         <item>دكتور 1</item>

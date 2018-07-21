@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         if(!isValidData(email, password)){
             progressBarLogin.setVisibility(View.GONE);
             signInButton.setVisibility(View.VISIBLE);
-            displaySnackMessage(scrollViewLogin, "Please enter your email and password!");
+            displaySnackMessage(scrollViewLogin, getResources().getString(R.string.enter_mail_password));
             return;
         }
 
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                     setUser(auth.getCurrentUser().getUid());
                     startMainActivity();
                 }else{
-                    displaySnackMessage(scrollViewLogin, "Login failed, wrong username or password!");
+                    displaySnackMessage(scrollViewLogin, getResources().getString(R.string.login_failed));
                 }
             }
         });

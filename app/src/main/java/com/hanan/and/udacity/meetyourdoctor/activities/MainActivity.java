@@ -1,9 +1,9 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -12,42 +12,40 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
-import com.hanan.and.udacity.meetyourdoctor.adapters.SpecialistsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.fragments.DoctorsFragment;
 import com.hanan.and.udacity.meetyourdoctor.fragments.MoreFragment;
-import com.hanan.and.udacity.meetyourdoctor.fragments.SearchFragment;
+import com.hanan.and.udacity.meetyourdoctor.fragments.SpecialistsFragment;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ANONYMOUS;
+import br.com.mauker.materialsearchview.MaterialSearchView;
+
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.AR_LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.CITY;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_NODE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EN_LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.NOT_SIGNED;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALISTS_NODE;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.getLocale;
 
 public class MainActivity extends AppCompatActivity {
@@ -70,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private String selectedCity;
     private String[] cities;
     private Bundle dataBundle;
+    MaterialDialog searchProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
+        actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
         //------------------------------------------------------------------------------------------
         //initiate the SearchView
         initiateSearchView();
@@ -101,7 +101,12 @@ public class MainActivity extends AppCompatActivity {
         }
         //------------------------------------------------------------------------------------------
         //setup the Bottom Navigation View
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+        setupBottomNavigation();
+    }
+
+    private BottomNavigationView bottomNavigationView;
+    private void setupBottomNavigation() {
+        bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -111,13 +116,11 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.action_search:
                                 actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
-                                selectedFragment = SearchFragment.newInstance();
+                                selectedFragment = SpecialistsFragment.newInstance();
                                 selectedFragment.setArguments(dataBundle);
                                 transaction.replace(R.id.frame_layout, selectedFragment, "specialist");
                                 transaction.commit();
-                                searchView.setVisibility(View.VISIBLE);
                                 searchViewEnabled = true;
-                                searchView.setSuggestions(getResources().getStringArray(R.array.specialists_suggestions));
                                 break;
                             case R.id.action_favourites:
                                 if (isSigned) {
@@ -127,9 +130,7 @@ public class MainActivity extends AppCompatActivity {
                                     selectedFragment.setArguments(dataBundle);
                                     transaction.replace(R.id.frame_layout, selectedFragment);
                                     transaction.commit();
-                                    searchView.setVisibility(View.VISIBLE);
-                                    searchViewEnabled = true;
-                                    searchView.setSuggestions(getResources().getStringArray(R.array.doctors_suggestions));
+                                    searchViewEnabled = false;
                                 } else {
                                     finish();
                                     //start login activity
@@ -143,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = MoreFragment.newInstance();
                                 transaction.replace(R.id.frame_layout, selectedFragment);
                                 transaction.commit();
-                                searchView.setVisibility(View.INVISIBLE);
                                 searchViewEnabled = false;
                                 break;
                         }
@@ -160,15 +160,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void displaySearchFragment(){
+    public void displaySearchFragment() {
         actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SearchFragment searchFragment = SearchFragment.newInstance();
+        SpecialistsFragment specialistsFragment = SpecialistsFragment.newInstance();
         dataBundle = new Bundle();
         dataBundle.putParcelableArrayList(DOCTORS_NODE, doctors);
         dataBundle.putParcelableArrayList(SPECIALISTS_NODE, specialists);
-        searchFragment.setArguments(dataBundle);
-        transaction.replace(R.id.frame_layout, searchFragment);
+        specialistsFragment.setArguments(dataBundle);
+        transaction.replace(R.id.frame_layout, specialistsFragment);
         transaction.commit();
     }
 
@@ -176,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(searchItem);
 
         if (searchViewEnabled) {
             searchItem.setVisible(true);
@@ -187,49 +186,72 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        searchView.clearSuggestions();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        searchView.activityResumed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_search) {
+            searchView.openSearch();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
-        if (searchView.isSearchOpen()) {
+        int selectedItemId = bottomNavigationView.getMenu().findItem(bottomNavigationView.getSelectedItemId()).getItemId();
+        if (searchView.isOpen()) {
             searchView.closeSearch();
         } else if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
+            searchViewEnabled = true;
+            invalidateOptionsMenu();
+        } else if (selectedItemId == R.id.action_favourites || selectedItemId == R.id.action_more){
+            bottomNavigationView.setSelectedItemId(R.id.action_search);
         } else {
+            searchViewEnabled = true;
+            invalidateOptionsMenu();
             super.onBackPressed();
         }
     }
 
     public void initiateSearchView() {
         searchView = findViewById(R.id.search_view);
-        searchView.setEllipsize(true);
-        searchView.setVoiceSearch(true);
-        searchView.setSuggestions(getResources().getStringArray(R.array.specialists_suggestions));
+        searchView.setHint(getResources().getString(R.string.search_hint));
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Do something when the suggestion list is clicked.
+                String suggestion = searchView.getSuggestionAtPosition(position);
+                searchView.setQuery(suggestion, true);
+            }
+        });
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
-                return true;
+                searchForDoctor(query);
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(MainActivity.this, newText, Toast.LENGTH_SHORT).show();
                 return false;
-            }
-        });
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewShown() {
-                Toast.makeText(MainActivity.this, "SearchView is shown", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onSearchViewClosed() {
-                Toast.makeText(MainActivity.this, "SearchView is closed", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+
     //get all data from firebase
     public void getData() {
+        final List<String> doctorsNames = new ArrayList<>();
         if (getLocale().equals(ARABIC)) {
             databaseReference = firebaseDatabase.getReference(AR_LOCALE);
         } else {
@@ -249,7 +271,8 @@ public class MainActivity extends AppCompatActivity {
                         Specialist specialist = specialistsNode.getValue(Specialist.class);
                         specialist.setId(specialistsNode.getKey());
                         specialists.add(specialist);
-                    };
+                    }
+                    ;
 
                     //get doctors list
                     for (DataSnapshot doctorsNode : dataSnapshot.child(DOCTORS_NODE).getChildren()) {
@@ -264,16 +287,18 @@ public class MainActivity extends AppCompatActivity {
                         doctor.setId(doctorsNode.getKey());
 
                         //get doctors of only selected city, if all cities is selected get all doctors
-                        if(selectedCity.equals(cities[0])){
+                        if (selectedCity.equals(cities[0])) {
                             doctors.add(doctor);
-                        }else{
-                            if(doctor.getCity().equalsIgnoreCase(selectedCity.toLowerCase())){
+                        } else {
+                            if (doctor.getCity().equalsIgnoreCase(selectedCity.toLowerCase())) {
                                 doctors.add(doctor);
                             }
                         }
+                        doctorsNames.add(doctor.getName());
                     }
                 }
                 displaySearchFragment();
+                searchView.addSuggestions(doctorsNames);
             }
 
             @Override
@@ -294,11 +319,71 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    public String getSelectedCity(){
+    public String getSelectedCity() {
         int cityPosition = getApplicationContext()
                 .getSharedPreferences(getResources().getString(R.string.pref_file), 0)
                 .getInt(CITY, 0);
         String city = getResources().getStringArray(R.array.city_list)[cityPosition];
         return city;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MaterialSearchView.REQUEST_VOICE && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (matches != null && matches.size() > 0) {
+                String searchWrd = matches.get(0);
+                if (!TextUtils.isEmpty(searchWrd)) {
+                    searchView.setQuery(searchWrd, false);
+                }
+            }
+
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void searchForDoctor(final String searchQuery){
+        AsyncTask<String, Void, ArrayList<Doctor>> searchAsync = new AsyncTask<String, Void, ArrayList<Doctor>>() {
+            @Override
+            protected void onPreExecute() {
+                searchProgressDialog = new MaterialDialog.Builder(MainActivity.this)
+                        .progress(true, 0)
+                        .progressIndeterminateStyle(true)
+                        .show();
+            }
+
+            @Override
+            protected ArrayList<Doctor> doInBackground(String... strings) {
+                String searchQuery = strings[0];
+                ArrayList<Doctor> doctorsResult = new ArrayList<>();
+                for(Doctor doctor : doctors){
+                    if(doctor.getName().contains(searchQuery)){
+                        doctorsResult.add(doctor);
+                    }
+                }
+                return doctorsResult;
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Doctor> doctors) {
+                searchProgressDialog.dismiss();
+                showSearchResult(searchQuery, doctors);
+            }
+        }.execute(searchQuery);
+    }
+
+    public void showSearchResult(String searchQuery, ArrayList<Doctor> doctorsResults){
+        actionBar.setTitle(getResources().getString(R.string.search_results_str, searchQuery));
+        DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
+        Bundle searchResultsBundle = new Bundle();
+        searchResultsBundle.putParcelableArrayList(DOCTORS_NODE, doctorsResults);
+        searchResultsBundle.putBoolean("SEARCH", true);
+        doctorsFragment.setArguments(searchResultsBundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("search_results_fragment");
+        transaction.commit();
+        searchViewEnabled = false;
+        invalidateOptionsMenu();
     }
 }

@@ -42,6 +42,13 @@
             android:name=".activities.StartScreen"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.ReviewsActivity"></activity>
+
+        <provider
+            android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
+            android:authorities="com.hanan.and.udacity.meetyourdoctor.searchhistorydatabase"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true"/>
     </application>
 
 </manifest>

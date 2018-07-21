@@ -96,14 +96,9 @@ public class DoctorProfile extends AppCompatActivity{
         database = FirebaseDatabase.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-//            favouriteBtn.setVisibility(View.VISIBLE);
             isDoctorFavourite();
         }
         invalidateOptionsMenu();
-//        else {
-//            favouriteBtn.setVisibility(View.GONE);
-//        }
-
 
         //get doctor object from activity intent
         if (getIntent().getParcelableExtra(DOCTOR) != null) {
@@ -224,13 +219,13 @@ public class DoctorProfile extends AppCompatActivity{
     public void onFavouriteClicked(MenuItem item) {
         if (isFavourite) {
             //delete from favourites
-            Toast.makeText(this, "Deleted from favourites", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.remove_from_fav), Toast.LENGTH_SHORT).show();
             isFavourite = false;
             item.setIcon(getResources().getDrawable(R.drawable.ic_favourite_border_white));
             userRef.child(DOCTORS_NODE).child(doctor.getId()).removeValue();
         } else {
             //add to favourites
-            Toast.makeText(this, "Added to favourites", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.add_to_fav), Toast.LENGTH_SHORT).show();
             isFavourite = true;
             item.setIcon(getResources().getDrawable(R.drawable.ic_favourite_white));
             //add current doctor as favourite to current user

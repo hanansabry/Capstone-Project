@@ -98,7 +98,7 @@ public class MoreFragment extends Fragment {
                     //so the button is logout, set the user to anonymous
                     signOut();
                     //start main activity
-                    startActivity(new Intent(getActivity(), MainActivity.class));
+//                    startActivity(new Intent(getActivity(), MainActivity.class));
                 }else{
                     //if not signed so it's login, start LoginActivity
                     Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -128,6 +128,14 @@ public class MoreFragment extends Fragment {
         editor.putString(USER, ANONYMOUS);
         editor.apply();
 
+        //restart app
+        restartApplication();
+    }
+
+    public void restartApplication(){
+        Intent i = new Intent(getActivity(), MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 
     @Override

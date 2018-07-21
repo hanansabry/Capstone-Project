@@ -18,7 +18,7 @@ public class StartScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_start_2);
 
         //check if the user is signed
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(
