@@ -77,8 +77,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (notSigned) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
             finish();
-            startMainActivity();
         } else {
             super.onBackPressed();
         }

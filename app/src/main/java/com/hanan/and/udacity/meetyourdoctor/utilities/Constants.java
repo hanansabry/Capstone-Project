@@ -24,6 +24,7 @@ public class Constants {
     public static final String CITY = "city";
     public static final String LANGUAGE = "language";
     public static final String TRUE = "true";
+    public static final String PREV_STARTED = "PREV_STARTED";
     public static String LOCALE = DoctorOnline.getContext().getResources().getConfiguration().locale.getDisplayLanguage();
 
     public static void displaySnackMessage( View view, String msg){

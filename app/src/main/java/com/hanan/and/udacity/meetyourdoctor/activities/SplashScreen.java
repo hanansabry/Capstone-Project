@@ -1,6 +1,7 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import com.hanan.and.udacity.meetyourdoctor.R;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static final long SPLASH_TIME_OUT = 500;
+    private static final long SPLASH_TIME_OUT = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +55,4 @@ public class SplashScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openMainActivity(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
 }
