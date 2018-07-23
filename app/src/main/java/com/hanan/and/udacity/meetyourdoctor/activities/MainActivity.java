@@ -1,6 +1,7 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
@@ -32,8 +33,10 @@ import com.hanan.and.udacity.meetyourdoctor.fragments.MoreFragment;
 import com.hanan.and.udacity.meetyourdoctor.fragments.SpecialistsFragment;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
+import com.hanan.and.udacity.meetyourdoctor.utilities.ObjectSerializer;
 import com.hanan.and.udacity.meetyourdoctor.widget.SpecialistsListRemoteViewsFactroy;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         //setup the Bottom Navigation View
         setupBottomNavigation();
-//        Intent widgetIntent = SpecialistsListRemoteViewsFactroy.updateWidgetList(getApplicationContext());
-//        getApplicationContext().sendBroadcast(widgetIntent);
+        Intent widgetIntent = SpecialistsListRemoteViewsFactroy.updateWidgetList(getApplicationContext());
+        sendBroadcast(widgetIntent);
 //        if(getIntent() != null){
 ////            Toast.makeText(this, "Coming from widget"+((Specialist)getIntent().getParcelableExtra(SPECIALIST)).getName()
 ////                    , Toast.LENGTH_SHORT).show();
@@ -310,7 +313,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 displaySearchFragment();
                 searchView.addSuggestions(doctorsNames);
-                if(MainActivity.this.getIntent() != null){
+                saveSpecialistsList();
+                if(MainActivity.this.getIntent().hasExtra(SPECIALIST)){
                     Specialist specialist = getIntent().getParcelableExtra(SPECIALIST);
                     showWidgetSpecialistDoctors(specialist);
                 }
@@ -399,5 +403,16 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("specialists_fragment");
         transaction.commit();
+    }
+
+    public void saveSpecialistsList(){
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(getString(R.string.pref_file), 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        try {
+            editor.putString(SPECIALISTS_NODE, ObjectSerializer.serialize(specialists));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        editor.apply();
     }
 }

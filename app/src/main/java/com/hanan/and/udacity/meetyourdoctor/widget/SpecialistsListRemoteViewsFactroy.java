@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,7 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
+import com.hanan.and.udacity.meetyourdoctor.utilities.ObjectSerializer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
@@ -49,35 +52,46 @@ public class SpecialistsListRemoteViewsFactroy implements RemoteViewsService.Rem
     @Override
     public void onDataSetChanged() {
 //        get specialists list from the firebase
-        if (getLocale().equals(ARABIC)) {
-            databaseReference = firebaseDatabase.getReference(AR_LOCALE);
-        } else {
-            databaseReference = firebaseDatabase.getReference(EN_LOCALE);
-        }
-        databaseReference.keepSynced(true);
-
-        valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    specialists = new ArrayList<>();
-
-                    //get specialists list
-                    for (DataSnapshot specialistsNode : dataSnapshot.child(SPECIALISTS_NODE).getChildren()) {
-                        Specialist specialist = specialistsNode.getValue(Specialist.class);
-                        specialist.setId(specialistsNode.getKey());
-                        specialists.add(specialist);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-        databaseReference.addListenerForSingleValueEvent(valueEventListener);
+//        if (getLocale().equals(ARABIC)) {
+//            databaseReference = firebaseDatabase.getReference(AR_LOCALE);
+//        } else {
+//            databaseReference = firebaseDatabase.getReference(EN_LOCALE);
+//        }
+//        databaseReference.keepSynced(true);
+//
+//        valueEventListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    specialists = new ArrayList<>();
+//
+//                    //get specialists list
+//                    for (DataSnapshot specialistsNode : dataSnapshot.child(SPECIALISTS_NODE).getChildren()) {
+//                        Specialist specialist = specialistsNode.getValue(Specialist.class);
+//                        specialist.setId(specialistsNode.getKey());
+//                        specialists.add(specialist);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        };
+//        databaseReference.addListenerForSingleValueEvent(valueEventListener);
 //        populateListItems();
+        getSpecialistsList();
+    }
+
+    public void getSpecialistsList(){
+        SharedPreferences prefs = mContext.getSharedPreferences(mContext.getString(R.string.pref_file), Context.MODE_PRIVATE);
+
+        try {
+            specialists = (ArrayList<Specialist>) ObjectSerializer.deserialize(prefs.getString(SPECIALISTS_NODE, ObjectSerializer.serialize(new ArrayList<Specialist>())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void populateListItems(){

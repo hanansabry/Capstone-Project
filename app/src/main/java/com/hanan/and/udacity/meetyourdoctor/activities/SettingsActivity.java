@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.hanan.and.udacity.meetyourdoctor.R;
+import com.hanan.and.udacity.meetyourdoctor.widget.SpecialistsListRemoteViewsFactroy;
 
 import java.util.Locale;
 
@@ -143,6 +144,8 @@ public class SettingsActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
+        Intent widgetIntent = SpecialistsListRemoteViewsFactroy.updateWidgetList(getApplicationContext());
+        sendBroadcast(widgetIntent);
     }
 
     public void setCityValue(int position){

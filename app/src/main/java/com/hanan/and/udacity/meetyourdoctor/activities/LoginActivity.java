@@ -106,6 +106,13 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
+        //check if mail is valid
+        if(isEmailValid(email)){
+            progressBarLogin.setVisibility(View.GONE);
+            signInButton.setVisibility(View.VISIBLE);
+            displaySnackMessage(scrollViewLogin, getString(R.string.not_valid_mail));
+        }
+
         if(!isValidData(email, password)){
             progressBarLogin.setVisibility(View.GONE);
             signInButton.setVisibility(View.VISIBLE);
@@ -136,6 +143,10 @@ public class LoginActivity extends AppCompatActivity {
         }else{
             return true;
         }
+    }
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public void setUser(String userId){

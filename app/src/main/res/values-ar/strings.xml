@@ -63,10 +63,13 @@
     <string name="update_user">تم تعديل البيانات بنجاح</string>
     <string name="update_user_failed">فشل عملية تعديل البيانات.. من فضلك حاول مرة أخرى!</string>
     <string name="add_review">إضافة تقييم</string>
+    <string name="write_review">من فضلك قم بكتابة تقييم!</string>
     <string name="reviewer">الاسم</string>
     <string name="review_content">اكتب تقييمك هنا</string>
     <string name="add">إضافة</string>
     <string name="success_adding_review">تم إضافة التقييم بنجاح</string>
+    <string name="failed_adding_review">حدث خطأ ما.. من فضلك حاول مرة أخرى!</string>
+    <string name="not_valid_mail">الايميل غير صالح .. من فضلك قم بمراجعته!</string>
 
 
     <string-array name="doctors_suggestions">

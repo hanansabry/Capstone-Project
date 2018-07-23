@@ -3,7 +3,9 @@ package com.hanan.and.udacity.meetyourdoctor.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Specialist implements Parcelable{
+import java.io.Serializable;
+
+public class Specialist implements Parcelable, Serializable{
     private String id;
     private String name;
     private String desc;

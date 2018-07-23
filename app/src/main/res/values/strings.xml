@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Doctor Finder</string>
+    <string name="app_name">Find My Doctor</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="pref_file">pref_file</string>
@@ -65,10 +65,13 @@
     <string name="update_user">Data updated successfully</string>
     <string name="update_user_failed">Failed to update data, please try again!</string>
     <string name="add_review">Add review</string>
+    <string name="write_review">Please write your review!</string>
     <string name="reviewer">Your name</string>
     <string name="review_content">Write your review here</string>
     <string name="add">Add</string>
     <string name="success_adding_review">Review is add successfully</string>
+    <string name="failed_adding_review">Something went wrong, Please try again!</string>
+    <string name="not_valid_mail">Email is not valid, Please check it!</string>
 
 
     <string-array name="specialists_suggestions">

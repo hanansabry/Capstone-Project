@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -88,7 +89,7 @@ public class ReviewsActivity extends AppCompatActivity {
         reviewsRecyclerView.setLayoutManager(layoutManager);
         //fill the recycler view with data
         addReviewsToReyclerView();
-        if(currentUser != null) {
+        if (currentUser != null) {
             getCurrentUserName();
         }
     }
@@ -105,10 +106,10 @@ public class ReviewsActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(doctorReviewsRef != null){
+        if (doctorReviewsRef != null) {
             doctorReviewsRef.removeEventListener(childEventListener);
         }
-        if(userRef != null){
+        if (userRef != null) {
             userRef.removeEventListener(usersEventListener);
         }
     }
@@ -149,9 +150,9 @@ public class ReviewsActivity extends AppCompatActivity {
 
     public void addNewReview(View view) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
-                .title("Add review")
+                .title(getString(R.string.add_review))
                 .customView(R.layout.review_dialog, true)
-                .positiveText("Add")
+                .positiveText(getString(R.string.add))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -160,7 +161,7 @@ public class ReviewsActivity extends AppCompatActivity {
                         EditText reviewContentET = dialogView.findViewById(R.id.review);
                         RatingBar reviewerRating = dialogView.findViewById(R.id.reviewer_rating);
 
-                        if(currentUser != null) {
+                        if (currentUser != null) {
                             reviewerET.setText(userName);
                         }
 
@@ -169,7 +170,7 @@ public class ReviewsActivity extends AppCompatActivity {
                         ratingValue = reviewerRating.getRating();
 
                         if (TextUtils.isEmpty(reviewContent)) {
-                            Toast.makeText(ReviewsActivity.this, "Please write your review!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ReviewsActivity.this, getString(R.string.write_review), Toast.LENGTH_SHORT).show();
                         } else {
                             String timestamp = getDateCurrentTime();
 
@@ -180,10 +181,18 @@ public class ReviewsActivity extends AppCompatActivity {
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(
                                                     ReviewsActivity.this,
-                                                    "Review is added successfully", Toast.LENGTH_SHORT)
+                                                    getString(R.string.success_adding_review), Toast.LENGTH_SHORT)
                                                     .show();
                                         }
-                                    });
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(
+                                            ReviewsActivity.this,
+                                            getString(R.string.failed_adding_review), Toast.LENGTH_SHORT)
+                                            .show();
+                                }
+                            });
                         }
                     }
                 });
@@ -208,7 +217,7 @@ public class ReviewsActivity extends AppCompatActivity {
         return "";
     }
 
-    public void getCurrentUserName(){
+    public void getCurrentUserName() {
         userRef = database.getReference().child(USERS).child(currentUser.getUid());
         usersEventListener = new ValueEventListener() {
             @Override
