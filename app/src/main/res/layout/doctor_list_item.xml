@@ -72,7 +72,7 @@
                 android:id="@+id/call_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryColor"
+                android:background="@drawable/bg_border_green"
                 android:text="@string/call_now_str"
                 android:layout_gravity="bottom"
                 android:textColor="@color/white"

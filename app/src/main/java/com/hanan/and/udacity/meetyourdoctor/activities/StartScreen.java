@@ -33,7 +33,7 @@ public class StartScreen extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        checkFirstTimeRunning();
+//        checkFirstTimeRunning();
     }
 
     public void checkFirstTimeRunning(){

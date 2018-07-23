@@ -64,6 +64,11 @@
     <string name="create_user_failed">Failed to create new user, Please try again!</string>
     <string name="update_user">Data updated successfully</string>
     <string name="update_user_failed">Failed to update data, please try again!</string>
+    <string name="add_review">Add review</string>
+    <string name="reviewer">Your name</string>
+    <string name="review_content">Write your review here</string>
+    <string name="add">Add</string>
+    <string name="success_adding_review">Review is add successfully</string>
 
 
     <string-array name="specialists_suggestions">
@@ -118,5 +123,7 @@
         <item>@drawable/ic_cardiology</item>
         <item>@drawable/ic_allergy</item>
     </integer-array>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

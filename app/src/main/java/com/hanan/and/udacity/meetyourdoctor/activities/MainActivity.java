@@ -32,6 +32,7 @@ import com.hanan.and.udacity.meetyourdoctor.fragments.MoreFragment;
 import com.hanan.and.udacity.meetyourdoctor.fragments.SpecialistsFragment;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
+import com.hanan.and.udacity.meetyourdoctor.widget.SpecialistsListRemoteViewsFactroy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
     private String selectedCity;
     private String[] cities;
     private Bundle dataBundle;
-    MaterialDialog searchProgressDialog;
+    private BottomNavigationView bottomNavigationView;
+    private MaterialDialog searchProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,9 +104,18 @@ public class MainActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         //setup the Bottom Navigation View
         setupBottomNavigation();
+//        Intent widgetIntent = SpecialistsListRemoteViewsFactroy.updateWidgetList(getApplicationContext());
+//        getApplicationContext().sendBroadcast(widgetIntent);
+//        if(getIntent() != null){
+////            Toast.makeText(this, "Coming from widget"+((Specialist)getIntent().getParcelableExtra(SPECIALIST)).getName()
+////                    , Toast.LENGTH_SHORT).show();
+//            Specialist specialist = getIntent().getParcelableExtra(SPECIALIST);
+//            showWidgetSpecialistDoctors(specialist);
+//        }
+
     }
 
-    private BottomNavigationView bottomNavigationView;
+
     private void setupBottomNavigation() {
         bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener
@@ -299,6 +310,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 displaySearchFragment();
                 searchView.addSuggestions(doctorsNames);
+                if(MainActivity.this.getIntent() != null){
+                    Specialist specialist = getIntent().getParcelableExtra(SPECIALIST);
+                    showWidgetSpecialistDoctors(specialist);
+                }
             }
 
             @Override
@@ -327,21 +342,6 @@ public class MainActivity extends AppCompatActivity {
         return city;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MaterialSearchView.REQUEST_VOICE && resultCode == RESULT_OK) {
-            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            if (matches != null && matches.size() > 0) {
-                String searchWrd = matches.get(0);
-                if (!TextUtils.isEmpty(searchWrd)) {
-                    searchView.setQuery(searchWrd, false);
-                }
-            }
-
-            return;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     public void searchForDoctor(final String searchQuery){
         AsyncTask<String, Void, ArrayList<Doctor>> searchAsync = new AsyncTask<String, Void, ArrayList<Doctor>>() {
@@ -385,5 +385,19 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
         searchViewEnabled = false;
         invalidateOptionsMenu();
+    }
+
+    public void showWidgetSpecialistDoctors(Specialist specialist){
+        //create bundle to pass specialist object to doctors fragment
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SPECIALIST, specialist);
+        bundle.putParcelableArrayList(DOCTORS_NODE, doctors);
+        //initiate DoctorsFragment
+        DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
+        doctorsFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("specialists_fragment");
+        transaction.commit();
     }
 }

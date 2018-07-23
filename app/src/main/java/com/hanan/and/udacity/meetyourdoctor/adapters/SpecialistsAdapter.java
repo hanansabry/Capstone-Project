@@ -14,8 +14,6 @@ import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
 
 import java.util.List;
 
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
-
 /**
  * Created by Nono on 6/11/2018.
  */
@@ -37,7 +35,7 @@ public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.
 
     @Override
     public SpecialistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.specialist_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.specialist_item_layout, parent, false);
         return new SpecialistViewHolder(view);
     }
 

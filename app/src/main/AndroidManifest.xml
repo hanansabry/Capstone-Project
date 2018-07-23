@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hanan.and.udacity.meetyourdoctor">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".utilities.DoctorOnline"
@@ -41,14 +41,28 @@
         <activity
             android:name=".activities.StartScreen"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.ReviewsActivity"></activity>
+        <activity android:name=".activities.ReviewsActivity" />
 
         <provider
             android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
             android:authorities="com.hanan.and.udacity.meetyourdoctor.searchhistorydatabase"
             android:exported="false"
             android:protectionLevel="signature"
-            android:syncable="true"/>
+            android:syncable="true" />
+
+        <receiver android:name=".widget.MyAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_provider_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

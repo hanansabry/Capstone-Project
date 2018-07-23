@@ -62,6 +62,11 @@
     <string name="create_user_failed">فشل عملية إضافة حساب جديد.. من فضلك حاول مرة أخرى</string>
     <string name="update_user">تم تعديل البيانات بنجاح</string>
     <string name="update_user_failed">فشل عملية تعديل البيانات.. من فضلك حاول مرة أخرى!</string>
+    <string name="add_review">إضافة تقييم</string>
+    <string name="reviewer">الاسم</string>
+    <string name="review_content">اكتب تقييمك هنا</string>
+    <string name="add">إضافة</string>
+    <string name="success_adding_review">تم إضافة التقييم بنجاح</string>
 
 
     <string-array name="doctors_suggestions">
