@@ -14,40 +14,40 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <!--<android.support.design.widget.CollapsingToolbarLayout-->
-            <!--android:id="@+id/collapsing_toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:fitsSystemWindows="true"-->
-            <!--app:contentScrim="?attr/colorPrimary"-->
-            <!--app:expandedTitleMarginEnd="64dp"-->
-            <!--app:expandedTitleMarginStart="48dp"-->
-            <!--app:expandedTitleTextAppearance="@android:color/transparent"-->
-            <!--app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
+        <!--android:id="@+id/collapsing_toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--app:contentScrim="?attr/colorPrimary"-->
+        <!--app:expandedTitleMarginEnd="64dp"-->
+        <!--app:expandedTitleMarginStart="48dp"-->
+        <!--app:expandedTitleTextAppearance="@android:color/transparent"-->
+        <!--app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
 
-            <!--<ImageView-->
-                <!--android:id="@+id/backdrop"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:fitsSystemWindows="true"-->
-                <!--android:src="@drawable/find_my_doctor" />-->
+        <!--<ImageView-->
+        <!--android:id="@+id/backdrop"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--android:src="@drawable/find_my_doctor" />-->
 
-            <!--<FrameLayout-->
-                <!--android:id="@+id/toolbar_container"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="?attr/actionBarSize">-->
+        <!--<FrameLayout-->
+        <!--android:id="@+id/toolbar_container"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize">-->
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-                <br.com.mauker.materialsearchview.MaterialSearchView
-                    android:id="@+id/search_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/MaterialSearchViewStyle"/>
-            <!--</FrameLayout>-->
+        <br.com.mauker.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            style="@style/MaterialSearchViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <!--</FrameLayout>-->
         <!--</android.support.design.widget.CollapsingToolbarLayout>-->
 
     </android.support.design.widget.AppBarLayout>
@@ -63,13 +63,39 @@
         app:itemTextColor="@color/nav_item_state_list"
         app:menu="@menu/bottom_navigation_items" />
 
-
     <FrameLayout
-        android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
+        android:layout_height="match_parent"
         android:layout_below="@id/appbar">
+
+        <LinearLayout
+            android:id="@+id/loading_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/data_progress_bar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp" />
+
+            <TextView
+                android:layout_margin="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"/>
+
     </FrameLayout>
 
 

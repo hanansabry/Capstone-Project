@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString().trim();
 
         //check if mail is valid
-        if(isEmailValid(email)){
+        if(!isEmailValid(email)){
             progressBarLogin.setVisibility(View.GONE);
             signInButton.setVisibility(View.VISIBLE);
             displaySnackMessage(scrollViewLogin, getString(R.string.not_valid_mail));

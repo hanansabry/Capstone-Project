@@ -1,14 +1,11 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
-import com.hanan.and.udacity.meetyourdoctor.adapters.DoctorsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Review;
 import com.hanan.and.udacity.meetyourdoctor.utilities.FloatingActionImageView;
@@ -41,21 +35,19 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTOR;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_NODE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.REVIEWS_NODE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.TRUE;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
 
 public class DoctorProfile extends AppCompatActivity{
     private Doctor doctor;
     @BindView(R.id.doctor_name)
     TextView doctorName;
-    @BindView(R.id.doctor_specialist)
-    TextView doctorSpecialist;
+    @BindView(R.id.doctor_study)
+    TextView doctorStudy;
     @BindView(R.id.fees_tv)
     TextView fees;
     @BindView(R.id.address_tv)
@@ -66,6 +58,10 @@ public class DoctorProfile extends AppCompatActivity{
     TextView times;
     @BindView(R.id.rating)
     RatingBar ratingBar;
+    @BindView(R.id.about_doctor_tv)
+    TextView aboutDoctor;
+    @BindView(R.id.services_tv)
+    TextView servicesTv;
     @BindView(R.id.doctor_profile_image)
     FloatingActionImageView doctorProfileImage;
 //    @BindView(R.id.favourite_button)
@@ -112,15 +108,15 @@ public class DoctorProfile extends AppCompatActivity{
         }
 
         doctorName.setText(doctor.getName());
-        doctorSpecialist.setText(doctor.getSpecialist().getName());
+        doctorStudy.setText(doctor.getStudy());
         fees.setText(doctor.getFees());
         address.setText(doctor.getAddress());
         days.setText(doctor.getDays());
         times.setText(doctor.getTimes());
+        aboutDoctor.setText(doctor.getAbout());
+        servicesTv.setText(doctor.getServices());
         ratingBar.setRating(doctor.getRating());
         phones = doctor.getPhones();
-
-//        getDoctorRating();
     }
 
     @Override

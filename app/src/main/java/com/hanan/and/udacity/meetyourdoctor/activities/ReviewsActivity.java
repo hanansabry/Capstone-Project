@@ -168,10 +168,10 @@ public class ReviewsActivity extends AppCompatActivity {
                         reviewerName = (reviewerET.getText().toString()).equals("") ? ANONYMOUS : reviewerET.getText().toString();
                         reviewContent = reviewContentET.getText().toString();
                         ratingValue = reviewerRating.getRating();
-
-                        if (TextUtils.isEmpty(reviewContent)) {
-                            Toast.makeText(ReviewsActivity.this, getString(R.string.write_review), Toast.LENGTH_SHORT).show();
-                        } else {
+//
+//                        if (TextUtils.isEmpty(reviewContent)) {
+//                            Toast.makeText(ReviewsActivity.this, getString(R.string.write_review), Toast.LENGTH_SHORT).show();
+//                        } else {
                             String timestamp = getDateCurrentTime();
 
                             Review review = new Review(reviewerName, reviewContent, ratingValue, timestamp, doctor.getId());
@@ -193,7 +193,7 @@ public class ReviewsActivity extends AppCompatActivity {
                                             .show();
                                 }
                             });
-                        }
+//                        }
                     }
                 });
         MaterialDialog dialog = builder.build();

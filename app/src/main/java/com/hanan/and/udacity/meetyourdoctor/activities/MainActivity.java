@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialSearchView searchView;
     private CollapsingToolbarLayout collapsingToolbar;
     private Toolbar toolbar;
+    private LinearLayout loadingLayout;
     private boolean searchViewEnabled = true;
     private ActionBar actionBar;
     private boolean isSigned = false;
@@ -94,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
+
+        loadingLayout = findViewById(R.id.loading_layout);
+        loadingLayout.setVisibility(View.VISIBLE);
         //------------------------------------------------------------------------------------------
         //initiate the SearchView
         initiateSearchView();
@@ -109,13 +114,6 @@ public class MainActivity extends AppCompatActivity {
         setupBottomNavigation();
         Intent widgetIntent = SpecialistsListRemoteViewsFactroy.updateWidgetList(getApplicationContext());
         sendBroadcast(widgetIntent);
-//        if(getIntent() != null){
-////            Toast.makeText(this, "Coming from widget"+((Specialist)getIntent().getParcelableExtra(SPECIALIST)).getName()
-////                    , Toast.LENGTH_SHORT).show();
-//            Specialist specialist = getIntent().getParcelableExtra(SPECIALIST);
-//            showWidgetSpecialistDoctors(specialist);
-//        }
-
     }
 
 
@@ -137,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                                 searchViewEnabled = true;
                                 break;
                             case R.id.action_favourites:
+                                loadingLayout.setVisibility(View.INVISIBLE);
                                 if (isSigned) {
                                     //if the user is signed start favourites doctors screen
                                     actionBar.setTitle(getResources().getString(R.string.favourites));
@@ -154,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 break;
                             case R.id.action_more:
+                                loadingLayout.setVisibility(View.INVISIBLE);
                                 actionBar.setTitle(getResources().getString(R.string.more_action_string));
                                 selectedFragment = MoreFragment.newInstance();
                                 transaction.replace(R.id.frame_layout, selectedFragment);
@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         specialistsFragment.setArguments(dataBundle);
         transaction.replace(R.id.frame_layout, specialistsFragment);
         transaction.commit();
+        loadingLayout.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -322,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(MainActivity.this, "Error occurred, Please try again!", Toast.LENGTH_SHORT).show();
             }
         };
         databaseReference.addListenerForSingleValueEvent(valueEventListener);

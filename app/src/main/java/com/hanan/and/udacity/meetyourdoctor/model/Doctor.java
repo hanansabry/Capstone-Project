@@ -19,6 +19,7 @@ public class Doctor implements Parcelable{
     private String city;
     private String photoUrl;
     private String gender;
+    private String about;
     private float rating;
     private List<String> phones;
 
@@ -39,6 +40,7 @@ public class Doctor implements Parcelable{
         city = in.readString();
         photoUrl = in.readString();
         gender = in.readString();
+        about = in.readString();
         rating = in.readFloat();
         phones = in.createStringArrayList();
     }
@@ -167,6 +169,14 @@ public class Doctor implements Parcelable{
         this.phones = phones;
     }
 
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -186,6 +196,7 @@ public class Doctor implements Parcelable{
         dest.writeString(city);
         dest.writeString(photoUrl);
         dest.writeString(gender);
+        dest.writeString(about);
         dest.writeFloat(rating);
         dest.writeStringList(phones);
     }

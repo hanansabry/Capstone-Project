@@ -48,7 +48,6 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
         Doctor doctor = mDoctorsList.get(position);
         holder.doctorName.setText(doctor.getName());
         holder.doctorStudy.setText(doctor.getStudy());
-//        holder.ratingBar.setRating(doctor.getRating());
         holder.fees.setText(doctor.getFees());
         holder.address.setText(doctor.getAddress());
         holder.days.setText(doctor.getDays());

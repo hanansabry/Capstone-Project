@@ -2,8 +2,8 @@
     <string name="app_name">Find My Doctor</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="pref_file">pref_file</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pref_file" translatable="false">pref_file</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="search_action_string">Search</string>
     <string name="favourites_action_string">Favourites</string>
     <string name="more_action_string">More</string>
@@ -72,23 +72,8 @@
     <string name="success_adding_review">Review is add successfully</string>
     <string name="failed_adding_review">Something went wrong, Please try again!</string>
     <string name="not_valid_mail">Email is not valid, Please check it!</string>
+    <string name="loading">Loading…</string>
 
-
-    <string-array name="specialists_suggestions">
-        <item>Specialist 1</item>
-        <item>Specialist 2</item>
-        <item>Specialist 3</item>
-        <item>Specialist 4</item>
-        <item>Specialist 5</item>
-    </string-array>
-
-    <string-array name="doctors_suggestions">
-        <item>Doctor 1</item>
-        <item>Doctor 2</item>
-        <item>Doctor 3</item>
-        <item>Doctor 4</item>
-        <item>Doctor 5</item>
-    </string-array>
 
     <string-array name="city_list">
         <item>All Cities</item>
@@ -100,33 +85,5 @@
         <item>Arabic</item>
         <item>English</item>
     </string-array>
-
-    <string-array name="specialists">
-        <item>Dermatology</item>
-        <item>Dentistry</item>
-        <item>Psychiatry</item>
-        <item>Pediatrics and New Born</item>
-        <item>Neurology</item>
-        <item>Orthopedics</item>
-        <item>Gynaecology and Infertility</item>
-        <item>Ear, Nose and Throat</item>
-        <item>Cardiology and Vascular Disease</item>
-        <item>Allergy and Immunology</item>
-    </string-array>
-
-    <integer-array name="specialists_icons">
-        <item>@drawable/ic_dermatology</item>
-        <item>@drawable/ic_dentistry</item>
-        <item>@drawable/ic_psychiatry</item>
-        <item>@drawable/ic_newborn</item>
-        <item>@drawable/ic_neurology</item>
-        <item>@drawable/ic_orthopedics</item>
-        <item>@drawable/ic_gynaecology</item>
-        <item>@drawable/ic_earnose</item>
-        <item>@drawable/ic_cardiology</item>
-        <item>@drawable/ic_allergy</item>
-    </integer-array>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
 
 </resources>

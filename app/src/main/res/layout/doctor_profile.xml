@@ -39,15 +39,18 @@
                     android:text="@string/amany_sabry"
                     android:textColor="@android:color/white"
                     android:textSize="32sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
 
                 <TextView
-                    android:id="@+id/doctor_specialist"
+                    android:id="@+id/doctor_study"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/specialist_name"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:maxLines="2"
+                    android:textAlignment="center"/>
 
                 <RatingBar
                     android:id="@+id/rating"

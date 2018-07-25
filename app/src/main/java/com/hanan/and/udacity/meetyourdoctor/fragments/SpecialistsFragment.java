@@ -51,7 +51,7 @@ public class SpecialistsFragment extends Fragment implements SpecialistsAdapter.
         specialists = bundle.getParcelableArrayList(SPECIALISTS_NODE);
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_specialists, container, false);
 
         //setup the Specialists Recycler View
         RecyclerView specialistRecyclerView = rootView.findViewById(R.id.specialists_list);

@@ -26,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.adapters.DoctorsAdapter;
-import com.hanan.and.udacity.meetyourdoctor.data.DoctorsRetrieval;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
 import com.hanan.and.udacity.meetyourdoctor.utilities.DoctorOnline;

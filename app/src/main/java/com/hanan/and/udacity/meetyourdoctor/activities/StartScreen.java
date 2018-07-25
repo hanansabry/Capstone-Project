@@ -10,16 +10,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hanan.and.udacity.meetyourdoctor.R;
 
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ANONYMOUS;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.PREV_STARTED;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
 
 public class StartScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_2);
+        setContentView(R.layout.activity_start);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){

@@ -70,15 +70,9 @@
     <string name="success_adding_review">تم إضافة التقييم بنجاح</string>
     <string name="failed_adding_review">حدث خطأ ما.. من فضلك حاول مرة أخرى!</string>
     <string name="not_valid_mail">الايميل غير صالح .. من فضلك قم بمراجعته!</string>
+    <string name="loading">جاري التحميل …</string>
 
 
-    <string-array name="doctors_suggestions">
-        <item>دكتور 1</item>
-        <item>دكتور 2</item>
-        <item>دكتور 3</item>
-        <item>دكتور 4</item>
-        <item>دكتور 5</item>
-    </string-array>
 
     <string-array name="city_list">
         <item>جميع المدن</item>
@@ -91,16 +85,4 @@
         <item>انجليزي</item>
     </string-array>
 
-    <string-array name="specialists">
-        <item>جلدية</item>
-        <item>أسنان</item>
-        <item>نفسي وعصبي</item>
-        <item>أطفال وحديثي ولادة</item>
-        <item>مخ وأعصاب</item>
-        <item>عظام</item>
-        <item>نساء وولادة</item>
-        <item>أنف وأذن وحنجرة</item>
-        <item>قلب وأوعية دموية</item>
-        <item>حساسية ومناعة</item>
-    </string-array>
 </resources>
