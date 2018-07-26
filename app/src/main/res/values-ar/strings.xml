@@ -6,7 +6,6 @@
     <string name="favourites_action_string">المفضلة</string>
     <string name="more_action_string">المزيد</string>
     <string name="search_title">بحث</string>
-    <string name="search_specialists">ابحث بالتخصص</string>
     <string name="search_hint">ابحث باسم الطبيب</string>
     <string name="call_now_str">اتصل الآن</string>
     <string name="settings">اعدادات</string>
@@ -15,13 +14,11 @@
     <string name="logout">خروج (%1$s)</string>
     <string name="language">اللغة</string>
     <string name="login">دخول</string>
-    <string name="login_first">يجب ان تسجل أولا</string>
     <string name="email">البريد الالكتروني</string>
     <string name="password">كلمة المرور</string>
     <string name="sign_in">دخول</string>
     <string name="don_t_have_account">لا تملك حساب ؟</string>
     <string name="sign_up">سجل الآن</string>
-    <string name="or">أو</string>
     <string name="full_name">الاسم الكامل</string>
     <string name="mobile_number">رقم الهاتف</string>
     <string name="gender">النوع</string>
@@ -43,10 +40,7 @@
     <string name="favourites">الدكاترة المفضلين لي</string>
     <string name="arabic">عربي</string>
     <string name="english">انجليزي</string>
-    <string name="continue_with_google">المتابعة بحساب جوجل</string>
-    <string name="continue_with_facebook">المتابعة بحساب الفيس بوك</string>
     <string name="create_account_with_email">أنشأ حساب بايميلك الخاص</string>
-    <string name="already_a_member">لديك حساب؟</string>
     <string name="skip">تخطى</string>
     <string name="clinic_phones">أرقام العيادة</string>
     <string name="info">معلومات</string>
@@ -63,7 +57,6 @@
     <string name="update_user">تم تعديل البيانات بنجاح</string>
     <string name="update_user_failed">فشل عملية تعديل البيانات.. من فضلك حاول مرة أخرى!</string>
     <string name="add_review">إضافة تقييم</string>
-    <string name="write_review">من فضلك قم بكتابة تقييم!</string>
     <string name="reviewer">الاسم</string>
     <string name="review_content">اكتب تقييمك هنا</string>
     <string name="add">إضافة</string>

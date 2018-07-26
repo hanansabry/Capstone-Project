@@ -3,14 +3,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="pref_file" translatable="false">pref_file</string>
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="specialist_fragment" translatable="false">specialists_fragment</string>
     <string name="search_results_fragment" translatable="false">search_results_fragment</string>
     <string name="search_action_string">Search</string>
     <string name="favourites_action_string">Favourites</string>
     <string name="more_action_string">More</string>
     <string name="search_title">Search</string>
-    <string name="search_specialists">Search by specialistOld</string>
     <string name="search_hint">Search by doctor name</string>
     <string name="call_now_str">Call Now</string>
     <string name="settings">Settings</string>
@@ -19,13 +17,11 @@
     <string name="logout">Logout (%1$s)</string>
     <string name="language">Language:</string>
     <string name="login">Login</string>
-    <string name="login_first">(You must login first)</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="don_t_have_account">Don\'t have account?</string>
     <string name="sign_up">Sign up</string>
-    <string name="or">OR</string>
     <string name="full_name">Full Name</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="gender">Gender:</string>
@@ -47,10 +43,7 @@
     <string name="favourites">My Favourites Doctors</string>
     <string name="arabic">Arabic</string>
     <string name="english">English</string>
-    <string name="continue_with_google">Continue with google</string>
-    <string name="continue_with_facebook">Continue with Facebook</string>
     <string name="create_account_with_email">Create Account with Email</string>
-    <string name="already_a_member">Already A Member?</string>
     <string name="skip">Skip</string>
     <string name="clinic_phones">Clinic Phones</string>
     <string name="info">Info</string>
@@ -67,7 +60,6 @@
     <string name="update_user">Data updated successfully</string>
     <string name="update_user_failed">Failed to update data, please try again!</string>
     <string name="add_review">Add review</string>
-    <string name="write_review">Please write your review!</string>
     <string name="reviewer">Your name</string>
     <string name="review_content">Write your review here</string>
     <string name="add">Add</string>

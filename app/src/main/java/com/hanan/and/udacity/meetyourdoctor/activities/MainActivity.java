@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -54,7 +53,6 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.getLocale
 public class MainActivity extends AppCompatActivity {
 
     private MaterialSearchView searchView;
-    private CollapsingToolbarLayout collapsingToolbar;
     private Toolbar toolbar;
     private LinearLayout loadingLayout;
     private boolean searchViewEnabled = true;
@@ -101,11 +99,7 @@ public class MainActivity extends AppCompatActivity {
         initiateSearchView();
         //------------------------------------------------------------------------------------------
         //check if the user is signed
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            isSigned = false;
-        } else {
-            isSigned = true;
-        }
+        isSigned = FirebaseAuth.getInstance().getCurrentUser() != null;
         //------------------------------------------------------------------------------------------
         //setup the Bottom Navigation View
         setupBottomNavigation();
@@ -284,7 +278,6 @@ public class MainActivity extends AppCompatActivity {
                         specialist.setId(specialistsNode.getKey());
                         specialists.add(specialist);
                     }
-                    ;
 
                     //get doctors list
                     for (DataSnapshot doctorsNode : dataSnapshot.child(DOCTORS_NODE).getChildren()) {
@@ -326,6 +319,13 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(valueEventListener);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (valueEventListener != null) {
+            databaseReference.removeEventListener(valueEventListener);
+        }
+    }
 
     public Specialist getSpecialistByKey(final String key) {
         for (Specialist specialist : specialists) {
@@ -340,13 +340,12 @@ public class MainActivity extends AppCompatActivity {
         int cityPosition = getApplicationContext()
                 .getSharedPreferences(getResources().getString(R.string.pref_file), 0)
                 .getInt(CITY, 0);
-        String city = getResources().getStringArray(R.array.city_list)[cityPosition];
-        return city;
+        return getResources().getStringArray(R.array.city_list)[cityPosition];
     }
 
 
     public void searchForDoctor(final String searchQuery) {
-        AsyncTask<String, Void, ArrayList<Doctor>> searchAsync = new AsyncTask<String, Void, ArrayList<Doctor>>() {
+        new AsyncTask<String, Void, ArrayList<Doctor>>() {
             @Override
             protected void onPreExecute() {
                 searchProgressDialog = new MaterialDialog.Builder(MainActivity.this)
@@ -383,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
         searchResultsBundle.putBoolean("SEARCH", true);
         doctorsFragment.setArguments(searchResultsBundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack(getString(R.string.search_results_fragment   ));
+        transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack(getString(R.string.search_results_fragment));
         transaction.commit();
         searchViewEnabled = false;
         invalidateOptionsMenu();

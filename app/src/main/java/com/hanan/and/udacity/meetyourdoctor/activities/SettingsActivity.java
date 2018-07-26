@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.hanan.and.udacity.meetyourdoctor.R;
@@ -122,11 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
         Resources resources = getResources();
         Configuration configuration = resources.getConfiguration();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLocale(locale);
-        } else {
-            configuration.locale = locale;
-        }
+        configuration.setLocale(locale);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             getApplicationContext().createConfigurationContext(configuration);
         } else {

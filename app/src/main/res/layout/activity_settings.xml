@@ -77,7 +77,6 @@
                 android:contentDescription="@string/choose_city"/>
 
             <TextView
-                android:id="@+id/choose_city_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -108,7 +107,6 @@
             android:background="@android:color/darker_gray" />
 
         <LinearLayout
-            android:id="@+id/language_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/line2"
@@ -121,7 +119,6 @@
             android:paddingTop="16dp">
 
             <ImageView
-                android:id="@+id/login_icon"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
@@ -130,7 +127,6 @@
                 android:contentDescription="@string/language"/>
 
             <TextView
-                android:id="@+id/language_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

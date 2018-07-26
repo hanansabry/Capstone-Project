@@ -53,11 +53,7 @@ public class DoctorOnline extends Application {
         Resources resources = getResources();
         Configuration configuration = resources.getConfiguration();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLocale(locale);
-        } else {
-            configuration.locale = locale;
-        }
+        configuration.setLocale(locale);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             getApplicationContext().createConfigurationContext(configuration);
         } else {

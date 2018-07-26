@@ -136,11 +136,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean isValidData(String email, String password) {
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password);
     }
 
     boolean isEmailValid(CharSequence email) {

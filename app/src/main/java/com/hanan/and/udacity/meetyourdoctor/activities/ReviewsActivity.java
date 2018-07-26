@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ANONYMOUS;
@@ -224,7 +223,6 @@ public class ReviewsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 userName = user.getName();
-                Log.d("User Name", userName);
             }
 
             @Override
