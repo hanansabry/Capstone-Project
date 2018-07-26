@@ -31,7 +31,8 @@
             android:layout_height="match_parent"
             android:alpha=".7"
             android:scaleType="centerCrop"
-            android:src="@drawable/doctor_start_screen_2" />
+            android:src="@drawable/doctor_start_screen_2"
+            android:contentDescription="@string/start_screen_image"/>
 
     </RelativeLayout>
 

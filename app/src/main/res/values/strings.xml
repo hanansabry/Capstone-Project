@@ -73,6 +73,11 @@
     <string name="failed_adding_review">Something went wrong, Please try again!</string>
     <string name="not_valid_mail">Email is not valid, Please check it!</string>
     <string name="loading">Loading…</string>
+    <string name="doctor_icon">Doctor Icon</string>
+    <string name="specialist_icon">Specialist Icon</string>
+    <string name="app_logo">App Logo</string>
+    <string name="user_image">User Image</string>
+    <string name="start_screen_image">Start Screen Image</string>
 
 
     <string-array name="city_list">

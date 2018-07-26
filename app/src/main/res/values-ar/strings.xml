@@ -71,6 +71,11 @@
     <string name="failed_adding_review">حدث خطأ ما.. من فضلك حاول مرة أخرى!</string>
     <string name="not_valid_mail">الايميل غير صالح .. من فضلك قم بمراجعته!</string>
     <string name="loading">جاري التحميل …</string>
+    <string name="doctor_icon">صورة الطبيب</string>
+    <string name="specialist_icon">صورة التخصص</string>
+    <string name="app_logo">شعار البرنامج</string>
+    <string name="user_image">صورة المستخدم</string>
+    <string name="start_screen_image">صورة البداية</string>
 
 
     <string-array name="city_list">

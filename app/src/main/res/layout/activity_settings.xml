@@ -72,7 +72,8 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/ic_location_city_black_24dp" />
+                android:src="@drawable/ic_location_city_black_24dp"
+                android:contentDescription="@string/choose_city"/>
 
             <TextView
                 android:id="@+id/choose_city_tv"
@@ -123,7 +124,8 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/ic_language_black_32dp" />
+                android:src="@drawable/ic_language_black_32dp"
+                android:contentDescription="@string/language"/>
 
             <TextView
                 android:id="@+id/language_tv"

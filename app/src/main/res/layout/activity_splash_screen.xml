@@ -24,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/app_name_tv"
         android:layout_centerInParent="true"
-        android:src="@drawable/stethoscope" />
+        android:src="@drawable/stethoscope"
+        android:contentDescription="@string/app_logo"/>
 
     <!--<FrameLayout-->
     <!--android:layout_width="wrap_content"-->
