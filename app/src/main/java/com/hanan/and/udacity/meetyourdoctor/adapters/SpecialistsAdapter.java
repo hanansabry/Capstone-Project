@@ -23,10 +23,6 @@ public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.
     private List<Specialist> mSpecialistList;
     private SpecialistAdapterCallback mCallback;
 
-    public interface SpecialistAdapterCallback {
-        void onSpecialistClick(int position);
-    }
-
     public SpecialistsAdapter(Context context, List<Specialist> specialistList, SpecialistAdapterCallback callback) {
         mContext = context;
         mSpecialistList = specialistList;
@@ -51,6 +47,10 @@ public class SpecialistsAdapter extends RecyclerView.Adapter<SpecialistsAdapter.
     @Override
     public int getItemCount() {
         return mSpecialistList.size();
+    }
+
+    public interface SpecialistAdapterCallback {
+        void onSpecialistClick(int position);
     }
 
     class SpecialistViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

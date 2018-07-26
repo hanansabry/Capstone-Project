@@ -27,45 +27,45 @@
         android:src="@drawable/stethoscope" />
 
     <!--<FrameLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_centerInParent="true">-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_centerInParent="true">-->
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/signup_skip_layout"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity=""-->
-            <!--android:layout_marginBottom="96dp"-->
-            <!--android:visibility="invisible">-->
+    <!--<LinearLayout-->
+    <!--android:id="@+id/signup_skip_layout"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity=""-->
+    <!--android:layout_marginBottom="96dp"-->
+    <!--android:visibility="invisible">-->
 
-            <!--<Button-->
-                <!--android:id="@+id/signup_button"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="8dp"-->
-                <!--android:background="@color/secondaryLightColor"-->
-                <!--android:text="Sign up"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:onClick="openSignupActivity"/>-->
+    <!--<Button-->
+    <!--android:id="@+id/signup_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="8dp"-->
+    <!--android:background="@color/secondaryLightColor"-->
+    <!--android:text="Sign up"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:onClick="openSignupActivity"/>-->
 
-            <!--<Button-->
-                <!--android:id="@+id/skip_button"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="8dp"-->
-                <!--android:background="@color/white"-->
-                <!--android:text="Skip"-->
-                <!--android:textColor="@color/secondaryLightColor"-->
-                <!--android:onClick="openMainActivity"/>-->
-        <!--</LinearLayout>-->
+    <!--<Button-->
+    <!--android:id="@+id/skip_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="8dp"-->
+    <!--android:background="@color/white"-->
+    <!--android:text="Skip"-->
+    <!--android:textColor="@color/secondaryLightColor"-->
+    <!--android:onClick="openMainActivity"/>-->
+    <!--</LinearLayout>-->
 
-        <!--<ProgressBar-->
-            <!--android:id="@+id/progress_bar"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center" />-->
+    <!--<ProgressBar-->
+    <!--android:id="@+id/progress_bar"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center" />-->
 
     <!--</FrameLayout>-->
 

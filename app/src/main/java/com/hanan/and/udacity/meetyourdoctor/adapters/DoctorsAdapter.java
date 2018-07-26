@@ -10,9 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -60,9 +58,35 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
         return mDoctorsList.size();
     }
 
-    class DoctorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public void onCallClicked(final Doctor doctor) {
+        final String[] selectedPhone = new String[1];
+        selectedPhone[0] = doctor.getPhones().get(0);
+        new MaterialDialog.Builder(mContext)
+                .title(mContext.getResources().getString(R.string.clinic_phones))
+                .items(doctor.getPhones())
+                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        selectedPhone[0] = doctor.getPhones().get(which);
+                        return true;
+                    }
+                })
+                .alwaysCallSingleChoiceCallback()
+                .positiveText(R.string.call_now_str)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @SuppressLint("MissingPermission")
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + selectedPhone[0]));
+                        mContext.startActivity(intent);
+                    }
+                })
+                .show();
+    }
+
+    class DoctorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView doctorName, doctorStudy, fees, address, days, times;
-//        RatingBar ratingBar;
+        //        RatingBar ratingBar;
         Button callNow;
 
         DoctorViewHolder(View itemView) {
@@ -92,31 +116,5 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
             intent.putExtra(DOCTOR, mDoctorsList.get(getAdapterPosition()));
             mContext.startActivity(intent);
         }
-    }
-
-    public void onCallClicked(final Doctor doctor){
-        final String[] selectedPhone = new String[1];
-        selectedPhone[0] = doctor.getPhones().get(0);
-        new MaterialDialog.Builder(mContext)
-                .title(mContext.getResources().getString(R.string.clinic_phones))
-                .items(doctor.getPhones())
-                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        selectedPhone[0] = doctor.getPhones().get(which);
-                        return true;
-                    }
-                })
-                .alwaysCallSingleChoiceCallback()
-                .positiveText(R.string.call_now_str)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @SuppressLint("MissingPermission")
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + selectedPhone[0]));
-                        mContext.startActivity(intent);
-                    }
-                })
-                .show();
     }
 }

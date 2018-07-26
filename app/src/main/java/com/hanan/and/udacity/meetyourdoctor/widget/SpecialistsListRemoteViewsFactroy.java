@@ -7,14 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.AppWidgetTarget;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -25,12 +21,8 @@ import com.hanan.and.udacity.meetyourdoctor.utilities.ObjectSerializer;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.AR_LOCALE;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EN_LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALISTS_NODE;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.getLocale;
 
 public class SpecialistsListRemoteViewsFactroy implements RemoteViewsService.RemoteViewsFactory {
 
@@ -42,6 +34,18 @@ public class SpecialistsListRemoteViewsFactroy implements RemoteViewsService.Rem
 
     SpecialistsListRemoteViewsFactroy(Context context) {
         mContext = context;
+    }
+
+    public static Intent updateWidgetList(Context context) {
+        Intent intent = new Intent(context, MyAppWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, MyAppWidgetProvider.class));
+
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds);
+        return intent;
     }
 
     @Override
@@ -84,7 +88,7 @@ public class SpecialistsListRemoteViewsFactroy implements RemoteViewsService.Rem
         getSpecialistsList();
     }
 
-    public void getSpecialistsList(){
+    public void getSpecialistsList() {
         SharedPreferences prefs = mContext.getSharedPreferences(mContext.getString(R.string.pref_file), Context.MODE_PRIVATE);
 
         try {
@@ -94,7 +98,7 @@ public class SpecialistsListRemoteViewsFactroy implements RemoteViewsService.Rem
         }
     }
 
-    public void populateListItems(){
+    public void populateListItems() {
         specialists = new ArrayList<>();
         Specialist s1 = new Specialist();
         s1.setId("allergy");
@@ -147,7 +151,7 @@ public class SpecialistsListRemoteViewsFactroy implements RemoteViewsService.Rem
                     .load(specialist.getIconUrl())
                     .asBitmap()
                     .placeholder(R.drawable.ic_specialist_placeholder)
-                    .into(100,100)
+                    .into(100, 100)
                     .get();
 
             views.setImageViewBitmap(R.id.specialist_icon, bitmap);
@@ -183,17 +187,5 @@ public class SpecialistsListRemoteViewsFactroy implements RemoteViewsService.Rem
     @Override
     public boolean hasStableIds() {
         return false;
-    }
-
-    public static Intent updateWidgetList(Context context) {
-        Intent intent = new Intent(context, MyAppWidgetProvider.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, MyAppWidgetProvider.class));
-
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds);
-        return intent;
     }
 }

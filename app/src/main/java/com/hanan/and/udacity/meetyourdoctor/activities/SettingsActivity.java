@@ -5,9 +5,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
@@ -17,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.widget.SpecialistsListRemoteViewsFactroy;
@@ -31,10 +29,10 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.LANGUAGE;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private boolean isUserInteraction;
-    private String user;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    private boolean isUserInteraction;
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +136,7 @@ public class SettingsActivity extends AppCompatActivity {
         restartApplication();
     }
 
-    public void restartApplication(){
+    public void restartApplication() {
 //        Intent i = getBaseContext().getPackageManager()
 //                .getLaunchIntentForPackage(getBaseContext().getPackageName());
         Intent i = new Intent(this, MainActivity.class);
@@ -148,25 +146,25 @@ public class SettingsActivity extends AppCompatActivity {
         sendBroadcast(widgetIntent);
     }
 
-    public void setCityValue(int position){
+    public void setCityValue(int position) {
         editor.putInt(CITY, position);
         editor.apply();
     }
 
-    public void setLanguageValue(int position){
+    public void setLanguageValue(int position) {
         editor.putInt(LANGUAGE, position);
         editor.apply();
     }
 
-    public int getCityPosition(){
+    public int getCityPosition() {
         return preferences.getInt(CITY, 0);
     }
 
-    public int getLanguagePosition(){
+    public int getLanguagePosition() {
         return preferences.getInt(LANGUAGE, 1);
     }
 
-    public MaterialDialog.Builder confirmationDialog(){
+    public MaterialDialog.Builder confirmationDialog() {
         //create confirmation Dialog
         MaterialDialog.Builder builder = new MaterialDialog.Builder(SettingsActivity.this);
         builder.title("Change Language")

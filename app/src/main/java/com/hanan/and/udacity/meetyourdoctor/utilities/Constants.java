@@ -12,7 +12,7 @@ public class Constants {
     public static final String EDIT_PROFILE = "edit_profile";
     public static final String AR_LOCALE = "ar";
     public static final String EN_LOCALE = "en";
-    public static final String NOT_SIGNED= "login";
+    public static final String NOT_SIGNED = "login";
     public static final String ARABIC = "Arabic";
     public static final String ENGLISH = "English";
     public static final String ANONYMOUS = "anonymous";
@@ -27,11 +27,11 @@ public class Constants {
     public static final String PREV_STARTED = "PREV_STARTED";
     public static String LOCALE = DoctorOnline.getContext().getResources().getConfiguration().locale.getDisplayLanguage();
 
-    public static void displaySnackMessage( View view, String msg){
+    public static void displaySnackMessage(View view, String msg) {
         Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
     }
 
-    public static String getLocale(){
+    public static String getLocale() {
         return DoctorOnline.getContext().getResources().getConfiguration().locale.getDisplayLanguage();
     }
 }

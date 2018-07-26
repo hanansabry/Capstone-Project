@@ -2,7 +2,6 @@ package com.hanan.and.udacity.meetyourdoctor.utilities;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -21,6 +20,14 @@ public class DoctorOnline extends Application {
     private static Context context;
     private static String city;
 
+    public static Context getContext() {
+        return context;
+    }
+
+    public static String getSelectedCity() {
+        return city;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -32,11 +39,7 @@ public class DoctorOnline extends Application {
         setLocale();
     }
 
-    public static Context getContext(){
-        return context;
-    }
-
-    public void setLocale(){
+    public void setLocale() {
         int langIndex = context.getSharedPreferences(getResources().getString(R.string.pref_file), 0)
                 .getInt(Constants.LANGUAGE, 1);
         String lang = getResources().getStringArray(R.array.language_list)[langIndex];
@@ -60,9 +63,5 @@ public class DoctorOnline extends Application {
         } else {
             resources.updateConfiguration(configuration, displayMetrics);
         }
-    }
-
-    public static String getSelectedCity(){
-        return city;
     }
 }

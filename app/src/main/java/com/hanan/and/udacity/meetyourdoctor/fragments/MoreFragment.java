@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ANONYMOUS;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EDIT_PROFILE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
 
 
@@ -67,12 +66,12 @@ public class MoreFragment extends Fragment {
 
         //check if the user is signed
         user = auth.getCurrentUser();
-        if(user == null){
+        if (user == null) {
             loginTv.setText(getResources().getString(R.string.login));
             editProfileLayout.setVisibility(View.GONE);
             line.setVisibility(View.GONE);
             signed = false;
-        }else{
+        } else {
             loginTv.setText(getResources().getString(R.string.logout, user.getEmail()));
             editProfileLayout.setVisibility(View.VISIBLE);
             line.setVisibility(View.VISIBLE);
@@ -94,12 +93,12 @@ public class MoreFragment extends Fragment {
         loginLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(signed) {
+                if (signed) {
                     //so the button is logout, set the user to anonymous
                     signOut();
                     //start main activity
 //                    startActivity(new Intent(getActivity(), MainActivity.class));
-                }else{
+                } else {
                     //if not signed so it's login, start LoginActivity
                     Intent intent = new Intent(getContext(), LoginActivity.class);
                     startActivity(intent);
@@ -120,7 +119,7 @@ public class MoreFragment extends Fragment {
     }
 
 
-    private void signOut(){
+    private void signOut() {
         FirebaseAuth.getInstance().signOut();
         SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(
                 getResources().getString(R.string.pref_file), 0);
@@ -132,7 +131,7 @@ public class MoreFragment extends Fragment {
         restartApplication();
     }
 
-    public void restartApplication(){
+    public void restartApplication() {
         Intent i = new Intent(getActivity(), MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);

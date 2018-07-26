@@ -1,13 +1,12 @@
 package com.hanan.and.udacity.meetyourdoctor.activities;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -172,27 +171,27 @@ public class ReviewsActivity extends AppCompatActivity {
 //                        if (TextUtils.isEmpty(reviewContent)) {
 //                            Toast.makeText(ReviewsActivity.this, getString(R.string.write_review), Toast.LENGTH_SHORT).show();
 //                        } else {
-                            String timestamp = getDateCurrentTime();
+                        String timestamp = getDateCurrentTime();
 
-                            Review review = new Review(reviewerName, reviewContent, ratingValue, timestamp, doctor.getId());
-                            doctorReviewsRef.push().setValue(review)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(
-                                                    ReviewsActivity.this,
-                                                    getString(R.string.success_adding_review), Toast.LENGTH_SHORT)
-                                                    .show();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(
-                                            ReviewsActivity.this,
-                                            getString(R.string.failed_adding_review), Toast.LENGTH_SHORT)
-                                            .show();
-                                }
-                            });
+                        Review review = new Review(reviewerName, reviewContent, ratingValue, timestamp, doctor.getId());
+                        doctorReviewsRef.push().setValue(review)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(
+                                                ReviewsActivity.this,
+                                                getString(R.string.success_adding_review), Toast.LENGTH_SHORT)
+                                                .show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(
+                                        ReviewsActivity.this,
+                                        getString(R.string.failed_adding_review), Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        });
 //                        }
                     }
                 });

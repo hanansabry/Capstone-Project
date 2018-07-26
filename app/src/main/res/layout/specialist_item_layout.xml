@@ -3,29 +3,29 @@
     android:id="@+id/specialist_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:background="?android:selectableItemBackground"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/specialist_icon"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="center"
-        android:adjustViewBounds="true"/>
+        android:adjustViewBounds="true" />
 
     <TextView
         android:id="@+id/specialist_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="2dp"
-        android:textSize="14sp"
         android:background="@color/primaryColor"
+        android:gravity="center"
+        android:maxLines="2"
+        android:padding="2dp"
         android:textColor="@color/white"
-        android:maxLines="2"/>
+        android:textSize="14sp" />
 </LinearLayout>

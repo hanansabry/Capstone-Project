@@ -5,7 +5,18 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class Specialist implements Parcelable, Serializable{
+public class Specialist implements Parcelable, Serializable {
+    public static final Creator<Specialist> CREATOR = new Creator<Specialist>() {
+        @Override
+        public Specialist createFromParcel(Parcel in) {
+            return new Specialist(in);
+        }
+
+        @Override
+        public Specialist[] newArray(int size) {
+            return new Specialist[size];
+        }
+    };
     private String id;
     private String name;
     private String desc;
@@ -27,18 +38,6 @@ public class Specialist implements Parcelable, Serializable{
         iconUrl = in.readString();
         id = in.readString();
     }
-
-    public static final Creator<Specialist> CREATOR = new Creator<Specialist>() {
-        @Override
-        public Specialist createFromParcel(Parcel in) {
-            return new Specialist(in);
-        }
-
-        @Override
-        public Specialist[] newArray(int size) {
-            return new Specialist[size];
-        }
-    };
 
     public String getName() {
         return name;

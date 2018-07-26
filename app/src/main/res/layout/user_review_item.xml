@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:text="Hanan Sabry"
-            android:textColor="@color/primaryColor"/>
+            android:textColor="@color/primaryColor" />
 
         <TextView
             android:id="@+id/review_date_tv"
@@ -58,6 +58,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/user_icon"
         android:layout_margin="8dp"
-        android:text="some text review some text review some text review some text reviewsome text review some text reviewsome text review some text review"/>
+        android:text="some text review some text review some text review some text reviewsome text review some text reviewsome text review some text review" />
 
 </RelativeLayout>

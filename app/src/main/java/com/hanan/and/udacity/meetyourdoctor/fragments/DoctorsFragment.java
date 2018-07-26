@@ -4,18 +4,14 @@ package com.hanan.and.udacity.meetyourdoctor.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,18 +24,11 @@ import com.hanan.and.udacity.meetyourdoctor.R;
 import com.hanan.and.udacity.meetyourdoctor.adapters.DoctorsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
-import com.hanan.and.udacity.meetyourdoctor.utilities.DoctorOnline;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.AR_LOCALE;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_NODE;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EN_LOCALE;
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
 
@@ -47,6 +36,7 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
  * A simple {@link Fragment} subclass.
  */
 public class DoctorsFragment extends Fragment {
+    ActionBar actionBar;
     private Specialist currentSpecialist;
     private ArrayList<Doctor> allDoctors;
     private FirebaseUser currentUser;
@@ -56,7 +46,6 @@ public class DoctorsFragment extends Fragment {
     private DoctorsAdapter doctorsAdapter;
     private RecyclerView doctorsRecyclerView;
     private boolean search;
-    ActionBar actionBar;
 
     public static DoctorsFragment newInstance() {
         return new DoctorsFragment();

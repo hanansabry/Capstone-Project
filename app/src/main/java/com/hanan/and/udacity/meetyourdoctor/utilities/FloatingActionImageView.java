@@ -10,12 +10,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
-
-import com.hanan.and.udacity.meetyourdoctor.R;
 
 public class FloatingActionImageView extends FloatingActionButton {
 
@@ -54,9 +50,8 @@ public class FloatingActionImageView extends FloatingActionButton {
             mScaledBitmap = fullSizeBitmap;
         } else {
             mScaledBitmap = Bitmap.createScaledBitmap(fullSizeBitmap,
-                    scaledWidth, scaledHeight, true );
+                    scaledWidth, scaledHeight, true);
         }
-
 
 
         Bitmap circleBitmap = getCircledBitmap(mScaledBitmap);
@@ -66,7 +61,7 @@ public class FloatingActionImageView extends FloatingActionButton {
     }
 
     public Bitmap getRoundedCornerBitmap(Context context, Bitmap input,
-                                         int pixels, int w, int h, boolean     squareTL, boolean squareTR,
+                                         int pixels, int w, int h, boolean squareTL, boolean squareTR,
                                          boolean squareBL, boolean squareBR) {
 
         Bitmap output = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
@@ -123,7 +118,7 @@ public class FloatingActionImageView extends FloatingActionButton {
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
 //        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-        canvas.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2,     bitmap.getHeight()/2, paint);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, bitmap.getHeight() / 2, paint);
 
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);

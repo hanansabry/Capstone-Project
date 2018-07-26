@@ -14,10 +14,10 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
     signingConfigs {
         config {
-            keyAlias 'CapstoneProjectKey'
-            keyPassword 'tweety6242'
-            storeFile file('C:/toto/Android_ND_Program/Projects/Capstone_Project/MeetYourDoctor/app/capstone_project.jks')
-            storePassword 'tweety624'
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
         }
     }
     compileSdkVersion 27

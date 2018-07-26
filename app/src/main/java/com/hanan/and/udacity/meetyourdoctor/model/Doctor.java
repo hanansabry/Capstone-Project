@@ -5,8 +5,19 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-public class Doctor implements Parcelable{
+public class Doctor implements Parcelable {
 
+    public static final Creator<Doctor> CREATOR = new Creator<Doctor>() {
+        @Override
+        public Doctor createFromParcel(Parcel in) {
+            return new Doctor(in);
+        }
+
+        @Override
+        public Doctor[] newArray(int size) {
+            return new Doctor[size];
+        }
+    };
     private String id;
     private String name;
     private Specialist specialist;
@@ -23,9 +34,9 @@ public class Doctor implements Parcelable{
     private float rating;
     private List<String> phones;
 
+
     public Doctor() {
     }
-
 
     protected Doctor(Parcel in) {
         id = in.readString();
@@ -44,18 +55,6 @@ public class Doctor implements Parcelable{
         rating = in.readFloat();
         phones = in.createStringArrayList();
     }
-
-    public static final Creator<Doctor> CREATOR = new Creator<Doctor>() {
-        @Override
-        public Doctor createFromParcel(Parcel in) {
-            return new Doctor(in);
-        }
-
-        @Override
-        public Doctor[] newArray(int size) {
-            return new Doctor[size];
-        }
-    };
 
     public String getId() {
         return id;

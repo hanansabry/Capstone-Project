@@ -2,9 +2,9 @@ package com.hanan.and.udacity.meetyourdoctor.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -15,7 +15,6 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,7 +38,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EDIT_PROFILE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.displaySnackMessage;
@@ -194,7 +192,7 @@ public class SignupActivity extends AppCompatActivity {
 
     public void updateUser(String name, String mobile, final String password, String gender) {
         User user = new User(name, currentUser.getEmail(), mobile, password, gender);
-        Map<String, Object>  children= new HashMap<>();
+        Map<String, Object> children = new HashMap<>();
         children.put("name", name);
         children.put("gender", gender);
         children.put("mobileNumber", mobile);

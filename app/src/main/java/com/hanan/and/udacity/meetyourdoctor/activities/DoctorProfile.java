@@ -3,11 +3,11 @@ package com.hanan.and.udacity.meetyourdoctor.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,8 +42,7 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.REVIEWS_N
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.TRUE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
 
-public class DoctorProfile extends AppCompatActivity{
-    private Doctor doctor;
+public class DoctorProfile extends AppCompatActivity {
     @BindView(R.id.doctor_name)
     TextView doctorName;
     @BindView(R.id.doctor_study)
@@ -64,11 +63,10 @@ public class DoctorProfile extends AppCompatActivity{
     TextView servicesTv;
     @BindView(R.id.doctor_profile_image)
     FloatingActionImageView doctorProfileImage;
+    List<String> phones;
 //    @BindView(R.id.favourite_button)
 //    ImageButton favouriteBtn;
-
-    List<String> phones;
-
+    private Doctor doctor;
     private FirebaseDatabase database;
     private DatabaseReference userRef;
     private DatabaseReference reviewRef;
@@ -97,7 +95,8 @@ public class DoctorProfile extends AppCompatActivity{
         invalidateOptionsMenu();
 
         //get doctor object from activity intent
-        if (getIntent().getParcelableExtra(DOCTOR) != null) {
+        Intent intent = getIntent();
+        if (intent != null && intent.getParcelableExtra(DOCTOR) != null) {
             doctor = getIntent().getParcelableExtra(DOCTOR);
         }
         initCollapsingToolbar(doctor.getName());
@@ -124,12 +123,12 @@ public class DoctorProfile extends AppCompatActivity{
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.doctor_profile_menu, menu);
         MenuItem favItem = menu.findItem(R.id.action_fav);
-        if(currentUser != null){
+        if (currentUser != null) {
             favItem.setVisible(true);
-        }else{
+        } else {
             favItem.setVisible(false);
         }
-        if(isFavourite){
+        if (isFavourite) {
             favItem.setIcon(getResources().getDrawable(R.drawable.ic_favourite_white));
         }
         return true;
@@ -140,9 +139,9 @@ public class DoctorProfile extends AppCompatActivity{
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
             onBackPressed(); // close this activity and return to preview activity (if there is any)
-        }else if(item.getItemId() == R.id.action_fav){
+        } else if (item.getItemId() == R.id.action_fav) {
             onFavouriteClicked(item);
-        }else if(item.getItemId() == R.id.action_call){
+        } else if (item.getItemId() == R.id.action_call) {
             onCallClicked();
         }
         return super.onOptionsItemSelected(item);
@@ -183,7 +182,7 @@ public class DoctorProfile extends AppCompatActivity{
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
     }
 
-//    @OnClick(R.id.call_button)
+    //    @OnClick(R.id.call_button)
     public void onCallClicked() {
         final String[] selectedPhone = new String[1];
         selectedPhone[0] = phones.get(0);
@@ -211,7 +210,7 @@ public class DoctorProfile extends AppCompatActivity{
                 .show();
     }
 
-//    @OnClick(R.id.favourite_button)
+    //    @OnClick(R.id.favourite_button)
     public void onFavouriteClicked(MenuItem item) {
         if (isFavourite) {
             //delete from favourites
@@ -257,20 +256,20 @@ public class DoctorProfile extends AppCompatActivity{
         if (favouriteDoctorsEventListener != null) {
             userRef.removeEventListener(favouriteDoctorsEventListener);
         }
-        if (reviewsEventListener != null){
+        if (reviewsEventListener != null) {
             reviewRef.removeEventListener(reviewsEventListener);
         }
     }
 
-    public void getDoctorRating(){
+    public void getDoctorRating() {
         reviewsValue = 0;
         reviewRef = database.getReference().child(REVIEWS_NODE).child(doctor.getId());
         reviewsEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot reviewChild: dataSnapshot.getChildren()){
+                for (DataSnapshot reviewChild : dataSnapshot.getChildren()) {
                     Review review = reviewChild.getValue(Review.class);
-                    reviewsValue +=review.getRatingValue();
+                    reviewsValue += review.getRatingValue();
                 }
                 //get doctor rating value
                 float ratingValue = reviewsValue / dataSnapshot.getChildrenCount();

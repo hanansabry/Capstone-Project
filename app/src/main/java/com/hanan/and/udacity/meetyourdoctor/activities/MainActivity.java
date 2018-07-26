@@ -3,7 +3,7 @@ package com.hanan.and.udacity.meetyourdoctor.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.speech.RecognizerIntent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -11,9 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -229,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             getFragmentManager().popBackStack();
             searchViewEnabled = true;
             invalidateOptionsMenu();
-        } else if (selectedItemId == R.id.action_favourites || selectedItemId == R.id.action_more){
+        } else if (selectedItemId == R.id.action_favourites || selectedItemId == R.id.action_more) {
             bottomNavigationView.setSelectedItemId(R.id.action_search);
         } else {
             searchViewEnabled = true;
@@ -315,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
                 displaySearchFragment();
                 searchView.addSuggestions(doctorsNames);
                 saveSpecialistsList();
-                if(MainActivity.this.getIntent().hasExtra(SPECIALIST)){
+                if (MainActivity.this.getIntent().hasExtra(SPECIALIST)) {
                     Specialist specialist = getIntent().getParcelableExtra(SPECIALIST);
                     showWidgetSpecialistDoctors(specialist);
                 }
@@ -348,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void searchForDoctor(final String searchQuery){
+    public void searchForDoctor(final String searchQuery) {
         AsyncTask<String, Void, ArrayList<Doctor>> searchAsync = new AsyncTask<String, Void, ArrayList<Doctor>>() {
             @Override
             protected void onPreExecute() {
@@ -362,8 +360,8 @@ public class MainActivity extends AppCompatActivity {
             protected ArrayList<Doctor> doInBackground(String... strings) {
                 String searchQuery = strings[0];
                 ArrayList<Doctor> doctorsResult = new ArrayList<>();
-                for(Doctor doctor : doctors){
-                    if(doctor.getName().contains(searchQuery)){
+                for (Doctor doctor : doctors) {
+                    if (doctor.getName().contains(searchQuery)) {
                         doctorsResult.add(doctor);
                     }
                 }
@@ -378,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
         }.execute(searchQuery);
     }
 
-    public void showSearchResult(String searchQuery, ArrayList<Doctor> doctorsResults){
+    public void showSearchResult(String searchQuery, ArrayList<Doctor> doctorsResults) {
         actionBar.setTitle(getResources().getString(R.string.search_results_str, searchQuery));
         DoctorsFragment doctorsFragment = DoctorsFragment.newInstance();
         Bundle searchResultsBundle = new Bundle();
@@ -392,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
-    public void showWidgetSpecialistDoctors(Specialist specialist){
+    public void showWidgetSpecialistDoctors(Specialist specialist) {
         //create bundle to pass specialist object to doctors fragment
         Bundle bundle = new Bundle();
         bundle.putParcelable(SPECIALIST, specialist);
@@ -406,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void saveSpecialistsList(){
+    public void saveSpecialistsList() {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences(getString(R.string.pref_file), 0);
         SharedPreferences.Editor editor = prefs.edit();
         try {

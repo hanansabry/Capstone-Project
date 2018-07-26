@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/action_search"
-        android:title="@string/search_action_string"
-        android:icon="@drawable/ic_search"/>
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search_action_string" />
 
-    <item android:id="@+id/action_favourites"
-        android:title="@string/favourites_action_string"
-        android:icon="@drawable/ic_favourites"/>
+    <item
+        android:id="@+id/action_favourites"
+        android:icon="@drawable/ic_favourites"
+        android:title="@string/favourites_action_string" />
 
-    <item android:id="@+id/action_more"
-        android:title="@string/more_action_string"
-        android:icon="@drawable/ic_more"/>
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/ic_more"
+        android:title="@string/more_action_string" />
 
 </menu>

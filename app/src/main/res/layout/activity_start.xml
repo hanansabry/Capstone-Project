@@ -34,7 +34,7 @@
             android:onClick="openSignInActivity"
             android:text="@string/sign_in"
             android:textColor="@color/primaryColor"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
 
         <Button

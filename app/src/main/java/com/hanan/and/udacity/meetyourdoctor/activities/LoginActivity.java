@@ -2,19 +2,17 @@ package com.hanan.and.udacity.meetyourdoctor.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,9 +30,6 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.displaySn
 
 public class LoginActivity extends AppCompatActivity {
 
-    private boolean notSigned;
-    private FirebaseAuth auth;
-    private SharedPreferences sharedPreferences;
     @BindView(R.id.email_edittext)
     EditText emailEditText;
     @BindView(R.id.password_edittext)
@@ -45,6 +40,9 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar progressBarLogin;
     @BindView(R.id.signin_button)
     Button signInButton;
+    private boolean notSigned;
+    private FirebaseAuth auth;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void startMainActivity(){
+    public void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -99,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.signin_button)
-    public void onSigninClicked(View view){
+    public void onSigninClicked(View view) {
         progressBarLogin.setVisibility(View.VISIBLE);
         signInButton.setVisibility(View.GONE);
 
@@ -107,13 +105,13 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString().trim();
 
         //check if mail is valid
-        if(!isEmailValid(email)){
+        if (!isEmailValid(email)) {
             progressBarLogin.setVisibility(View.GONE);
             signInButton.setVisibility(View.VISIBLE);
             displaySnackMessage(scrollViewLogin, getString(R.string.not_valid_mail));
         }
 
-        if(!isValidData(email, password)){
+        if (!isValidData(email, password)) {
             progressBarLogin.setVisibility(View.GONE);
             signInButton.setVisibility(View.VISIBLE);
             displaySnackMessage(scrollViewLogin, getResources().getString(R.string.enter_mail_password));
@@ -126,21 +124,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBarLogin.setVisibility(View.GONE);
                 signInButton.setVisibility(View.VISIBLE);
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     //save user in shared preferences
                     setUser(auth.getCurrentUser().getUid());
                     startMainActivity();
-                }else{
+                } else {
                     displaySnackMessage(scrollViewLogin, getResources().getString(R.string.login_failed));
                 }
             }
         });
     }
 
-    public boolean isValidData(String email, String password){
-        if(TextUtils.isEmpty(email)||TextUtils.isEmpty(password)){
+    public boolean isValidData(String email, String password) {
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -149,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public void setUser(String userId){
+    public void setUser(String userId) {
         sharedPreferences = getApplicationContext().getSharedPreferences(
                 getResources().getString(R.string.pref_file), 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -17,7 +17,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewHo
     Context mContext;
     List<Review> mReviewsList;
 
-    public ReviewsAdapter(Context context, List<Review> reviewsList){
+    public ReviewsAdapter(Context context, List<Review> reviewsList) {
         mContext = context;
         mReviewsList = reviewsList;
     }
@@ -42,7 +42,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewHo
         return mReviewsList.size();
     }
 
-    class ReviewHolder extends RecyclerView.ViewHolder{
+    class ReviewHolder extends RecyclerView.ViewHolder {
         TextView userNameTextView, reviewDateTextView, reviewTextView;
         RatingBar ratingBar;
 

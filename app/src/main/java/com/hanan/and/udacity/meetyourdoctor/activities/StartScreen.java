@@ -2,8 +2,8 @@ package com.hanan.and.udacity.meetyourdoctor.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +20,7 @@ public class StartScreen extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null){
+        if (user != null) {
             finish();
             //start the main activity
             Intent intent = new Intent(this, MainActivity.class);
@@ -34,15 +34,15 @@ public class StartScreen extends AppCompatActivity {
 //        checkFirstTimeRunning();
     }
 
-    public void checkFirstTimeRunning(){
+    public void checkFirstTimeRunning() {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences(getResources().getString(R.string.pref_file), 0);
         boolean previouslyStarted = prefs.getBoolean(PREV_STARTED, false);
-        if(!previouslyStarted) {
+        if (!previouslyStarted) {
             SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(PREV_STARTED, Boolean.TRUE);
             edit.apply();
             //show main activity
-        }else{
+        } else {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

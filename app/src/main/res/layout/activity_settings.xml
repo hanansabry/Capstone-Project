@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -24,35 +23,35 @@
         android:layout_height="wrap_content">
 
         <!--<LinearLayout-->
-            <!--android:id="@+id/edit_profile_layout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="?attr/selectableItemBackground"-->
-            <!--android:clickable="true"-->
-            <!--android:focusable="true"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingBottom="8dp"-->
-            <!--android:paddingEnd="16sp"-->
-            <!--android:paddingStart="16sp"-->
-            <!--android:paddingTop="16dp"-->
-            <!--android:weightSum="3">-->
+        <!--android:id="@+id/edit_profile_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="?attr/selectableItemBackground"-->
+        <!--android:clickable="true"-->
+        <!--android:focusable="true"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:paddingBottom="8dp"-->
+        <!--android:paddingEnd="16sp"-->
+        <!--android:paddingStart="16sp"-->
+        <!--android:paddingTop="16dp"-->
+        <!--android:weightSum="3">-->
 
-            <!--<ImageView-->
-                <!--android:layout_width="32dp"-->
-                <!--android:layout_height="32dp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:background="@color/white"-->
-                <!--android:src="@drawable/ic_account_circle_24dp" />-->
+        <!--<ImageView-->
+        <!--android:layout_width="32dp"-->
+        <!--android:layout_height="32dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:background="@color/white"-->
+        <!--android:src="@drawable/ic_account_circle_24dp" />-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/edit_profile_tv"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginStart="32dp"-->
-                <!--android:text="@string/edit_profile"-->
-                <!--android:textColor="@color/secondaryLightColor"-->
-                <!--android:textSize="16sp" />-->
+        <!--<TextView-->
+        <!--android:id="@+id/edit_profile_tv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginStart="32dp"-->
+        <!--android:text="@string/edit_profile"-->
+        <!--android:textColor="@color/secondaryLightColor"-->
+        <!--android:textSize="16sp" />-->
 
         <!--</LinearLayout>-->
 
@@ -89,11 +88,11 @@
                 android:id="@+id/choose_city_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
                 android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:backgroundTint="@color/primaryLightColor"
                 android:prompt="@string/choose_city"
-                android:spinnerMode="dialog"
-                android:backgroundTint="@color/primaryLightColor"/>
+                android:spinnerMode="dialog" />
         </LinearLayout>
 
         <View
@@ -135,15 +134,16 @@
                 android:text="@string/language"
                 android:textColor="@color/secondaryLightColor"
                 android:textSize="16sp" />
+
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/language_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
                 android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:backgroundTint="@color/primaryLightColor"
                 android:prompt="@string/language"
-                android:spinnerMode="dialog"
-                android:backgroundTint="@color/primaryLightColor"/>
+                android:spinnerMode="dialog" />
 
         </LinearLayout>
 

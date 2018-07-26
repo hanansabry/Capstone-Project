@@ -13,8 +13,8 @@
         android:isIndicator="false"
         android:numStars="5"
         android:progressTint="@color/yellow"
-        android:stepSize="1"
-        android:rating="3"/>
+        android:rating="3"
+        android:stepSize="1" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

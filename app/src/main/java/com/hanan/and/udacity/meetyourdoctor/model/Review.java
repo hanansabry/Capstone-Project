@@ -3,8 +3,19 @@ package com.hanan.and.udacity.meetyourdoctor.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Review implements Parcelable{
+public class Review implements Parcelable {
 
+    public static final Creator<Review> CREATOR = new Creator<Review>() {
+        @Override
+        public Review createFromParcel(Parcel in) {
+            return new Review(in);
+        }
+
+        @Override
+        public Review[] newArray(int size) {
+            return new Review[size];
+        }
+    };
     private int reviewId;
     private String reviewerName;
     private String review;
@@ -31,18 +42,6 @@ public class Review implements Parcelable{
         reviewDate = in.readString();
         doctorId = in.readString();
     }
-
-    public static final Creator<Review> CREATOR = new Creator<Review>() {
-        @Override
-        public Review createFromParcel(Parcel in) {
-            return new Review(in);
-        }
-
-        @Override
-        public Review[] newArray(int size) {
-            return new Review[size];
-        }
-    };
 
     public int getReviewId() {
         return reviewId;
