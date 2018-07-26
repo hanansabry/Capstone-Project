@@ -76,6 +76,8 @@
     <string name="app_logo">شعار البرنامج</string>
     <string name="user_image">صورة المستخدم</string>
     <string name="start_screen_image">صورة البداية</string>
+    <string name="widget_error_msg">حدث خطأ أثناء تحميل البيانات، من فضلك تأكد من اتصالك بشبكة الانترنت</string>
+    <string name="error_occurred">حدث خطأ.. من فضلك حاول مرة أخرى</string>
 
 
     <string-array name="city_list">

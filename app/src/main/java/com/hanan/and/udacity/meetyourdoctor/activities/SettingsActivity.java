@@ -68,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(SettingsActivity.this, "Nothing is selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SettingsActivity.this, "Nothing is selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -97,7 +97,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(SettingsActivity.this, "Nothing is selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SettingsActivity.this, "Nothing is selected", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ANONYMOUS;
@@ -131,7 +132,7 @@ public class ReviewsActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(ReviewsActivity.this, "deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReviewsActivity.this, getString(R.string.review_deleted), Toast.LENGTH_SHORT).show();
             }
 
             @Override

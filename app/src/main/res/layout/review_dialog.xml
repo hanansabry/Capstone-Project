@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -14,7 +15,8 @@
         android:numStars="5"
         android:progressTint="@color/yellow"
         android:rating="3"
-        android:stepSize="1" />
+        android:stepSize="1"
+        tools:targetApi="lollipop" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

@@ -53,7 +53,6 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.getLocale
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
     private MaterialSearchView searchView;
     private CollapsingToolbarLayout collapsingToolbar;
     private Toolbar toolbar;
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                                 actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
                                 selectedFragment = SpecialistsFragment.newInstance();
                                 selectedFragment.setArguments(dataBundle);
-                                transaction.replace(R.id.frame_layout, selectedFragment, "specialist");
+                                transaction.replace(R.id.frame_layout, selectedFragment);
                                 transaction.commit();
                                 searchViewEnabled = true;
                                 break;
@@ -321,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MainActivity.this, "Error occurred, Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, getString(R.string.error_occurred), Toast.LENGTH_SHORT).show();
             }
         };
         databaseReference.addListenerForSingleValueEvent(valueEventListener);
@@ -384,7 +383,7 @@ public class MainActivity extends AppCompatActivity {
         searchResultsBundle.putBoolean("SEARCH", true);
         doctorsFragment.setArguments(searchResultsBundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("search_results_fragment");
+        transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack(getString(R.string.search_results_fragment   ));
         transaction.commit();
         searchViewEnabled = false;
         invalidateOptionsMenu();
@@ -400,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
         doctorsFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("specialists_fragment");
+        transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack(getString(R.string.specialist_fragment));
         transaction.commit();
     }
 

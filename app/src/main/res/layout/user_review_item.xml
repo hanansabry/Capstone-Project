@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
@@ -25,14 +26,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            android:text="Hanan Sabry"
             android:textColor="@color/primaryColor" />
 
         <TextView
             android:id="@+id/review_date_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20/6/2018"
             android:textColor="@android:color/darker_gray"
             android:textSize="12sp"
             android:textStyle="italic" />
@@ -51,14 +50,13 @@
         android:progressTint="@color/yellow"
         android:stepSize="1"
         app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom" />
+        app:layout_anchorGravity="bottom"
+        tools:targetApi="lollipop" />
 
     <TextView
         android:id="@+id/review_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/user_icon"
-        android:layout_margin="8dp"
-        android:text="some text review some text review some text review some text reviewsome text review some text reviewsome text review some text review" />
-
+        android:layout_margin="8dp"/>
 </RelativeLayout>
