@@ -87,15 +87,6 @@
         app:layout_anchorGravity="bottom|center"
         android:contentDescription="@string/doctor_icon"/>
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="bottom|end"-->
-    <!--android:layout_margin="8dp"-->
-    <!--android:src="@drawable/ic_search"-->
-    <!--app:fabSize="normal"-->
-    <!--app:backgroundTint="@color/secondaryLightColor"/>-->
-
     <include layout="@layout/doctor_profile_content" />
 
     <Button
