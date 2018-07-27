@@ -33,9 +33,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="8dp"
+        android:contentDescription="@string/add_review"
         android:onClick="addNewReview"
         android:src="@drawable/ic_rate_review_24dp"
-        app:fabSize="normal"
-        android:contentDescription="@string/add_review"/>
+        app:fabSize="normal" />
 
 </RelativeLayout>

@@ -30,8 +30,8 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/ic_settings_24dp"
-                android:contentDescription="@string/settings"/>
+                android:contentDescription="@string/settings"
+                android:src="@drawable/ic_settings_24dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -74,8 +74,8 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/ic_account_circle_24dp"
-                android:contentDescription="@string/edit_profile"/>
+                android:contentDescription="@string/edit_profile"
+                android:src="@drawable/ic_account_circle_24dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -115,8 +115,8 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/login"
-                android:contentDescription="@string/login"/>
+                android:contentDescription="@string/login"
+                android:src="@drawable/login" />
 
             <TextView
                 android:id="@+id/login_tv"

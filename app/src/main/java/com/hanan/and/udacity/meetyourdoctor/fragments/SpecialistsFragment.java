@@ -20,6 +20,7 @@ import com.hanan.and.udacity.meetyourdoctor.model.Specialist;
 import java.util.ArrayList;
 
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_NODE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_SPECIALIST_TAG;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALISTS_NODE;
 
@@ -79,7 +80,7 @@ public class SpecialistsFragment extends Fragment implements SpecialistsAdapter.
         doctorsFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, doctorsFragment).addToBackStack("specialists_fragment");
+        transaction.replace(R.id.frame_layout, doctorsFragment, DOCTORS_SPECIALIST_TAG).addToBackStack("specialists_fragment");
         transaction.commit();
     }
 }

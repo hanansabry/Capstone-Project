@@ -17,10 +17,6 @@ import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USER;
 
 public class AddingReviewDialog extends DialogFragment {
 
-    public interface AddReviewDialogListener {
-        void onFinishAddingReview(String reviewerName, String reviewContent, Float reviewRate);
-    }
-
     public AddingReviewDialog() {
     }
 
@@ -66,5 +62,9 @@ public class AddingReviewDialog extends DialogFragment {
                 dismiss();
             }
         });
+    }
+
+    public interface AddReviewDialogListener {
+        void onFinishAddingReview(String reviewerName, String reviewContent, Float reviewRate);
     }
 }

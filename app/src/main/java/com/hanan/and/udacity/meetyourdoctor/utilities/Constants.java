@@ -25,6 +25,10 @@ public class Constants {
     public static final String LANGUAGE = "language";
     public static final String TRUE = "true";
     public static final String PREV_STARTED = "PREV_STARTED";
+    public static final String NAVIGATION_ID = "NAVIGATION_ID";
+    public static final String DOCTORS_SPECIALIST_TAG = "doctors_specialist";
+    public static final String DOCTORS_FAVOURITES_TAG = "doctors_fav";
+    public static final String DATA = "data";
     public static String LOCALE = DoctorOnline.getContext().getResources().getConfiguration().locale.getDisplayLanguage();
 
     public static void displaySnackMessage(View view, String msg) {

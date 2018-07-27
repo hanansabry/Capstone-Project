@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -43,8 +44,12 @@ import br.com.mauker.materialsearchview.MaterialSearchView;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ARABIC;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.AR_LOCALE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.CITY;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DATA;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_FAVOURITES_TAG;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_NODE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTORS_SPECIALIST_TAG;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.EN_LOCALE;
+import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.NAVIGATION_ID;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.NOT_SIGNED;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALIST;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.SPECIALISTS_NODE;
@@ -71,12 +76,17 @@ public class MainActivity extends AppCompatActivity {
     private Bundle dataBundle;
     private BottomNavigationView bottomNavigationView;
     private MaterialDialog searchProgressDialog;
+    private FragmentManager fm;
+
+    private int selectedItemSaveState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //initiate vars
+        fm = getSupportFragmentManager();
         //get firebase database instance
         firebaseDatabase = FirebaseDatabase.getInstance();
         //------------------------------------------------------------------------------------------
@@ -84,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         selectedCity = getSelectedCity();
         cities = getResources().getStringArray(R.array.city_list);
 
-        getData();
         //------------------------------------------------------------------------------------------
         //setup the Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -103,8 +112,25 @@ public class MainActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         //setup the Bottom Navigation View
         setupBottomNavigation();
-        Intent widgetIntent = SpecialistsListRemoteViewsFactroy.updateWidgetList(getApplicationContext());
-        sendBroadcast(widgetIntent);
+
+        if (savedInstanceState != null) {
+            loadingLayout.setVisibility(View.INVISIBLE);
+            dataBundle = savedInstanceState.getBundle(DATA);
+            Fragment dfragment = getSupportFragmentManager().findFragmentByTag(DOCTORS_SPECIALIST_TAG);
+            selectedItemSaveState = savedInstanceState.getInt(NAVIGATION_ID);
+            if (dfragment != null && selectedItemSaveState != R.id.action_favourites) {
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame_layout, dfragment);
+                transaction.commit();
+            } else {
+                bottomNavigationView.setSelectedItemId(selectedItemSaveState);
+            }
+        } else {
+            getData();
+            bottomNavigationView.getMenu().getItem(0).setChecked(true);
+            Intent widgetIntent = SpecialistsListRemoteViewsFactroy.updateWidgetList(getApplicationContext());
+            sendBroadcast(widgetIntent);
+        }
     }
 
 
@@ -114,14 +140,22 @@ public class MainActivity extends AppCompatActivity {
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        Fragment selectedFragment = null;
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        Fragment selectedFragment = fm.findFragmentById(R.id.frame_layout);
                         switch (item.getItemId()) {
                             case R.id.action_search:
                                 actionBar.setTitle(getResources().getString(R.string.most_common_specialists));
-                                selectedFragment = SpecialistsFragment.newInstance();
-                                selectedFragment.setArguments(dataBundle);
-                                transaction.replace(R.id.frame_layout, selectedFragment);
+                                //check if specialist docotors fragment is already opened
+                                if (fm.findFragmentByTag(DOCTORS_SPECIALIST_TAG) != null) {
+                                    selectedFragment = fm.findFragmentByTag(DOCTORS_SPECIALIST_TAG);
+                                    transaction.replace(R.id.frame_layout, selectedFragment);
+                                } else if (selectedFragment == null || !(selectedFragment instanceof SpecialistsFragment)) {
+                                    selectedFragment = SpecialistsFragment.newInstance();
+                                    selectedFragment.setArguments(dataBundle);
+                                    transaction.replace(R.id.frame_layout, selectedFragment);
+                                } else {
+                                    transaction.replace(R.id.frame_layout, selectedFragment);
+                                }
                                 transaction.commit();
                                 searchViewEnabled = true;
                                 break;
@@ -130,9 +164,12 @@ public class MainActivity extends AppCompatActivity {
                                 if (isSigned) {
                                     //if the user is signed start favourites doctors screen
                                     actionBar.setTitle(getResources().getString(R.string.favourites));
-                                    selectedFragment = DoctorsFragment.newInstance();
-                                    selectedFragment.setArguments(dataBundle);
-                                    transaction.replace(R.id.frame_layout, selectedFragment);
+                                    if (selectedFragment == null || !(selectedFragment instanceof DoctorsFragment)
+                                            || !selectedFragment.getTag().equals(DOCTORS_FAVOURITES_TAG)) {
+                                        selectedFragment = DoctorsFragment.newInstance();
+                                        selectedFragment.setArguments(dataBundle);
+                                    }
+                                    transaction.replace(R.id.frame_layout, selectedFragment, DOCTORS_FAVOURITES_TAG);
                                     transaction.commit();
                                     searchViewEnabled = false;
                                 } else {
@@ -146,7 +183,9 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.action_more:
                                 loadingLayout.setVisibility(View.INVISIBLE);
                                 actionBar.setTitle(getResources().getString(R.string.more_action_string));
-                                selectedFragment = MoreFragment.newInstance();
+                                if (selectedFragment == null || !(selectedFragment instanceof MoreFragment)) {
+                                    selectedFragment = MoreFragment.newInstance();
+                                }
                                 transaction.replace(R.id.frame_layout, selectedFragment);
                                 transaction.commit();
                                 searchViewEnabled = false;
@@ -156,13 +195,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
-        //Manually displaying the first fragment - one time only
-        bottomNavigationView.getMenu().getItem(0).setChecked(true);
-        //Used to select an item programmatically
-        //bottomNavigationView.getMenu().getItem(2).setChecked(true);
-        //------------------------------------------------------------------------------------------
-
     }
 
     public void displaySearchFragment() {
@@ -201,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         searchView.activityResumed();
+        bottomNavigationView.setSelectedItemId(selectedItemSaveState);
     }
 
     @Override
@@ -411,5 +444,13 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         editor.apply();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        selectedItemSaveState = bottomNavigationView.getSelectedItemId();
+        outState.putInt(NAVIGATION_ID, selectedItemSaveState);
+        outState.putBundle(DATA, dataBundle);
     }
 }

@@ -64,7 +64,7 @@ public class DoctorProfile extends AppCompatActivity {
     @BindView(R.id.doctor_profile_image)
     FloatingActionImageView doctorProfileImage;
     List<String> phones;
-//    @BindView(R.id.favourite_button)
+    //    @BindView(R.id.favourite_button)
 //    ImageButton favouriteBtn;
     private Doctor doctor;
     private FirebaseDatabase database;

@@ -73,8 +73,8 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/ic_location_city_black_24dp"
-                android:contentDescription="@string/choose_city"/>
+                android:contentDescription="@string/choose_city"
+                android:src="@drawable/ic_location_city_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -123,8 +123,8 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
-                android:src="@drawable/ic_language_black_32dp"
-                android:contentDescription="@string/language"/>
+                android:contentDescription="@string/language"
+                android:src="@drawable/ic_language_black_32dp" />
 
             <TextView
                 android:layout_width="wrap_content"

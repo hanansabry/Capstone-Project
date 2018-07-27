@@ -21,8 +21,8 @@
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:background="@color/white"
-            android:src="@drawable/doctor_icon"
-            android:contentDescription="@string/doctor_icon"/>
+            android:contentDescription="@string/doctor_icon"
+            android:src="@drawable/doctor_icon" />
 
         <TextView
             android:id="@+id/doctor_name"
