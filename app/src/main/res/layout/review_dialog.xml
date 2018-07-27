@@ -1,50 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <RatingBar
-        android:id="@+id/reviewer_rating"
-        style="?android:attr/ratingBarStyleIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:isIndicator="false"
-        android:numStars="5"
-        android:progressTint="@color/yellow"
-        android:rating="3"
-        android:stepSize="1"
-        tools:targetApi="lollipop" />
-
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/reviewer_name"
+        <RatingBar
+            android:id="@+id/reviewer_rating"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="8dp"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:progressTint="@color/yellow"
+            android:rating="3"
+            android:stepSize="1"
+            tools:targetApi="lollipop" />
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/reviewer"
-            android:inputType="textAutoCorrect"
-            android:maxLines="1" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="18dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+            <EditText
+                android:id="@+id/reviewer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reviewer"
+                android:inputType="textAutoCorrect"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/review"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top"
-            android:hint="@string/review_content"
-            android:inputType="textCapSentences|textMultiLine|textAutoCorrect"
-            android:minLines="4" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp">
 
-</LinearLayout>
+            <EditText
+                android:id="@+id/review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:hint="@string/review_content"
+                android:inputType="textCapSentences|textMultiLine|textAutoCorrect"
+                android:minLines="4" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/add_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_border_green"
+            android:text="@string/add"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+</ScrollView>

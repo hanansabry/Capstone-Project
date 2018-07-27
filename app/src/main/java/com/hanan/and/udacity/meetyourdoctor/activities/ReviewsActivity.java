@@ -3,19 +3,15 @@ package com.hanan.and.udacity.meetyourdoctor.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +27,7 @@ import com.hanan.and.udacity.meetyourdoctor.adapters.ReviewsAdapter;
 import com.hanan.and.udacity.meetyourdoctor.model.Doctor;
 import com.hanan.and.udacity.meetyourdoctor.model.Review;
 import com.hanan.and.udacity.meetyourdoctor.model.User;
+import com.hanan.and.udacity.meetyourdoctor.utilities.AddingReviewDialog;
 import com.hanan.and.udacity.meetyourdoctor.utilities.GridSpacingItemDecoration;
 
 import java.text.SimpleDateFormat;
@@ -40,12 +37,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.ANONYMOUS;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.DOCTOR;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.REVIEWS_NODE;
 import static com.hanan.and.udacity.meetyourdoctor.utilities.Constants.USERS;
 
-public class ReviewsActivity extends AppCompatActivity {
+public class ReviewsActivity extends AppCompatActivity implements AddingReviewDialog.AddReviewDialogListener {
     private FirebaseDatabase database;
     private DatabaseReference doctorReviewsRef;
     private DatabaseReference userRef;
@@ -148,58 +144,9 @@ public class ReviewsActivity extends AppCompatActivity {
     }
 
     public void addNewReview(View view) {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
-                .title(getString(R.string.add_review))
-                .customView(R.layout.review_dialog, true)
-                .positiveText(getString(R.string.add))
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        View dialogView = dialog.getCustomView();
-                        EditText reviewerET = dialogView.findViewById(R.id.reviewer_name);
-                        EditText reviewContentET = dialogView.findViewById(R.id.review);
-                        RatingBar reviewerRating = dialogView.findViewById(R.id.reviewer_rating);
-
-                        if (currentUser != null) {
-                            reviewerET.setText(userName);
-                        }
-
-                        reviewerName = (reviewerET.getText().toString()).equals("") ? ANONYMOUS : reviewerET.getText().toString();
-                        reviewContent = reviewContentET.getText().toString();
-                        ratingValue = reviewerRating.getRating();
-//
-//                        if (TextUtils.isEmpty(reviewContent)) {
-//                            Toast.makeText(ReviewsActivity.this, getString(R.string.write_review), Toast.LENGTH_SHORT).show();
-//                        } else {
-                        String timestamp = getDateCurrentTime();
-
-                        Review review = new Review(reviewerName, reviewContent, ratingValue, timestamp, doctor.getId());
-                        doctorReviewsRef.push().setValue(review)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(
-                                                ReviewsActivity.this,
-                                                getString(R.string.success_adding_review), Toast.LENGTH_SHORT)
-                                                .show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(
-                                        ReviewsActivity.this,
-                                        getString(R.string.failed_adding_review), Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        });
-//                        }
-                    }
-                });
-        MaterialDialog dialog = builder.build();
-        View dialogView = dialog.getCustomView();
-        EditText usernameEditText = dialogView.findViewById(R.id.reviewer_name);
-        usernameEditText.setText(userName);
-        dialog.show();
+        FragmentManager fm = getSupportFragmentManager();
+        AddingReviewDialog addingReviewDialog = AddingReviewDialog.newInstance(userName);
+        addingReviewDialog.show(fm, "add_review_tag");
     }
 
     public String getDateCurrentTime() {
@@ -231,5 +178,32 @@ public class ReviewsActivity extends AppCompatActivity {
             }
         };
         userRef.addListenerForSingleValueEvent(usersEventListener);
+    }
+
+    @Override
+    public void onFinishAddingReview(String reviewerName, String reviewContent, Float reviewRate) {
+        //adding the review to the database
+        String timestamp = getDateCurrentTime();
+
+        Review review = new Review(reviewerName, reviewContent, reviewRate, timestamp, doctor.getId());
+
+        doctorReviewsRef.push().setValue(review)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(
+                                ReviewsActivity.this,
+                                getString(R.string.success_adding_review), Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(
+                        ReviewsActivity.this,
+                        getString(R.string.failed_adding_review), Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
     }
 }
