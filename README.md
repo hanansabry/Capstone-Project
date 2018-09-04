@@ -8,13 +8,13 @@ The app is for all patients (in the selected city) who looking for best doctor i
 
 *Main features of the app: 
 
-● Search and find doctors around you based on doctor specialist and area. 
-● Save specific doctor as favourite to easily find him next time. 
-● Write reviews about doctors to help other patients find the best doctor for them. 
-● Call the doctor’s clinic directly from the app to book appointment. 
-● Support Arabic and English Languages. 
-● Widget for the application to easily search for the doctors.
-● Make users authentication
+- Search and find doctors around you based on doctor specialist and area. 
+- Save specific doctor as favourite to easily find him next time. 
+- Write reviews about doctors to help other patients find the best doctor for them. 
+- Call the doctor’s clinic directly from the app to book appointment. 
+- Support Arabic and English Languages. 
+- Widget for the application to easily search for the doctors.
+- Make users authentication
 
 *The application is Using Firebase Realtime Database to store all data of the doctors. 
 
