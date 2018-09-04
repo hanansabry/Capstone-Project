@@ -1,7 +1,7 @@
 
 *Description:
 
-Meet your Doctor is an app for anyone who searches for best doctor around him in any specialist (in the selected city) as it includes large database of all doctors in most common specialists and their details like fees, clinic times, clinic address and useful information about the doctor. It also provides you with real reviews from other patients to help the user find the best doctor that he looking for. 
+Find My Doctor is an app for anyone who searches for best doctor around him in any specialist (in the selected city) as it includes large database of all doctors in most common specialists and their details like fees, clinic times, clinic address and useful information about the doctor. It also provides you with real reviews from other patients to help the user find the best doctor that he looking for. 
 
 *Intended User  
 The app is for all patients (in the selected city) who looking for best doctor in any specialist 
